@@ -5,7 +5,7 @@ function App() {
   const [message, setMessage] = useState("");
 
   const fetchApi = async () => {
-    const response = await fetch("http://127.0.0.1:8000/api/");
+    const response = await fetch("https://wersow-api.herokuapp.com/api/");
     const data = await response.json();
     setMessage(data.message);
   };
