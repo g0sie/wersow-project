@@ -132,4 +132,5 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # https://pypi.org/project/django-cors-headers/
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
+    "https://wersow.netlify.app",
 ]
