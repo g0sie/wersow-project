@@ -23,7 +23,7 @@ def videos_list(request):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
-@api_view(['GET', 'PUT'])
+@api_view(['GET', 'PUT', 'DELETE'])
 def video_details(request, id: int):
 
     try:
@@ -41,3 +41,7 @@ def video_details(request, id: int):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    if request.method == 'DELETE':
+        video.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
