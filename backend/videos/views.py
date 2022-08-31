@@ -19,3 +19,11 @@ def videos_list(request):
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
+@api_view(['GET'])
+def video_details(request, id: int):
+    if request.method == 'GET':
+        video = Video.objects.get(id=id)
+        serializer = VideoSerializer(video)
+        return Response(serializer.data)
