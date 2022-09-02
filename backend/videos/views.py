@@ -52,5 +52,7 @@ def random_video(request):
 
     if request.method == 'GET':
         video = Video.objects.random()
-        serializer = VideoSerializer(video)
-        return Response(serializer.data)
+        if video:
+            serializer = VideoSerializer(video)
+            return Response(serializer.data)
+        return Response({'there are no videos to pick from'}, status=status.HTTP_428_PRECONDITION_REQUIRED)
