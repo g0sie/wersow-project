@@ -1,4 +1,4 @@
-from django.http import JsonResponse
+from django.http import HttpResponse
 
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
@@ -45,3 +45,12 @@ def video_details(request, id: int):
     if request.method == 'DELETE':
         video.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+@api_view(['GET'])
+def random_video(request):
+
+    if request.method == 'GET':
+        video = Video.random.all()
+        serializer = VideoSerializer(video)
+        return Response(serializer.data)
