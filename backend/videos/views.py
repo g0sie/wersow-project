@@ -51,6 +51,6 @@ def video_details(request, id: int):
 def random_video(request):
 
     if request.method == 'GET':
-        video = Video.random.all()
+        video = Video.objects.random()
         serializer = VideoSerializer(video)
         return Response(serializer.data)
