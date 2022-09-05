@@ -19,6 +19,7 @@ class Video(models.Model):
     url = models.URLField()
     thumbnail_url = models.URLField()
     publish_date = models.DateField()
+    todays = models.BooleanField(default=False)
 
     objects = VideoManager()
 
