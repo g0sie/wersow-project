@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
+from rest_framework import generics
 
 from .models import Video
 from .serializers import VideoSerializer
@@ -55,4 +56,15 @@ def random_video(request):
         if video:
             serializer = VideoSerializer(video)
             return Response(serializer.data)
-        return Response({'there are no videos to pick from'}, status=status.HTTP_428_PRECONDITION_REQUIRED)
+        return Response({'error': 'there are no videos to pick from'}, status=status.HTTP_428_PRECONDITION_REQUIRED)
+
+
+@api_view(['GET'])
+def todays_video(request):
+
+    if request.method == 'GET':
+        video = Video.objects.todays()
+        if video:
+            serializer = VideoSerializer(video)
+            return Response(serializer.data)
+        return Response({'error': "there is no today's video"}, status=status.HTTP_503_SERVICE_UNAVAILABLE)

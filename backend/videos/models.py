@@ -13,12 +13,18 @@ class VideoManager(models.Manager):
                 if video:
                     return video
 
+    def todays(self):
+        todays = self.filter(todays=True)
+        if todays.count() > 0:
+            return todays[0]
+
 
 class Video(models.Model):
     title = models.CharField(max_length=100)
     url = models.URLField()
     thumbnail_url = models.URLField()
     publish_date = models.DateField()
+    todays = models.BooleanField(default=False)
 
     objects = VideoManager()
 
