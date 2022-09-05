@@ -7,4 +7,5 @@ urlpatterns = [
     path('', views.videos_list, name='list'),
     path('<int:id>', views.video_details, name='details'),
     path('random', views.random_video, name='random'),
+    path('todays', views.todays_video, name='todays'),
 ]
