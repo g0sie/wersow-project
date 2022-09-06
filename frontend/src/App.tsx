@@ -1,32 +1,48 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
 
-function App() {
-  const [message, setMessage] = useState("");
+interface VideoProps {
+  id: number;
+  title: string;
+  url: string;
+  thumbnailUrl: string;
+  publish_date: string;
+  todays: boolean;
+}
 
-  const fetchApi = async () => {
+function App() {
+  const [video, setVideo] = useState<VideoProps>();
+
+  const getVideo = async () => {
     const response = await fetch(
       "https://wersow-api.herokuapp.com/api/videos/todays"
     );
     const data = await response.json();
-    console.log(data);
-    // setMessage(data.message);
+    setVideo(await data);
+    console.log(await data);
+    console.log(await video?.url);
   };
 
   useEffect(() => {
-    fetchApi();
-  }, [message]);
+    getVideo();
+  }, []);
 
   return (
     <div className="App">
-      <h1>{message}</h1>
-      <iframe
-        src="https://www.youtube.com/embed/TAhLF17C0DI"
-        title="YouTube video player"
-        frameBorder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowFullScreen
-      ></iframe>
+      {video && (
+        <div>
+          <iframe
+            width="200"
+            height="200"
+            src={video.url.replace("watch?v=", "embed/")}
+            title="YouTube video player"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          ></iframe>
+          <h1 className="video-title">{video.title}</h1>
+        </div>
+      )}
     </div>
   );
 }
