@@ -14,9 +14,7 @@ function App() {
   const [video, setVideo] = useState<VideoProps>();
 
   const getVideo = async () => {
-    const response = await fetch(
-      "https://wersow-api.herokuapp.com/api/videos/todays"
-    );
+    const response = await fetch("/api/videos/todays");
     const data = await response.json();
     setVideo(await data);
     console.log(await data);
