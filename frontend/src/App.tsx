@@ -5,9 +5,12 @@ function App() {
   const [message, setMessage] = useState("");
 
   const fetchApi = async () => {
-    const response = await fetch("https://wersow-api.herokuapp.com/api/");
+    const response = await fetch(
+      "https://wersow-api.herokuapp.com/api/videos/todays"
+    );
     const data = await response.json();
-    setMessage(data.message);
+    console.log(data);
+    // setMessage(data.message);
   };
 
   useEffect(() => {
