@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import "./App.css";
 
 interface VideoProps {
@@ -13,17 +13,17 @@ interface VideoProps {
 function App() {
   const [video, setVideo] = useState<VideoProps>();
 
-  const getVideo = async () => {
-    const response = await fetch("/api/videos/todays");
+  const getVideo = useCallback(async () => {
+    const response = await fetch(
+      "https://wersow-api.herokuapp.com/api/videos/todays"
+    );
     const data = await response.json();
     setVideo(await data);
-    console.log(await data);
-    console.log(await video?.url);
-  };
+  }, []);
 
   useEffect(() => {
     getVideo();
-  }, []);
+  }, [getVideo]);
 
   return (
     <div className="App">
