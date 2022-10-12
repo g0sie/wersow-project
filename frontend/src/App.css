@@ -4,12 +4,20 @@
   box-sizing: border-box;
 }
 
+:root {
+  --dark-pink: #874054;
+  --light-pink: #c45172;
+  --purple: #522e59;
+  --light-green: #e4f731;
+  --dark-green: #4f4c20;
+}
+
 .App {
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100vh;
-  background-color: #d318c3;
+  background-color: var(--dark-pink);
   text-align: center;
 }
 
@@ -20,7 +28,7 @@ iframe {
 
 .video-title {
   margin-top: 1vh;
-  color: #ffecfe;
+  color: var(--light-green);
   font-size: 45px;
   font-family: Arial, Helvetica, sans-serif;
 }
