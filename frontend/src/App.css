@@ -29,6 +29,6 @@ iframe {
 .video-title {
   margin-top: 1vh;
   color: var(--light-green);
-  font-size: 45px;
-  font-family: Arial, Helvetica, sans-serif;
+  font-size: 40px;
+  font-family: "Roboto", sans-serif;
 }
