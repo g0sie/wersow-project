@@ -2,7 +2,7 @@ interface VideoProps {
   url: string;
 }
 
-const VideoComponent = (props: VideoProps) => {
+const Video = (props: VideoProps) => {
   return (
     <div>
       <iframe
@@ -18,4 +18,4 @@ const VideoComponent = (props: VideoProps) => {
   );
 };
 
-export default VideoComponent;
+export default Video;

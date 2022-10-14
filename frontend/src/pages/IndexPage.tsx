@@ -1,6 +1,13 @@
 import { useCallback, useEffect, useState } from "react";
-import { VideoInterface } from "../components/Video/VideoInterface";
-import VideoComponent from "../components/Video/VideoComponent";
+import VideoComponent from "../components/Video";
+interface VideoInterface {
+  id: number;
+  title: string;
+  url: string;
+  thumbnailUrl: string;
+  publish_date: string;
+  todays: boolean;
+}
 
 export const IndexPage = () => {
   const [video, setVideo] = useState<VideoInterface>();
