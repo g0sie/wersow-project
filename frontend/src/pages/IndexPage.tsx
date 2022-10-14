@@ -17,7 +17,16 @@ export const IndexPage = () => {
     getVideo();
   }, [getVideo]);
 
-  return <>{video && <VideoComponent url={video.url} />}</>;
+  return (
+    <>
+      {video && (
+        <>
+          <VideoComponent url={video.url} />
+          <p className="video-title">{video.title}</p>
+        </>
+      )}
+    </>
+  );
 };
 
 export default IndexPage;
