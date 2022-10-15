@@ -4,58 +4,32 @@
   box-sizing: border-box;
 }
 
+:root {
+  --dark-pink: #874054;
+  --light-pink: #c45172;
+  --purple: #522e59;
+  --light-green: #e4f731;
+  --dark-green: #4f4c20;
+}
+
 .App {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  background-color: #d318c3;
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  height: 100vh;
+  background-color: var(--dark-pink);
+  text-align: center;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-iframe {
-  width: 90vw;
-  height: 85vh;
+.page {
+  max-width: 1400px;
+  width: 95%;
 }
 
 .video-title {
   margin-top: 1vh;
-  color: #ffecfe;
-  font-size: 45px;
-  font-family: Arial, Helvetica, sans-serif;
+  color: white;
+  font-size: 40px;
+  font-family: "Roboto", sans-serif;
 }
