@@ -20,6 +20,7 @@
   height: 100vh;
   background-color: var(--dark-pink);
   text-align: center;
+  font-family: "Roboto", sans-serif;
 }
 
 .page {
@@ -31,5 +32,4 @@
   margin-top: 1vh;
   color: white;
   font-size: 40px;
-  font-family: "Roboto", sans-serif;
 }
