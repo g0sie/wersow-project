@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import VideoComponent from "../components/Video";
+import Video from "../components/Video/Video";
 interface VideoInterface {
   id: number;
   title: string;
@@ -25,14 +25,14 @@ export const IndexPage = () => {
   }, [getVideo]);
 
   return (
-    <>
+    <div className="page">
       {video && (
         <>
-          <VideoComponent url={video.url} />
+          <Video url={video.url} />
           <p className="video-title">{video.title}</p>
         </>
       )}
-    </>
+    </div>
   );
 };
 
