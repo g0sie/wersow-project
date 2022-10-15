@@ -1,13 +1,16 @@
+import styles from "./Video.module.css";
+
 interface VideoProps {
   url: string;
 }
 
 const Video = (props: VideoProps) => {
   return (
-    <div>
+    <div className={styles.videoWrapper}>
       <iframe
-        width="200"
-        height="200"
+        className={styles.video}
+        width="560"
+        height="315"
         src={props.url.replace("watch?v=", "embed/")}
         title="YouTube video player"
         frameBorder="0"
