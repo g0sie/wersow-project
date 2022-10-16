@@ -27,21 +27,30 @@ const Video = () => {
   }, [getVideo]);
 
   return (
-    <div className={styles.videoWrapper}>
-      <div className={styles.videoBackground}>
+    <div className={styles.video}>
+      <div className={styles.videoWrapper}>
+        <div className={styles.videoBackground}>
+          {video ? (
+            <iframe
+              className={styles.videoPlayer}
+              width="560"
+              height="315"
+              src={video.url.replace("watch?v=", "embed/")}
+              title="YouTube video player"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
+          ) : (
+            <VideoLoader message="kupowanie licencji..." />
+          )}
+        </div>
+      </div>
+      <div className={styles.videoTitleWrapper}>
         {video ? (
-          <iframe
-            className={styles.video}
-            width="560"
-            height="315"
-            src={video.url.replace("watch?v=", "embed/")}
-            title="YouTube video player"
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          ></iframe>
+          <p className={styles.videoTitle}>{video.title}</p>
         ) : (
-          <VideoLoader message="kupowanie licencji..." />
+          <div className={styles.videoTitleLoader}></div>
         )}
       </div>
     </div>
