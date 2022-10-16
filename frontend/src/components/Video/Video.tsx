@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import styles from "./Video.module.css";
+import VideoLoader from "./VideoLoader";
 
 interface VideoInterface {
   id: number;
@@ -27,20 +28,22 @@ const Video = () => {
 
   return (
     <div className={styles.videoWrapper}>
-      {video ? (
-        <iframe
-          className={styles.video}
-          width="560"
-          height="315"
-          src={video.url.replace("watch?v=", "embed/")}
-          title="YouTube video player"
-          frameBorder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-        ></iframe>
-      ) : (
-        <></>
-      )}
+      <div className={styles.videoBackground}>
+        {video ? (
+          <iframe
+            className={styles.video}
+            width="560"
+            height="315"
+            src={video.url.replace("watch?v=", "embed/")}
+            title="YouTube video player"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          ></iframe>
+        ) : (
+          <VideoLoader message="kupowanie licencji..." />
+        )}
+      </div>
     </div>
   );
 };
