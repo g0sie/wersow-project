@@ -10,6 +10,8 @@
   --purple: #522e59;
   --light-green: #e4f731;
   --dark-green: #4f4c20;
+
+  font-size: 10px;
 }
 
 .App {
@@ -20,6 +22,7 @@
   height: 100vh;
   background-color: var(--dark-pink);
   text-align: center;
+  font-family: "Roboto", sans-serif;
 }
 
 .page {
@@ -31,5 +34,76 @@
   margin-top: 1vh;
   color: white;
   font-size: 40px;
-  font-family: "Roboto", sans-serif;
+}
+
+@media (min-width: 300px) {
+  :root {
+    font-size: 11px;
+  }
+}
+
+@media (min-width: 400px) {
+  :root {
+    font-size: 12px;
+  }
+}
+
+@media (min-width: 450px) {
+  :root {
+    font-size: 13px;
+  }
+}
+
+@media (min-width: 500px) {
+  :root {
+    font-size: 14px;
+  }
+}
+
+@media (min-width: 550px) {
+  :root {
+    font-size: 15px;
+  }
+}
+
+@media (min-width: 600px) {
+  :root {
+    font-size: 16px;
+  }
+}
+
+@media (min-width: 650px) {
+  :root {
+    font-size: 17px;
+  }
+}
+
+@media (min-width: 700px) {
+  :root {
+    font-size: 18px;
+  }
+}
+
+@media (min-width: 750px) {
+  :root {
+    font-size: 19px;
+  }
+}
+
+@media (min-width: 800px) {
+  :root {
+    font-size: 20px;
+  }
+}
+
+@media (min-width: 1000px) {
+  :root {
+    font-size: 21px;
+  }
+}
+
+@media (min-width: 1250px) {
+  :root {
+    font-size: 22px;
+  }
 }
