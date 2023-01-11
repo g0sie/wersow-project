@@ -48,7 +48,6 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
 
-    'api.apps.ApiConfig',
     'videos.apps.VideosConfig',
 ]
 
