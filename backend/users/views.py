@@ -13,6 +13,7 @@ from .models import User
 
 @api_view(['POST'])
 def register(request):
+
     if request.method == 'POST':
         serializer = UserSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -22,6 +23,7 @@ def register(request):
 
 @api_view(['POST'])
 def login(request):
+
     if request.method == 'POST':
         email = request.data['email']
         password = request.data['password']
@@ -40,8 +42,7 @@ def login(request):
             'iat': datetime.datetime.utcnow()
         }
 
-        secret_key = settings.JWT_SECRET_KEY
-        token = jwt.encode(payload, secret_key,
+        token = jwt.encode(payload, settings.JWT_SECRET_KEY,
                            algorithm='HS256').decode('utf-8')
 
         response = Response()
@@ -49,3 +50,24 @@ def login(request):
         response.data = {'jwt': token}
 
         return response
+
+
+@api_view(['GET'])
+def user(request):
+
+    if request.method == 'GET':
+        token = request.COOKIES.get('jwt')
+
+        if not token:
+            raise AuthenticationFailed('Unauthenticated')
+
+        try:
+            payload = jwt.decode(
+                token, settings.JWT_SECRET_KEY, algorithm=['HS256'])
+        except jwt.ExpiredSignatureError:
+            raise AuthenticationFailed('Unauthenticated')
+
+        user = User.objects.filter(id=payload['id']).first()
+        serializer = UserSerializer(user)
+
+        return Response(serializer.data)
