@@ -154,3 +154,4 @@ django_heroku.settings(locals())
 # Authentication
 
 AUTH_USER_MODEL = "users.User"
+JWT_SECRET_KEY = env('JWT_SECRET_KEY')
