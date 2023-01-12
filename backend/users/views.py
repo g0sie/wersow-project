@@ -71,3 +71,13 @@ def user(request):
         serializer = UserSerializer(user)
 
         return Response(serializer.data)
+
+
+@api_view(['POST'])
+def logout(request):
+
+    if request.method == 'POST':
+        response = Response()
+        response.delete_cookie('jwt')
+        response.data = {'message': "success"}
+        return response
