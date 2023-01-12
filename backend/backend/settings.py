@@ -149,3 +149,8 @@ CORS_ALLOWED_ORIGINS = [
 
 # Configure Django App for Heroku
 django_heroku.settings(locals())
+
+
+# Authentication
+
+AUTH_USER_MODEL = "users.User"
