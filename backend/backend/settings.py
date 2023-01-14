@@ -48,7 +48,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
 
-    'api.apps.ApiConfig',
+    'users.apps.UsersConfig',
     'videos.apps.VideosConfig',
 ]
 
@@ -149,3 +149,9 @@ CORS_ALLOWED_ORIGINS = [
 
 # Configure Django App for Heroku
 django_heroku.settings(locals())
+
+
+# Authentication
+
+AUTH_USER_MODEL = "users.User"
+JWT_SECRET_KEY = env('JWT_SECRET_KEY')
