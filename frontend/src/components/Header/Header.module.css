@@ -1,11 +1,19 @@
 .header {
+  --header-gradient: linear-gradient(
+    to right,
+    var(--dark-blue-600) 0%,
+    var(--dark-blue-500) 100%
+  );
+
+  position: relative;
   height: 3rem;
   width: 100%;
-  background: rgb(0, 29, 61);
-  background: linear-gradient(
-    0deg,
-    rgba(0, 29, 61, 1) 0%,
-    rgba(0, 53, 102, 1) 100%
-  );
-  margin-bottom: 2rem;
+  background: var(--header-gradient);
+}
+
+.logoImg {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  height: 2rem;
 }

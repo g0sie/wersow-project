@@ -5,6 +5,11 @@
 }
 
 :root {
+  /* SPACE THEME COLORS */
+  --dark-blue-700: #000814;
+  --dark-blue-600: #001d3d;
+  --dark-blue-500: #003566;
+
   --dark-pink: #874054;
   --light-pink: #c45172;
   --purple: #522e59;
@@ -13,15 +18,23 @@
 }
 
 .App {
+  --bg-gradient: linear-gradient(
+    45deg,
+    var(--dark-blue-700) 0%,
+    var(--dark-blue-600) 100%
+  );
+
+  display: grid;
+
   min-height: 100vh;
-  background-color: var(--dark-pink);
-  background-color: #000814;
+  background-image: var(--bg-gradient);
   text-align: center;
   font-family: "Roboto", sans-serif;
 }
 
 .page {
   margin: 0 auto;
+  padding: 1rem 0;
   max-width: 1400px;
   width: 95%;
 }
