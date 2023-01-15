@@ -13,17 +13,15 @@
 }
 
 .App {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   min-height: 100vh;
   background-color: var(--dark-pink);
+  background-color: #000814;
   text-align: center;
   font-family: "Roboto", sans-serif;
 }
 
 .page {
+  margin: 0 auto;
   max-width: 1400px;
   width: 95%;
 }
