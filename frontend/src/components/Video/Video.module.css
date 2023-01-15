@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 101%;
+  /* height: 101%; */
 }
 
 .videoWrapper {
@@ -70,21 +70,19 @@
 }
 
 .videoTitleWrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
+  margin-top: 0.5rem;
   min-height: 3rem;
 }
 
 .videoTitle {
-  font-size: 2rem;
+  font-size: 2.7rem;
+  line-height: 3rem;
+  font-weight: 500;
   color: white;
 }
 
 .videoTitleLoader {
-  height: 100%;
-  width: 100%;
+  height: 3rem;
   background-color: var(--purple);
   animation: placeholder 1s infinite linear alternate;
 }
