@@ -38,3 +38,8 @@ python manage.py changetodaysvideo
 
 - POST https://wersow-api.herokuapp.com/users/logout
   - logout an authenticated user
+
+## sources
+
+- [Parallax Pixel Background Animation](https://youtu.be/aywzn9cf-_U)
+- [Logo generator](https://logo.com/)

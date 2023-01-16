@@ -6,12 +6,19 @@ import "./App.css";
 function App() {
   return (
     <div className="App">
-      <BrowserRouter>
-        <Header />
-        <Routes>
-          <Route path="/" element={<IndexPage />}></Route>
-        </Routes>
-      </BrowserRouter>
+      <section className="starsWrapper">
+        <div className="stars"></div>
+        <div className="stars2"></div>
+        <div className="stars3"></div>
+        <main className="appMain">
+          <BrowserRouter>
+            <Header />
+            <Routes>
+              <Route path="/" element={<IndexPage />}></Route>
+            </Routes>
+          </BrowserRouter>
+        </main>
+      </section>
     </div>
   );
 }
