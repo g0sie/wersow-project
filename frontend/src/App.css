@@ -17,6 +17,8 @@
 
   --light-blue: #4690bb;
 
+  --bright-blue: #4efdfc;
+
   --bright-yellow-200: #ffc300;
   --bright-yellow-100: #ffd60a;
 
@@ -27,7 +29,7 @@
 .App {
   --bg-gradient: radial-gradient(
     ellipse at bottom,
-    var(--dark-blue-500) 0%,
+    var(--dark-blue-600) 0%,
     var(--dark-blue-700) 100%
   );
 
@@ -50,7 +52,7 @@
   padding: 0.12rem 2rem;
   border-radius: 2rem;
   border: none;
-  transition: 0.3s background-color;
+  transition: 0.3s background-color, 0.3s color, 0.3s box-shadow;
   cursor: pointer;
 
   font-size: 1.7rem;
@@ -64,6 +66,11 @@
 
 .btn:hover {
   background-color: var(--blue-transparent-400);
+  color: var(--bright-blue);
+
+  -webkit-box-shadow: inset 0px 0px 5px 0px var(--bright-blue);
+  -moz-box-shadow: inset 0px 0px 5px 0px var(--bright-blue);
+  box-shadow: inset 0px 0px 5px 0px var(--bright-blue);
 }
 
 .btn:active {
@@ -75,6 +82,10 @@
   background-color: lightslategray;
   color: var(--blue-400);
   translate: 0;
+}
+
+.btnBig {
+  font-size: 2.5rem;
 }
 
 /* STARS */
