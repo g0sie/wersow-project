@@ -3,7 +3,7 @@
   padding: 1rem 0;
   max-width: 1400px;
   width: 95%;
-  height: calc(100% - var(--header-height));
+  min-height: calc(100% - var(--header-height));
 }
 
 .pageCentered {
