@@ -10,11 +10,8 @@
   --dark-blue-600: #001d3d;
   --dark-blue-500: #003566;
 
-  --dark-pink: #874054;
-  --light-pink: #c45172;
-  --purple: #522e59;
-  --light-green: #e4f731;
-  --dark-green: #4f4c20;
+  --bright-yellow-200: #ffc300;
+  --bright-yellow-100: #ffd60a;
 }
 
 .App {
