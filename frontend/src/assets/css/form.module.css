@@ -1,0 +1,22 @@
+:root {
+  /* SPACE THEME COLORS */
+  --dark-blue-700: #000814;
+  --dark-blue-600: #001d3d;
+  --dark-blue-500: #003566;
+
+  --blue-transparent-500: rgba(0, 69, 134, 0.5);
+  --blue-transparent-400: rgba(0, 69, 134, 1);
+
+  --blue-400: #1a759f;
+
+  --light-blue: #4690bb;
+
+  --bright-yellow-200: #ffc300;
+  --bright-yellow-100: #ffd60a;
+}
+
+.formHeading {
+  font-size: 5rem;
+  color: white;
+  font-family: "Sofia Sans Extra Condensed", sans-serif;
+}

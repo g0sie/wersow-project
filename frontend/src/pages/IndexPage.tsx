@@ -1,8 +1,9 @@
+import pageStyles from "./Page.module.css";
 import Video from "../components/Video/Video";
 
 export const IndexPage = () => {
   return (
-    <div className="page">
+    <div className={`${pageStyles.page} ${pageStyles.pageCentered}`}>
       <Video />
     </div>
   );

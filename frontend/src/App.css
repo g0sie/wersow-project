@@ -19,6 +19,9 @@
 
   --bright-yellow-200: #ffc300;
   --bright-yellow-100: #ffd60a;
+
+  /* HEADER */
+  --header-height: 3rem;
 }
 
 .App {
@@ -29,19 +32,17 @@
   );
 
   min-height: 100vh;
-  background-color: var(--dark-blue-700);
-  background-image: var(--bg-gradient);
   text-align: center;
   font-family: "Roboto", sans-serif;
   position: relative;
-  overflow: hidden;
 }
 
-.page {
-  margin: 0 auto;
-  padding: 1rem 0;
-  max-width: 1400px;
-  width: 95%;
+.appMain {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
 }
 
 .btn {
@@ -77,6 +78,15 @@
 }
 
 /* STARS */
+
+.starsBg {
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  background-color: var(--dark-blue-700);
+  background-image: var(--bg-gradient);
+  overflow: hidden;
+}
 
 .stars {
   position: absolute;
