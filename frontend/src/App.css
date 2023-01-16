@@ -10,6 +10,10 @@
   --dark-blue-600: #001d3d;
   --dark-blue-500: #003566;
 
+  --blue: #1a759f;
+
+  --light-blue: #5fa8d3;
+
   --bright-yellow-200: #ffc300;
   --bright-yellow-100: #ffd60a;
 }
@@ -34,6 +38,21 @@
   padding: 1rem 0;
   max-width: 1400px;
   width: 95%;
+}
+
+.btn {
+  background-color: rgba(30, 96, 145, 0.8);
+  padding: 0.12rem 2rem;
+  border-radius: 2rem;
+  border: none;
+
+  font-size: 1.7rem;
+  font-family: "Sofia Sans Extra Condensed", sans-serif;
+  color: var(--light-blue);
+
+  -webkit-box-shadow: inset 0px 0px 5px 0px var(--light-blue);
+  -moz-box-shadow: inset 0px 0px 5px 0px var(--light-blue);
+  box-shadow: inset 0px 0px 5px 0px var(--light-blue);
 }
 
 /* STARS */
