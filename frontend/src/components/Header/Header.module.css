@@ -10,7 +10,8 @@
   height: 3rem;
   padding: 0 1rem;
   width: 100%;
-  background: var(--header-gradient);
+  background-color: var(--dark-blue-600);
+  background-image: var(--header-gradient);
 
   display: flex;
   justify-content: space-between;

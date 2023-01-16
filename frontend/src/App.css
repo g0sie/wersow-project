@@ -10,10 +10,12 @@
   --dark-blue-600: #001d3d;
   --dark-blue-500: #003566;
 
-  --blue-400: #1a759f;
-  --blue-300: #2c7da0;
+  --blue-transparent-500: rgba(0, 69, 134, 0.5);
+  --blue-transparent-400: rgba(0, 69, 134, 1);
 
-  --light-blue: #5fa8d3;
+  --blue-400: #1a759f;
+
+  --light-blue: #4690bb;
 
   --bright-yellow-200: #ffc300;
   --bright-yellow-100: #ffd60a;
@@ -27,6 +29,7 @@
   );
 
   min-height: 100vh;
+  background-color: var(--dark-blue-700);
   background-image: var(--bg-gradient);
   text-align: center;
   font-family: "Roboto", sans-serif;
@@ -42,7 +45,7 @@
 }
 
 .btn {
-  background-color: rgba(30, 96, 145, 0.8);
+  background-color: var(--blue-transparent-500);
   padding: 0.12rem 2rem;
   border-radius: 2rem;
   border: none;
@@ -59,11 +62,18 @@
 }
 
 .btn:hover {
-  background-color: var(--blue-300);
+  background-color: var(--blue-transparent-400);
 }
 
 .btn:active {
   translate: 0 1px;
+}
+
+.btn:disabled {
+  cursor: default;
+  background-color: lightslategray;
+  color: var(--blue-400);
+  translate: 0;
 }
 
 /* STARS */
