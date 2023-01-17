@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "./components/Header/Header";
 import IndexPage from "./pages/IndexPage";
 import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
 import "./App.css";
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
           <Routes>
             <Route path="/" element={<IndexPage />} />
             <Route path="login" element={<LoginPage />} />
+            <Route path="register" element={<RegisterPage />} />
           </Routes>
         </BrowserRouter>
       </main>
