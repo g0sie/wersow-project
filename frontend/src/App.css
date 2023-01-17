@@ -47,47 +47,6 @@
   width: 100%;
 }
 
-.btn {
-  background-color: var(--blue-transparent-500);
-  padding: 0.12rem 2rem;
-  border-radius: 2rem;
-  border: none;
-  transition: 0.3s background-color, 0.3s color, 0.3s box-shadow;
-  cursor: pointer;
-
-  font-size: 1.7rem;
-  font-family: "Sofia Sans Extra Condensed", sans-serif;
-  color: var(--light-blue);
-
-  -webkit-box-shadow: inset 0px 0px 5px 0px var(--light-blue);
-  -moz-box-shadow: inset 0px 0px 5px 0px var(--light-blue);
-  box-shadow: inset 0px 0px 5px 0px var(--light-blue);
-}
-
-.btn:hover {
-  background-color: var(--blue-transparent-400);
-  color: var(--bright-blue);
-
-  -webkit-box-shadow: inset 0px 0px 5px 0px var(--bright-blue);
-  -moz-box-shadow: inset 0px 0px 5px 0px var(--bright-blue);
-  box-shadow: inset 0px 0px 5px 0px var(--bright-blue);
-}
-
-.btn:active {
-  translate: 0 1px;
-}
-
-.btn:disabled {
-  cursor: default;
-  background-color: lightslategray;
-  color: var(--blue-400);
-  translate: 0;
-}
-
-.btnBig {
-  font-size: 2.5rem;
-}
-
 /* STARS */
 
 .starsBg {

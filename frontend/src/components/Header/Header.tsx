@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import styles from "./Header.module.css";
 import logoImg from "../../assets/logo.png";
+import Button from "../Button/Button";
 
 const Header = () => {
   return (
@@ -8,10 +9,17 @@ const Header = () => {
       <Link to="/">
         <img className={styles.logoImg} src={logoImg} alt="" />
       </Link>
+
       <nav className="nav"></nav>
+
       <div className={styles.authButtons}>
-        <button className="btn">Log in</button>
-        <button className="btn">Sign up</button>
+        <Link to={"login"}>
+          <Button size="small">Log in</Button>
+        </Link>
+
+        <Link to={"register"}>
+          <Button size="small">Sign up</Button>
+        </Link>
       </div>
     </header>
   );

@@ -1,3 +1,4 @@
+import Button from "../components/Button/Button";
 import formStyles from "../assets/css/form.module.css";
 import pageStyles from "./Page.module.css";
 
@@ -30,9 +31,9 @@ const LoginPage = () => {
             required
           />
         </div>
-        <button type="submit" className={`btn btnBig ${formStyles.submitBtn}`}>
+        <Button type="submit" size="big" className={[formStyles.submitBtn]}>
           Sign in
-        </button>
+        </Button>
       </form>
     </div>
   );
