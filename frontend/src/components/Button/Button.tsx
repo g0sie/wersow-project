@@ -5,6 +5,7 @@ interface ButtonProps {
   type?: "submit";
   size: "small" | "big";
   className?: string[];
+  disabled?: boolean;
 }
 
 const Button = (props: ButtonProps) => {
@@ -19,6 +20,7 @@ const Button = (props: ButtonProps) => {
     <button
       className={getClassNames()}
       type={props.type ? props.type : "button"}
+      disabled={props.disabled}
     >
       {props?.children}
     </button>

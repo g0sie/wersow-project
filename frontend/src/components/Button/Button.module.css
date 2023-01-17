@@ -31,6 +31,7 @@
 .btn:disabled {
   cursor: default;
   background-color: lightslategray;
+  box-shadow: none;
   color: var(--blue-400);
   translate: 0;
 }

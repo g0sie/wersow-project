@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { Navigate } from "react-router-dom";
 
@@ -11,12 +11,38 @@ const RegisterPage = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const [isNameCorrect, setIsNameCorrect] = useState(false);
+  //   const [isEmailCorrect, setIsEmailCorrect] = useState(false);
+  //   const [isPasswordCorrect, setIsPasswordCorrect] = useState(false);
+
+  const [nameErrorMsg, setNameErrorMsg] = useState("");
+
+  const [isReadyToSubmit, setIsReadyToSubmit] = useState(false);
+
   const [redirect, setRedirect] = useState(false);
 
   const handleNameInput = (
     event: React.ChangeEvent<HTMLInputElement>
   ): void => {
-    setName(event.target.value);
+    const inputName = event.target.value;
+    setName(inputName);
+    if (inputName.startsWith(" ")) {
+      setIsNameCorrect(false);
+      setIsReadyToSubmit(false);
+      setNameErrorMsg("Username shouldn't start with a whitespace");
+    } else if (inputName.length < 3) {
+      setIsNameCorrect(false);
+      setIsReadyToSubmit(false);
+      setNameErrorMsg("Username should have at least 3 characters");
+    } else if (inputName.length > 30) {
+      setIsNameCorrect(false);
+      setIsReadyToSubmit(false);
+      setNameErrorMsg("Username should have at most 30 characters");
+    } else {
+      setIsNameCorrect(true);
+      setIsReadyToSubmit(true);
+    }
   };
 
   const handleEmailInput = (
@@ -68,6 +94,10 @@ const RegisterPage = () => {
             className={formStyles.input}
             required
           />
+          <p className={formStyles.errorMsg}>
+            &zwnj;
+            {isNameCorrect ? "" : nameErrorMsg}
+          </p>
         </div>
 
         <div className={formStyles.inputGroup}>
@@ -98,7 +128,12 @@ const RegisterPage = () => {
           />
         </div>
 
-        <Button type="submit" size="big" className={[formStyles.submitBtn]}>
+        <Button
+          type="submit"
+          size="big"
+          className={[formStyles.submitBtn]}
+          disabled={!isReadyToSubmit}
+        >
           Sign up
         </Button>
       </form>
