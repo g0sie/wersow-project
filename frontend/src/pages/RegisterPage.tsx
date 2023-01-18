@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 
 import { Navigate } from "react-router-dom";
 
@@ -90,6 +90,12 @@ const RegisterPage = () => {
     }
   };
 
+  const preventWhiteSpaceOnKeyDown = (event: React.KeyboardEvent) => {
+    if (event.key === " ") {
+      event.preventDefault();
+    }
+  };
+
   const handleSubmit = async (
     event: React.FormEvent<HTMLFormElement>
   ): Promise<void> => {
@@ -147,6 +153,7 @@ const RegisterPage = () => {
           </label>
           <input
             onChange={handleEmailInput}
+            onKeyDown={preventWhiteSpaceOnKeyDown}
             id="login-email"
             name="email"
             type="email"
