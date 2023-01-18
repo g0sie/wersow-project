@@ -147,6 +147,8 @@ CORS_ALLOWED_ORIGINS = [
     "https://wersow.netlify.app",
 ]
 
+CORS_ALLOW_CREDENTIALS = True
+
 # Configure Django App for Heroku
 django_heroku.settings(locals())
 
