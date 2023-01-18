@@ -49,7 +49,12 @@ function App() {
             <Header />
             <Routes>
               <Route path="/" element={<IndexPage />} />
-              <Route path="login" element={<LoginPage />} />
+              <Route
+                path="login"
+                element={
+                  <LoginPage getAuthenticatedUser={getAuthenticatedUser} />
+                }
+              />
               <Route path="register" element={<RegisterPage />} />
             </Routes>
           </BrowserRouter>
