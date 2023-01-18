@@ -14,10 +14,11 @@ const RegisterPage = () => {
 
   const [isNameCorrect, setIsNameCorrect] = useState(false);
   const [isEmailCorrect, setIsEmailCorrect] = useState(false);
-  //   const [isPasswordCorrect, setIsPasswordCorrect] = useState(false);
+  const [isPasswordCorrect, setIsPasswordCorrect] = useState(false);
 
   const [nameErrorMsg, setNameErrorMsg] = useState("");
   const [emailErrorMsg, setEmailErrorMsg] = useState("");
+  const [passwordErrorMsg, setPasswordErrorMsg] = useState("");
 
   const [isReadyToSubmit, setIsReadyToSubmit] = useState(false);
 
@@ -36,12 +37,12 @@ const RegisterPage = () => {
     } else if (inputName.endsWith(" ")) {
       setNameErrorMsg("Username shouldn't end with a whitespace");
     } else if (inputName.length < 3) {
-      setNameErrorMsg("Username should have at least 3 characters");
+      setNameErrorMsg("Username should consist of at least 3 characters");
     } else if (inputName.length > 30) {
-      setNameErrorMsg("Username should have at most 30 characters");
+      setNameErrorMsg("Username should consist of at most 30 characters");
     } else {
       setIsNameCorrect(true);
-      setIsReadyToSubmit(isEmailCorrect);
+      setIsReadyToSubmit(isEmailCorrect && isPasswordCorrect);
     }
   };
 
@@ -63,14 +64,30 @@ const RegisterPage = () => {
       setEmailErrorMsg("The domain part of email address is invalid");
     } else {
       setIsEmailCorrect(true);
-      setIsReadyToSubmit(isNameCorrect);
+      setIsReadyToSubmit(isNameCorrect && isPasswordCorrect);
     }
   };
 
   const handlePasswordInput = (
     event: React.ChangeEvent<HTMLInputElement>
   ): void => {
-    setPassword(event.target.value);
+    const inputPassword = event.target.value;
+    setPassword(inputPassword);
+    setIsPasswordCorrect(false);
+    setIsReadyToSubmit(false);
+
+    if (inputPassword.startsWith(" ")) {
+      setPasswordErrorMsg("Password shouldn't start with a whitespace");
+    } else if (inputPassword.endsWith(" ")) {
+      setPasswordErrorMsg("Password shouldn't end with a whitespace");
+    } else if (inputPassword.length < 6) {
+      setPasswordErrorMsg("Password should consist of at least 6 characters");
+    } else if (inputPassword.length > 30) {
+      setPasswordErrorMsg("Password should consist of at most 30 characters");
+    } else {
+      setIsPasswordCorrect(true);
+      setIsReadyToSubmit(isNameCorrect && isEmailCorrect);
+    }
   };
 
   const handleSubmit = async (
@@ -159,9 +176,20 @@ const RegisterPage = () => {
             id="login-password"
             name="password"
             type="password"
-            className={formStyles.input}
+            className={`
+              ${formStyles.input} 
+              ${
+                !isPasswordCorrect &&
+                passwordErrorMsg !== "" &&
+                formStyles.inputInvalid
+              }
+            `}
             required
           />
+          <p className={formStyles.errorMsg}>
+            &zwnj;
+            {isPasswordCorrect ? "" : passwordErrorMsg}
+          </p>
         </div>
 
         <Button
