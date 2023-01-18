@@ -34,9 +34,9 @@
   border: 0.15rem solid var(--light-blue);
   background-color: var(--blue-transparent-500);
 
-  -webkit-box-shadow: inset 0px 0px 5px 0px var(--light-blue);
-  -moz-box-shadow: inset 0px 0px 5px 0px var(--light-blue);
-  box-shadow: inset 0px 0px 5px 0px var(--light-blue);
+  -webkit-box-shadow: inset 0px 0px 0.5rem 0px var(--light-blue);
+  -moz-box-shadow: inset 0px 0px 0.5rem 0px var(--light-blue);
+  box-shadow: inset 0px 0px 0.5rem 0px var(--light-blue);
 }
 
 .input:focus {
@@ -44,9 +44,16 @@
   border: 0.15rem solid var(--bright-blue);
   outline: none;
 
-  -webkit-box-shadow: inset 0px 0px 5px 0px var(--bright-blue);
-  -moz-box-shadow: inset 0px 0px 5px 0px var(--bright-blue);
-  box-shadow: inset 0px 0px 5px 0px var(--bright-blue);
+  -webkit-box-shadow: inset 0px 0px 0.5rem 0px var(--bright-blue);
+  -moz-box-shadow: inset 0px 0px 0.5rem 0px var(--bright-blue);
+  box-shadow: inset 0px 0px 0.5rem 0px var(--bright-blue);
+}
+
+.inputInvalid {
+  border: 0.15rem solid var(--bright-yellow-200);
+  -webkit-box-shadow: inset 0px 0px 0.5rem 0px var(--bright-yellow-200);
+  -moz-box-shadow: inset 0px 0px 0.5rem 0px var(--bright-yellow-200);
+  box-shadow: inset 0px 0px 0.5rem 0px var(--bright-yellow-200);
 }
 
 .label {
@@ -62,4 +69,12 @@
 
 .submitBtn {
   margin-top: 1.8rem;
+}
+
+.errorMsg {
+  font-size: 1.21rem;
+  margin-top: 0.15rem;
+  margin-left: 0.15rem;
+  color: var(--bright-yellow-200);
+  text-align: left;
 }
