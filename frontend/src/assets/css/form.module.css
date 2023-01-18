@@ -78,3 +78,7 @@
   color: var(--bright-yellow-200);
   text-align: left;
 }
+
+.errorMsgCentered {
+  text-align: center;
+}

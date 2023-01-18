@@ -23,6 +23,7 @@ const RegisterPage = () => {
   const [isReadyToSubmit, setIsReadyToSubmit] = useState(false);
 
   const [redirect, setRedirect] = useState(false);
+  const [somethingWentWrong, setSomethingWentWrong] = useState(false);
 
   const handleNameInput = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -101,17 +102,21 @@ const RegisterPage = () => {
   ): Promise<void> => {
     event.preventDefault();
 
-    await fetch("https://wersow-api.herokuapp.com/users/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        name,
-        email,
-        password,
-      }),
-    });
+    const response = await fetch(
+      "https://wersow-api.herokuapp.com/users/register",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name,
+          email,
+          password,
+        }),
+      }
+    );
 
-    setRedirect(true);
+    if (response.ok) setRedirect(true);
+    else setSomethingWentWrong(true);
   };
 
   if (redirect) {
@@ -207,6 +212,11 @@ const RegisterPage = () => {
         >
           Sign up
         </Button>
+        <p className={`${formStyles.errorMsg} ${formStyles.errorMsgCentered}`}>
+          &zwnj;
+          {somethingWentWrong &&
+            "Something went wrong... Try again with different data"}
+        </p>
       </form>
     </div>
   );
