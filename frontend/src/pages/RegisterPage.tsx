@@ -13,10 +13,11 @@ const RegisterPage = () => {
   const [password, setPassword] = useState("");
 
   const [isNameCorrect, setIsNameCorrect] = useState(false);
-  //   const [isEmailCorrect, setIsEmailCorrect] = useState(false);
+  const [isEmailCorrect, setIsEmailCorrect] = useState(false);
   //   const [isPasswordCorrect, setIsPasswordCorrect] = useState(false);
 
   const [nameErrorMsg, setNameErrorMsg] = useState("");
+  const [emailErrorMsg, setEmailErrorMsg] = useState("");
 
   const [isReadyToSubmit, setIsReadyToSubmit] = useState(false);
 
@@ -40,14 +41,30 @@ const RegisterPage = () => {
       setNameErrorMsg("Username should have at most 30 characters");
     } else {
       setIsNameCorrect(true);
-      setIsReadyToSubmit(true);
+      setIsReadyToSubmit(isEmailCorrect);
     }
   };
 
   const handleEmailInput = (
     event: React.ChangeEvent<HTMLInputElement>
   ): void => {
-    setEmail(event.target.value);
+    const inputEmail = event.target.value;
+    setEmail(inputEmail);
+    setIsEmailCorrect(false);
+    setIsReadyToSubmit(false);
+
+    if ((inputEmail.match(/@/g) || []).length !== 1) {
+      setEmailErrorMsg("Email address should contain exactly one '@' sign");
+    } else if (inputEmail.includes(" ")) {
+      setEmailErrorMsg("Email address shouldn't contain whitespaces");
+    } else if (!/.+@/.test(inputEmail)) {
+      setEmailErrorMsg("The username part of email address is invalid");
+    } else if (!/@.+[.]+.+/.test(inputEmail)) {
+      setEmailErrorMsg("The domain part of email address is invalid");
+    } else {
+      setIsEmailCorrect(true);
+      setIsReadyToSubmit(isNameCorrect);
+    }
   };
 
   const handlePasswordInput = (
@@ -82,6 +99,8 @@ const RegisterPage = () => {
     <div className={`${pageStyles.page} ${pageStyles.pageCentered}`}>
       <form className={formStyles.form} onSubmit={handleSubmit}>
         <h2 className={formStyles.formHeading}>Sign up to join #teamsówki</h2>
+
+        {/* NAME */}
         <div className={formStyles.inputGroup}>
           <label className={formStyles.label} htmlFor="login-name">
             username:
@@ -104,6 +123,7 @@ const RegisterPage = () => {
           </p>
         </div>
 
+        {/* EMAIL */}
         <div className={formStyles.inputGroup}>
           <label className={formStyles.label} htmlFor="login-email">
             email:
@@ -113,11 +133,23 @@ const RegisterPage = () => {
             id="login-email"
             name="email"
             type="email"
-            className={formStyles.input}
+            className={`
+              ${formStyles.input} 
+              ${
+                !isEmailCorrect &&
+                emailErrorMsg !== "" &&
+                formStyles.inputInvalid
+              }
+            `}
             required
           />
+          <p className={formStyles.errorMsg}>
+            &zwnj;
+            {isEmailCorrect ? "" : emailErrorMsg}
+          </p>
         </div>
 
+        {/* PASSWORD */}
         <div className={formStyles.inputGroup}>
           <label className={formStyles.label} htmlFor="login-email">
             password:
