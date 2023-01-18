@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 import { Navigate } from "react-router-dom";
 
@@ -27,17 +27,16 @@ const RegisterPage = () => {
   ): void => {
     const inputName = event.target.value;
     setName(inputName);
+    setIsNameCorrect(false);
+    setIsReadyToSubmit(false);
+
     if (inputName.startsWith(" ")) {
-      setIsNameCorrect(false);
-      setIsReadyToSubmit(false);
       setNameErrorMsg("Username shouldn't start with a whitespace");
+    } else if (inputName.endsWith(" ")) {
+      setNameErrorMsg("Username shouldn't end with a whitespace");
     } else if (inputName.length < 3) {
-      setIsNameCorrect(false);
-      setIsReadyToSubmit(false);
       setNameErrorMsg("Username should have at least 3 characters");
     } else if (inputName.length > 30) {
-      setIsNameCorrect(false);
-      setIsReadyToSubmit(false);
       setNameErrorMsg("Username should have at most 30 characters");
     } else {
       setIsNameCorrect(true);
@@ -91,7 +90,12 @@ const RegisterPage = () => {
             onChange={handleNameInput}
             id="login-name"
             name="name"
-            className={formStyles.input}
+            className={`
+              ${formStyles.input} 
+              ${
+                !isNameCorrect && nameErrorMsg !== "" && formStyles.inputInvalid
+              }
+            `}
             required
           />
           <p className={formStyles.errorMsg}>
