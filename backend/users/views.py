@@ -79,6 +79,6 @@ def logout(request):
 
     if request.method == 'POST':
         response = Response()
-        response.delete_cookie('jwt', samesite='None', secure=True)
+        response.delete_cookie('jwt', samesite='None')
         response.data = {'message': "success"}
         return response
