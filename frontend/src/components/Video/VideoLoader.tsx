@@ -17,6 +17,7 @@ const Loader = (props: loaderProps) => {
       {props.message.split("").map((char: string, index: number) => {
         return (
           <pre
+            key={index}
             className={styles.character}
             style={{
               animationDuration: `${DURATION}s`,

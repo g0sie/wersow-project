@@ -16,7 +16,7 @@ const Video = () => {
 
   const getVideo = useCallback(async () => {
     const response = await fetch(
-      "https://wersow-api.herokuapp.com/api/videos/todays"
+      "https://wersow-api.herokuapp.com/videos/todays"
     );
     const data = await response.json();
     setVideo(await data);
