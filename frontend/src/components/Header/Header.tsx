@@ -8,8 +8,17 @@ import Button from "../Button/Button";
 import styles from "./Header.module.css";
 import logoImg from "../../assets/logo.png";
 
-const Header = () => {
+const Header = (props: { updateUser: () => void }) => {
   const loggedInUser = useContext(LoggedInUserContext);
+
+  const logOut = async () => {
+    await fetch("https://wersow-api.herokuapp.com/users/logout", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+    });
+    props.updateUser();
+  };
 
   return (
     <header className={styles.header}>
@@ -34,7 +43,9 @@ const Header = () => {
             </Link>
           </>
         ) : (
-          <Button size="small">Log out</Button>
+          <Button size="small" onClick={logOut}>
+            Log out
+          </Button>
         )}
       </div>
     </header>

@@ -46,14 +46,12 @@ function App() {
       <LoggedInUserContext.Provider value={loggedInUser}>
         <main className="appMain">
           <BrowserRouter>
-            <Header />
+            <Header updateUser={getAuthenticatedUser} />
             <Routes>
               <Route path="/" element={<IndexPage />} />
               <Route
                 path="login"
-                element={
-                  <LoginPage getAuthenticatedUser={getAuthenticatedUser} />
-                }
+                element={<LoginPage updateUser={getAuthenticatedUser} />}
               />
               <Route path="register" element={<RegisterPage />} />
             </Routes>

@@ -6,6 +6,7 @@ interface ButtonProps {
   size: "small" | "big";
   className?: string[];
   disabled?: boolean;
+  onClick?: () => void;
 }
 
 const Button = (props: ButtonProps) => {
@@ -18,6 +19,7 @@ const Button = (props: ButtonProps) => {
 
   return (
     <button
+      onClick={props.onClick}
       className={getClassNames()}
       type={props.type ? props.type : "button"}
       disabled={props.disabled}

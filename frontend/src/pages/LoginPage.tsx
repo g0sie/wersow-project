@@ -6,7 +6,7 @@ import Button from "../components/Button/Button";
 import formStyles from "../assets/css/form.module.css";
 import pageStyles from "./Page.module.css";
 
-const LoginPage = (props: { getAuthenticatedUser: () => void }) => {
+const LoginPage = (props: { updateUser: () => void }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -30,7 +30,7 @@ const LoginPage = (props: { getAuthenticatedUser: () => void }) => {
     );
 
     if (response.ok) {
-      props.getAuthenticatedUser();
+      props.updateUser();
       setRedirect(true);
     } else setSomethingWentWrong(true);
   };
