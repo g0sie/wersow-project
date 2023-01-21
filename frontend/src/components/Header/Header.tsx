@@ -27,18 +27,18 @@ const Header = (props: { updateUser: () => void }) => {
         <img className={styles.logoImg} src={logoImg} alt="" />
       </Link>
 
-      {/* NAVBAR */}
-      <nav className="navbar"></nav>
+      {/* NAVIGATION */}
+      <nav></nav>
 
       {/* ( LOG IN, SIGN UP ) / ( LOG OUT ) */}
-      <div className={styles.authButtons}>
+      <nav className={styles.authButtons}>
         {loggedInUser === null ? (
           <>
-            <Link to={"login"}>
+            <Link to="login">
               <Button size="small">Log in</Button>
             </Link>
 
-            <Link to={"register"}>
+            <Link to="register">
               <Button size="small">Sign up</Button>
             </Link>
           </>
@@ -47,7 +47,7 @@ const Header = (props: { updateUser: () => void }) => {
             Log out
           </Button>
         )}
-      </div>
+      </nav>
     </header>
   );
 };
