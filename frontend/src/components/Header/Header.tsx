@@ -23,8 +23,9 @@ const Header = (props: { updateUser: () => void }) => {
   return (
     <header className={styles.header}>
       {/* LOGO */}
-      <Link to="/">
+      <Link to="/" className={styles.logo}>
         <img className={styles.logoImg} src={logoImg} alt="" />
+        <h1 className={styles.logoText}>wersow-project</h1>
       </Link>
 
       {/* NAVIGATION */}
