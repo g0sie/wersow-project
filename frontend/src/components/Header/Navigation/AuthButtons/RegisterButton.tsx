@@ -7,10 +7,7 @@ import styles from "../../Header.module.css";
 const RegisterButton = (props: { turnOffNav: () => void }) => {
   return (
     <Link to="register" onClick={props.turnOffNav}>
-      <Button
-        className={[styles.btn, styles.resetBtn, styles.navLink]}
-        size="small"
-      >
+      <Button className={[styles.resetBtn, styles.navLink]} size="small">
         Sign up
       </Button>
     </Link>
