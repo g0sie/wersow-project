@@ -1,13 +1,9 @@
-import { useContext } from "react";
-
 import { Link } from "react-router-dom";
 
-import { LoggedInUserContext } from "../../../App";
-
-import Button from "../../Button/Button";
+import AuthButtons from "./AuthButtons/AuthButtons";
+import Dimming from "./Dimming";
 
 import styles from "../Header.module.css";
-import Dimming from "./Dimming";
 
 interface NavigationProps {
   isNavActive: boolean;
@@ -16,19 +12,6 @@ interface NavigationProps {
 }
 
 const Navigation = (props: NavigationProps) => {
-  const loggedInUser = useContext(LoggedInUserContext);
-
-  const logOut = async () => {
-    await fetch("https://wersow-api.herokuapp.com/users/logout", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-    });
-    props.updateUser();
-
-    props.turnOffNav();
-  };
-
   return (
     <nav
       className={
@@ -58,47 +41,11 @@ const Navigation = (props: NavigationProps) => {
         </Link>
       </ul>
 
-      {/* ( LOG IN, SIGN UP ) / ( LOG OUT ) */}
-      <div
-        className={
-          props.isNavActive
-            ? `${styles.authButtons} ${styles.authButtonsActive}`
-            : styles.authButtons
-        }
-      >
-        {loggedInUser === null ? (
-          <>
-            <Link to="login" onClick={props.turnOffNav}>
-              <Button
-                className={[styles.resetBtn, styles.navLink]}
-                size="small"
-              >
-                Log in
-              </Button>
-            </Link>
-
-            <Link to="register" onClick={props.turnOffNav}>
-              <Button
-                className={[styles.resetBtn, styles.navLink]}
-                size="small"
-              >
-                Sign up
-              </Button>
-            </Link>
-          </>
-        ) : (
-          <div>
-            <Button
-              className={[styles.resetBtn, styles.navLink]}
-              size="small"
-              onClick={logOut}
-            >
-              Log out
-            </Button>
-          </div>
-        )}
-      </div>
-
+      <AuthButtons
+        isNavActive={props.isNavActive}
+        updateUser={props.updateUser}
+        turnOffNav={props.turnOffNav}
+      />
       <Dimming isNavActive={props.isNavActive} turnOffNav={props.turnOffNav} />
     </nav>
   );
