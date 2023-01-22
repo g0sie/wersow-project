@@ -4,11 +4,19 @@
   box-sizing: border-box;
 }
 
+a {
+  text-decoration: none;
+}
+
 :root {
   /* SPACE THEME COLORS */
   --dark-blue-700: #000814;
   --dark-blue-600: #001d3d;
   --dark-blue-500: #003566;
+
+  --dark-blue-700-transparent: rgba(0, 8, 20, 0.9);
+  --dark-blue-600-transparent: rgba(0, 29, 61, 0.7);
+  --dark-blue-500-transparent: rgba(0, 53, 102, 0.8);
 
   --blue-transparent-500: rgba(0, 69, 134, 0.5);
   --blue-transparent-400: rgba(0, 69, 134, 1);
@@ -35,7 +43,7 @@
 
   min-height: 100vh;
   text-align: center;
-  font-family: "Roboto", sans-serif;
+  font-family: "Sofia Sans Extra Condensed", sans-serif;
   position: relative;
 }
 
