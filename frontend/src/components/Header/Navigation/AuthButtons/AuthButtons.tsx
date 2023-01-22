@@ -1,9 +1,9 @@
 import { useContext } from "react";
-import { Link } from "react-router-dom";
 
 import { LoggedInUserContext } from "../../../../App";
 
 import LoginButton from "./LoginButton";
+import RegisterButton from "./RegisterButton";
 import Button from "../../../Button/Button";
 
 import styles from "../../Header.module.css";
@@ -39,12 +39,7 @@ const AuthButtons = (props: AuthButtonsProps) => {
       {loggedInUser === null ? (
         <>
           <LoginButton turnOffNav={props.turnOffNav} />
-
-          <Link to="register" onClick={props.turnOffNav}>
-            <Button className={[styles.resetBtn, styles.navLink]} size="small">
-              Sign up
-            </Button>
-          </Link>
+          <RegisterButton turnOffNav={props.turnOffNav} />
         </>
       ) : (
         <div>
