@@ -29,16 +29,6 @@ const Navigation = (props: NavigationProps) => {
         <Link className={styles.navLink} to="/" onClick={props.turnOffNav}>
           <li>Home</li>
         </Link>
-        <Link
-          className={styles.navLink}
-          to="/register"
-          onClick={props.turnOffNav}
-        >
-          <li>Register</li>
-        </Link>
-        <Link className={styles.navLink} to="/" onClick={props.turnOffNav}>
-          <li>Home</li>
-        </Link>
       </ul>
 
       <AuthButtons
@@ -46,6 +36,7 @@ const Navigation = (props: NavigationProps) => {
         updateUser={props.updateUser}
         turnOffNav={props.turnOffNav}
       />
+
       <Dimming isNavActive={props.isNavActive} turnOffNav={props.turnOffNav} />
     </nav>
   );
