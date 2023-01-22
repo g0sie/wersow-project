@@ -3,10 +3,10 @@ import { Link } from "react-router-dom";
 
 import { LoggedInUserContext } from "../../App";
 
+import Logo from "./Logo";
 import Button from "../Button/Button";
 
 import styles from "./Header.module.css";
-import logoImg from "../../assets/logo.png";
 
 const Header = (props: { updateUser: () => void }) => {
   const loggedInUser = useContext(LoggedInUserContext);
@@ -31,11 +31,7 @@ const Header = (props: { updateUser: () => void }) => {
 
   return (
     <header className={styles.header}>
-      {/* LOGO */}
-      <Link to="/" className={styles.logo} onClick={turnOffNav}>
-        <img className={styles.logoImg} src={logoImg} alt="" />
-        <h1 className={styles.logoText}>wersow-project</h1>
-      </Link>
+      <Logo turnOffNav={turnOffNav} />
 
       {/* NAVIGATION */}
       <nav
@@ -101,6 +97,7 @@ const Header = (props: { updateUser: () => void }) => {
             </div>
           )}
         </div>
+
         {/* dimming */}
         <div
           className={
