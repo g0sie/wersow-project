@@ -22,7 +22,7 @@ const LogoutButton = (props: LogoutButtonProps) => {
   return (
     <div>
       <Button
-        className={[styles.resetBtn, styles.navLink]}
+        className={[styles.btn, styles.resetBtn, styles.navLink]}
         size="small"
         onClick={logOut}
       >
