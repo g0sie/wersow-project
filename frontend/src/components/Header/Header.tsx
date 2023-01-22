@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { LoggedInUserContext } from "../../App";
 
 import Logo from "./Logo";
+import Hamburger from "./Hamburger";
 import Button from "../Button/Button";
 
 import styles from "./Header.module.css";
@@ -109,11 +110,7 @@ const Header = (props: { updateUser: () => void }) => {
         ></div>
       </nav>
 
-      <button className={styles.hamburger} onClick={toggleNav}>
-        <div className={styles.hamburgerLine}></div>
-        <div className={styles.hamburgerLine}></div>
-        <div className={styles.hamburgerLine}></div>
-      </button>
+      <Hamburger toggleNav={toggleNav} />
     </header>
   );
 };
