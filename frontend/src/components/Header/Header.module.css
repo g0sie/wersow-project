@@ -161,6 +161,7 @@
   .navLink {
     padding: 1rem;
     background-color: var(--dark-blue-600);
+    cursor: pointer;
   }
 
   .navLink:is(:hover, :active) {
@@ -178,6 +179,15 @@
 
   .authButtonsActive {
     translate: 0;
+  }
+
+  .authButtonOnSmallScreen {
+    border: none;
+    background-color: transparent;
+    color: inherit;
+    font-size: 1.5rem;
+    cursor: pointer;
+    font-family: inherit;
   }
 
   .hamburger {

@@ -1,9 +1,9 @@
-import buttonStyles from "../../../../assets/css/button.module.css";
 import styles from "../../Header.module.css";
 
 interface LogoutButtonProps {
   updateUser: () => void;
   turnOffNav: () => void;
+  className: string;
 }
 
 const LogoutButton = (props: LogoutButtonProps) => {
@@ -19,10 +19,8 @@ const LogoutButton = (props: LogoutButtonProps) => {
   };
 
   return (
-    <div>
-      <button className={buttonStyles.btn} onClick={logOut}>
-        Log out
-      </button>
+    <div className={styles.navLink} onClick={logOut}>
+      <button className={props.className}>Log out</button>
     </div>
   );
 };

@@ -1,13 +1,16 @@
-import { useRef } from "react";
 import { Link } from "react-router-dom";
 
-import buttonStyles from "../../../../assets/css/button.module.css";
 import styles from "../../Header.module.css";
 
-const LoginButton = (props: { turnOffNav: () => void }) => {
+interface LoginButtonProps {
+  turnOffNav: () => void;
+  className: string;
+}
+
+const LoginButton = (props: LoginButtonProps) => {
   return (
-    <Link to="login" onClick={props.turnOffNav}>
-      <button className={buttonStyles.btn}>Log in</button>
+    <Link to="login" onClick={props.turnOffNav} className={styles.navLink}>
+      <button className={props.className}>Log in</button>
     </Link>
   );
 };

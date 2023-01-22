@@ -1,12 +1,16 @@
 import { Link } from "react-router-dom";
 
-import buttonStyles from "../../../../assets/css/button.module.css";
 import styles from "../../Header.module.css";
 
-const RegisterButton = (props: { turnOffNav: () => void }) => {
+interface RegisterButtonProps {
+  turnOffNav: () => void;
+  className: string;
+}
+
+const RegisterButton = (props: RegisterButtonProps) => {
   return (
-    <Link to="register" onClick={props.turnOffNav}>
-      <button className={buttonStyles.btn}>Sign up</button>
+    <Link to="register" onClick={props.turnOffNav} className={styles.navLink}>
+      <button className={props.className}>Sign up</button>
     </Link>
   );
 };
