@@ -4,7 +4,7 @@ import { LoggedInUserContext } from "../../../../App";
 
 import LoginButton from "./LoginButton";
 import RegisterButton from "./RegisterButton";
-import Button from "../../../Button/Button";
+import LogoutButton from "./LogoutButton";
 
 import styles from "../../Header.module.css";
 
@@ -19,16 +19,22 @@ const authButtonsActiveClassName = `${styles.authButtons} ${styles.authButtonsAc
 const AuthButtons = (props: AuthButtonsProps) => {
   const loggedInUser = useContext(LoggedInUserContext);
 
-  const logOut = async () => {
-    await fetch("https://wersow-api.herokuapp.com/users/logout", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-    });
-    props.updateUser();
-
-    props.turnOffNav();
-  };
+  let buttons;
+  if (loggedInUser) {
+    buttons = (
+      <LogoutButton
+        updateUser={props.updateUser}
+        turnOffNav={props.turnOffNav}
+      />
+    );
+  } else {
+    buttons = (
+      <>
+        <LoginButton turnOffNav={props.turnOffNav} />
+        <RegisterButton turnOffNav={props.turnOffNav} />
+      </>
+    );
+  }
 
   return (
     <div
@@ -36,22 +42,7 @@ const AuthButtons = (props: AuthButtonsProps) => {
         props.isNavActive ? authButtonsActiveClassName : styles.authButtons
       }
     >
-      {loggedInUser === null ? (
-        <>
-          <LoginButton turnOffNav={props.turnOffNav} />
-          <RegisterButton turnOffNav={props.turnOffNav} />
-        </>
-      ) : (
-        <div>
-          <Button
-            className={[styles.resetBtn, styles.navLink]}
-            size="small"
-            onClick={logOut}
-          >
-            Log out
-          </Button>
-        </div>
-      )}
+      {buttons}
     </div>
   );
 };
