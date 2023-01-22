@@ -7,6 +7,7 @@ import { LoggedInUserContext } from "../../../App";
 import Button from "../../Button/Button";
 
 import styles from "../Header.module.css";
+import Dimming from "./Dimming";
 
 interface NavigationProps {
   isNavActive: boolean;
@@ -98,15 +99,7 @@ const Navigation = (props: NavigationProps) => {
         )}
       </div>
 
-      {/* dimming */}
-      <div
-        className={
-          props.isNavActive
-            ? `${styles.dimming} ${styles.dimmingActive}`
-            : styles.dimming
-        }
-        onClick={props.turnOffNav}
-      ></div>
+      <Dimming isNavActive={props.isNavActive} turnOffNav={props.turnOffNav} />
     </nav>
   );
 };
