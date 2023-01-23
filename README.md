@@ -1,11 +1,22 @@
 # wersow-project
 
-### Links
+## Table of Contents
+
+1. [Links](#links)
+1. [Overview](#overview)
+1. [Frontend](#frontend)
+   1. [Custom hooks](#custom-hooks)
+1. [Backend](#backend)
+   1. [API](#api)
+   1. [Custom commands](#custom-commands)
+1. [Sources](#sources)
+
+## Links
 
 - the website: https://wersow.netlify.app/
 - api: https://wersow-api.herokuapp.com/
 
-### Overview
+## Overview
 
 **wersow-project** is an app that allows you to watch a different video by Wersow (she's a Polish youtuber) every day. Design of the app is inspired by Chicken Invaders.
 
