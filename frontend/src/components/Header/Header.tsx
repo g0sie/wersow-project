@@ -22,7 +22,7 @@ const Header = (props: { updateUser: () => void }) => {
         turnOffNav={turnOffNav}
         updateUser={props.updateUser}
       />
-      <Hamburger toggleNav={toggleNav} />
+      <Hamburger isNavActive={isNavActive} toggleNav={toggleNav} />
     </header>
   );
 };

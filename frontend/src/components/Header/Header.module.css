@@ -88,6 +88,34 @@
   border-radius: 0.1rem;
   height: 0.2rem;
   width: 100%;
+
+  transition: var(--ease-out-quint);
+}
+
+.hamburgerLine:nth-child(1) {
+  transform-origin: right top;
+}
+
+.hamburgerLineActive:nth-child(1) {
+  rotate: -45deg;
+  translate: -0.4rem -0.1rem;
+}
+
+.hamburgerLine:nth-child(2) {
+  opacity: 1;
+}
+
+.hamburgerLineActive:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburgerLine:nth-child(3) {
+  transform-origin: right bottom;
+}
+
+.hamburgerLineActive:nth-child(3) {
+  rotate: 45deg;
+  translate: -0.4rem 0.1rem;
 }
 
 @media (max-width: 800px) {

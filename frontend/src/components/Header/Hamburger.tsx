@@ -1,11 +1,23 @@
 import styles from "./Header.module.css";
 
-const Hamburger = (props: { toggleNav: () => void }) => {
+interface HamburgerProps {
+  isNavActive: boolean;
+  toggleNav: () => void;
+}
+
+const Hamburger = (props: HamburgerProps) => {
+  let hamburgerLineClassName;
+  if (props.isNavActive) {
+    hamburgerLineClassName = `${styles.hamburgerLine} ${styles.hamburgerLineActive}`;
+  } else {
+    hamburgerLineClassName = styles.hamburgerLine;
+  }
+
   return (
     <button className={styles.hamburger} onClick={props.toggleNav}>
-      <div className={styles.hamburgerLine}></div>
-      <div className={styles.hamburgerLine}></div>
-      <div className={styles.hamburgerLine}></div>
+      <div className={hamburgerLineClassName}></div>
+      <div className={hamburgerLineClassName}></div>
+      <div className={hamburgerLineClassName}></div>
     </button>
   );
 };
