@@ -5,19 +5,11 @@
 - the website: https://wersow.netlify.app/
 - api: https://wersow-api.herokuapp.com/
 
-## Custom commands
+## Overview
 
-- **[to fix]** Update database with new Wersow's videos that aren't already in the database
+**wersow-project** is an app that allows you to watch a different video by Wersow (she's a Polish youtuber) every day. Design of the app is inspired by Chicken Invaders.
 
-```
-python manage.py loadvideos
-```
-
-- Change today's video to another random Wersow's video
-
-```
-python manage.py changetodaysvideo
-```
+![Screenshot of the app](screenshot.png)
 
 ## API
 
@@ -47,9 +39,23 @@ python manage.py changetodaysvideo
 - POST https://wersow-api.herokuapp.com/users/logout
   - log out an authenticated user
 
-## sources
+## Custom commands
 
-- The design is inspired by a game Chicken Invaders
+- **[to fix]** Update database with new Wersow's videos that aren't already in the database
+
+```
+python manage.py loadvideos
+```
+
+- Change today's video to another random Wersow's video
+
+```
+python manage.py changetodaysvideo
+```
+
+## Sources
+
+- Design is inspired by Chicken Invaders
 - [Parallax Pixel Background Animation](https://youtu.be/aywzn9cf-_U)
 - [Logo generator](https://logo.com/)
 - [Django API Authentication using JWT Tokens](https://youtu.be/PUzgZrS_piQ)
