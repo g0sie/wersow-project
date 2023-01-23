@@ -11,12 +11,21 @@
 
 ## Table of Contents
 
+1. [Technologies](#technologies)
 1. [Frontend](#frontend)
    1. [Custom hooks](#custom-hooks)
 1. [Backend](#backend)
    1. [API](#api)
    1. [Custom commands](#custom-commands)
 1. [Sources](#sources)
+
+## Technologies
+
+- Python 3.10
+- Django 4.1
+- Django REST Framework 3.13
+- Typescript 4.8
+- React 18.2
 
 ## Frontend
 
@@ -73,6 +82,12 @@ python manage.py loadvideos
 ```
 python manage.py changetodaysvideo
 ```
+
+## To-do
+
+- [x] every day another random Wersow's video
+- [x] authentication
+- [ ] ability to collect videos
 
 ## Sources
 
