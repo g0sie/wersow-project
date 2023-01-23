@@ -1,53 +1,28 @@
-import { useContext } from "react";
-import { Link } from "react-router-dom";
+import { useState } from "react";
 
-import { LoggedInUserContext } from "../../App";
-
-import Button from "../Button/Button";
+import Logo from "./Logo";
+import Hamburger from "./Hamburger";
+import Navigation from "./Navigation/Navigation";
 
 import styles from "./Header.module.css";
-import logoImg from "../../assets/logo.png";
 
 const Header = (props: { updateUser: () => void }) => {
-  const loggedInUser = useContext(LoggedInUserContext);
+  const [isNavActive, setIsNavActive] = useState(false);
 
-  const logOut = async () => {
-    await fetch("https://wersow-api.herokuapp.com/users/logout", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-    });
-    props.updateUser();
+  const toggleNav = () => setIsNavActive(!isNavActive);
+  const turnOffNav = () => {
+    if (isNavActive) toggleNav();
   };
 
   return (
     <header className={styles.header}>
-      {/* LOGO */}
-      <Link to="/">
-        <img className={styles.logoImg} src={logoImg} alt="" />
-      </Link>
-
-      {/* NAVBAR */}
-      <nav className="navbar"></nav>
-
-      {/* ( LOG IN, SIGN UP ) / ( LOG OUT ) */}
-      <div className={styles.authButtons}>
-        {loggedInUser === null ? (
-          <>
-            <Link to={"login"}>
-              <Button size="small">Log in</Button>
-            </Link>
-
-            <Link to={"register"}>
-              <Button size="small">Sign up</Button>
-            </Link>
-          </>
-        ) : (
-          <Button size="small" onClick={logOut}>
-            Log out
-          </Button>
-        )}
-      </div>
+      <Logo turnOffNav={turnOffNav} />
+      <Navigation
+        isNavActive={isNavActive}
+        turnOffNav={turnOffNav}
+        updateUser={props.updateUser}
+      />
+      <Hamburger isNavActive={isNavActive} toggleNav={toggleNav} />
     </header>
   );
 };

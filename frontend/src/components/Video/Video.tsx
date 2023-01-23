@@ -28,25 +28,27 @@ const Video = () => {
 
   return (
     <div className={styles.video}>
-      <div className={styles.videoWrapper}>
-        <div className={styles.videoBackground}>
-          {video ? (
-            <iframe
-              className={styles.videoPlayer}
-              width="560"
-              height="315"
-              src={video.url.replace("watch?v=", "embed/")}
-              title="YouTube video player"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            ></iframe>
-          ) : (
-            <VideoLoader message="kupowanie licencji..." />
-          )}
-        </div>
+      <div className={styles.videoPlayerWrapper}>
+        {video ? (
+          <iframe
+            className={styles.videoPlayer}
+            width="560"
+            height="315"
+            src={video.url.replace("watch?v=", "embed/")}
+            title="YouTube video player"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          ></iframe>
+        ) : (
+          <div
+            className={`${styles.videoPlayerPlaceholder} ${styles.placeholder}`}
+          >
+            <VideoLoader message="negotiating with a French artist..." />
+          </div>
+        )}
       </div>
-      <div className={styles.videoTitleWrapper}>
+      <div className={`${styles.videoTitleWrapper} ${styles.placeholder}`}>
         {video ? (
           <p className={styles.videoTitle}>{video.title}</p>
         ) : (

@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
+import SpaceBackground from "./components/SpaceBackground/SpaceBackground";
 import Header from "./components/Header/Header";
 import IndexPage from "./pages/IndexPage";
 import LoginPage from "./pages/LoginPage";
@@ -40,13 +41,10 @@ function App() {
 
   return (
     <div className="App">
-      <section className="starsBg">
-        <div className="stars"></div>
-        <div className="stars2"></div>
-        <div className="stars3"></div>
-      </section>
-      <LoggedInUserContext.Provider value={loggedInUser}>
-        <main className="appMain">
+      <SpaceBackground />
+
+      <main className="content">
+        <LoggedInUserContext.Provider value={loggedInUser}>
           <BrowserRouter>
             <Header updateUser={getAuthenticatedUser} />
             <Routes>
@@ -58,8 +56,8 @@ function App() {
               <Route path="register" element={<RegisterPage />} />
             </Routes>
           </BrowserRouter>
-        </main>
-      </LoggedInUserContext.Provider>
+        </LoggedInUserContext.Provider>
+      </main>
     </div>
   );
 }
