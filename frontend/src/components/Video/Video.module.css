@@ -67,7 +67,8 @@
   font-family: "Roboto", sans-serif;
 }
 
-.videoTitleLoader {
+.videoTitlePlaceholder {
+  display: block;
   height: 3rem;
   background-color: var(--dark-blue-500);
 }

@@ -4,6 +4,7 @@ import axios from "../../api";
 import VideoPlayer from "./VideoPlayer/VideoPlayer";
 import VideoPlaceholder from "./VideoPlayer/VideoPlaceholder";
 import VideoLoader from "./VideoPlayer/VideoLoader";
+import VideoTitle from "./VideoTitle";
 
 import styles from "./Video.module.css";
 
@@ -41,13 +42,7 @@ const Video = () => {
           </VideoPlaceholder>
         )}
       </div>
-      <div className={`${styles.videoTitleWrapper} ${styles.placeholder}`}>
-        {video ? (
-          <p className={styles.videoTitle}>{video.title}</p>
-        ) : (
-          <div className={styles.videoTitleLoader}></div>
-        )}
-      </div>
+      <VideoTitle title={video?.title} />
     </div>
   );
 };
