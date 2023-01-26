@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "../../api";
 
+import VideoPlayer from "./VideoPlayer";
 import VideoLoader from "./VideoLoader";
 
 import styles from "./Video.module.css";
@@ -32,16 +33,7 @@ const Video = () => {
     <div className={styles.video}>
       <div className={styles.videoPlayerWrapper}>
         {video ? (
-          <iframe
-            className={styles.videoPlayer}
-            width="560"
-            height="315"
-            src={video.url.replace("watch?v=", "embed/")}
-            title="YouTube video player"
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          ></iframe>
+          <VideoPlayer url={video.url.replace("watch?v=", "embed/")} />
         ) : (
           <div
             className={`${styles.videoPlayerPlaceholder} ${styles.placeholder}`}
