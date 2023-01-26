@@ -1,4 +1,4 @@
-import styles from "./Video.module.css";
+import styles from "../Video.module.css";
 
 interface VideoPlayerProps {
   url: string;

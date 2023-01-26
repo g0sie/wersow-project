@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import axios from "../../api";
 
-import VideoPlayer from "./VideoPlayer";
-import VideoPlaceholder from "./VideoPlaceholder";
-import VideoLoader from "./VideoLoader";
+import VideoPlayer from "./VideoPlayer/VideoPlayer";
+import VideoPlaceholder from "./VideoPlayer/VideoPlaceholder";
+import VideoLoader from "./VideoPlayer/VideoLoader";
 
 import styles from "./Video.module.css";
 

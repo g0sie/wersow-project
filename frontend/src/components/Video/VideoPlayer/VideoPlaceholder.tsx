@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 
-import styles from "./Video.module.css";
+import styles from "../Video.module.css";
 
 interface VideoPlaceholderProps {
   children?: ReactNode;
