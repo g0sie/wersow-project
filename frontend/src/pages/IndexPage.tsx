@@ -1,10 +1,10 @@
 import pageStyles from "./Page.module.css";
-import Video from "../components/Video/Video";
+import TodaysVideo from "../components/Video/TodaysVideo";
 
 export const IndexPage = () => {
   return (
     <div className={`${pageStyles.page} ${pageStyles.pageCentered}`}>
-      <Video />
+      <TodaysVideo />
     </div>
   );
 };
