@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "../../api";
 
 import VideoPlayer from "./VideoPlayer";
+import VideoPlaceholder from "./VideoPlaceholder";
 import VideoLoader from "./VideoLoader";
 
 import styles from "./Video.module.css";
@@ -35,11 +36,9 @@ const Video = () => {
         {video ? (
           <VideoPlayer url={video.url.replace("watch?v=", "embed/")} />
         ) : (
-          <div
-            className={`${styles.videoPlayerPlaceholder} ${styles.placeholder}`}
-          >
+          <VideoPlaceholder>
             <VideoLoader message="negotiating with a French artist..." />
-          </div>
+          </VideoPlaceholder>
         )}
       </div>
       <div className={`${styles.videoTitleWrapper} ${styles.placeholder}`}>
