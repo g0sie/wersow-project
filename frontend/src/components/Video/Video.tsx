@@ -1,6 +1,9 @@
-import { useCallback, useEffect, useState } from "react";
-import styles from "./Video.module.css";
+import { useEffect, useState } from "react";
+import axios from "../../api";
+
 import VideoLoader from "./VideoLoader";
+
+import styles from "./Video.module.css";
 
 interface VideoInterface {
   id: number;
@@ -14,17 +17,16 @@ interface VideoInterface {
 const Video = () => {
   const [video, setVideo] = useState<VideoInterface>();
 
-  const getVideo = useCallback(async () => {
-    const response = await fetch(
-      "https://wersow-api.herokuapp.com/videos/todays"
-    );
-    const data = await response.json();
-    setVideo(await data);
-  }, []);
+  const fetchTodaysVideo = () => {
+    axios
+      .get("/videos/todays")
+      .then((res) => setVideo(res.data))
+      .catch((error) => console.error(error.toJSON()));
+  };
 
   useEffect(() => {
-    getVideo();
-  }, [getVideo]);
+    fetchTodaysVideo();
+  }, []);
 
   return (
     <div className={styles.video}>
