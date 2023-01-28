@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Navigate } from "react-router-dom";
 
+import Input from "../components/Inputs/Input";
+
 import buttonStyles from "../assets/css/button.module.css";
 import formStyles from "../assets/css/form.module.css";
 import pageStyles from "./Page.module.css";
@@ -44,41 +46,32 @@ const LoginPage = (props: { updateUser: () => void }) => {
         <h2 className={formStyles.formHeading}>Sign in to join #teamsówki</h2>
 
         {/* EMAIL */}
-        <div className={formStyles.inputGroup}>
-          <label className={formStyles.label} htmlFor="login-email">
-            email:
-          </label>
-          <input
-            onChange={(e) => setEmail(e.target.value)}
-            id="login-email"
-            name="email"
-            type="email"
-            className={formStyles.input}
-            required
-          />
-        </div>
+        <Input
+          label="email:"
+          id="login-email"
+          name="email"
+          type="email"
+          onChange={(e) => setEmail(e.target.value)}
+        />
 
         {/* PASSWORD */}
-        <div className={formStyles.inputGroup}>
-          <label className={formStyles.label} htmlFor="login-email">
-            password:
-          </label>
-          <input
-            onChange={(e) => setPassword(e.target.value)}
-            id="login-password"
-            name="password"
-            type="password"
-            className={formStyles.input}
-            required
-          />
-        </div>
+        <Input
+          label="password:"
+          id="login-password"
+          name="password"
+          type="password"
+          onChange={(e) => setPassword(e.target.value)}
+        />
 
+        {/* SUBMIT BUTTON */}
         <button
           type="submit"
           className={`${formStyles.submitBtn} ${buttonStyles.btn} ${buttonStyles.btnBig}`}
         >
           Sign in
         </button>
+
+        {/* ERROR MESSAGE */}
         <p className={`${formStyles.errorMsg} ${formStyles.errorMsgCentered}`}>
           &zwnj;
           {somethingWentWrong &&
