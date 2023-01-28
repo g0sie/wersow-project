@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Navigate } from "react-router-dom";
 
 import SubmitButton from "../components/forms/SubmitButton";
+import ErrorMessage from "../components/forms/ErrorMessage";
 
 import formStyles from "../components/forms/form.module.css";
 import pageStyles from "./Page.module.css";
@@ -206,11 +207,11 @@ const RegisterPage = () => {
 
         <SubmitButton disabled={!isReadyToSubmit}>Sign up</SubmitButton>
 
-        <p className={`${formStyles.errorMsg} ${formStyles.errorMsgCentered}`}>
-          &zwnj;
-          {somethingWentWrong &&
-            "Something went wrong... Try again with different data"}
-        </p>
+        <ErrorMessage
+          center={true}
+          visible={somethingWentWrong}
+          message="Something went wrong... Try again with different data"
+        />
       </form>
     </div>
   );

@@ -3,8 +3,8 @@ import { Navigate } from "react-router-dom";
 
 import Input from "../components/forms/Input";
 import SubmitButton from "../components/forms/SubmitButton";
+import ErrorMessage from "../components/forms/ErrorMessage";
 
-import buttonStyles from "../assets/css/button.module.css";
 import formStyles from "../components/forms/form.module.css";
 import pageStyles from "./Page.module.css";
 
@@ -46,7 +46,6 @@ const LoginPage = (props: { updateUser: () => void }) => {
       <form className={formStyles.form} onSubmit={handleSubmit}>
         <h2 className={formStyles.formHeading}>Sign in to join #teamsówki</h2>
 
-        {/* EMAIL */}
         <Input
           label="email:"
           id="login-email"
@@ -55,7 +54,6 @@ const LoginPage = (props: { updateUser: () => void }) => {
           onChange={(e) => setEmail(e.target.value)}
         />
 
-        {/* PASSWORD */}
         <Input
           label="password:"
           id="login-password"
@@ -64,15 +62,13 @@ const LoginPage = (props: { updateUser: () => void }) => {
           onChange={(e) => setPassword(e.target.value)}
         />
 
-        {/* SUBMIT BUTTON */}
         <SubmitButton>Sign in</SubmitButton>
 
-        {/* ERROR MESSAGE */}
-        <p className={`${formStyles.errorMsg} ${formStyles.errorMsgCentered}`}>
-          &zwnj;
-          {somethingWentWrong &&
-            "Something went wrong... Try again with different data"}
-        </p>
+        <ErrorMessage
+          center={true}
+          visible={somethingWentWrong}
+          message="Something went wrong... Try again with different data"
+        />
       </form>
     </div>
   );
