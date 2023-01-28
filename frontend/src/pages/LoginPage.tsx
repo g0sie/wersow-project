@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Navigate } from "react-router-dom";
 
 import Input from "../components/forms/Input";
+import SubmitButton from "../components/forms/SubmitButton";
 
 import buttonStyles from "../assets/css/button.module.css";
 import formStyles from "../components/forms/form.module.css";
@@ -64,12 +65,7 @@ const LoginPage = (props: { updateUser: () => void }) => {
         />
 
         {/* SUBMIT BUTTON */}
-        <button
-          type="submit"
-          className={`${formStyles.submitBtn} ${buttonStyles.btn} ${buttonStyles.btnBig}`}
-        >
-          Sign in
-        </button>
+        <SubmitButton>Sign in</SubmitButton>
 
         {/* ERROR MESSAGE */}
         <p className={`${formStyles.errorMsg} ${formStyles.errorMsgCentered}`}>

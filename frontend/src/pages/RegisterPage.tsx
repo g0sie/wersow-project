@@ -2,7 +2,8 @@ import React, { useState } from "react";
 
 import { Navigate } from "react-router-dom";
 
-import buttonStyles from "../assets/css/button.module.css";
+import SubmitButton from "../components/forms/SubmitButton";
+
 import formStyles from "../components/forms/form.module.css";
 import pageStyles from "./Page.module.css";
 
@@ -203,13 +204,8 @@ const RegisterPage = () => {
           </p>
         </div>
 
-        <button
-          type="submit"
-          className={`${formStyles.submitBtn} ${buttonStyles.btn} ${buttonStyles.btnBig}`}
-          disabled={!isReadyToSubmit}
-        >
-          Sign up
-        </button>
+        <SubmitButton disabled={!isReadyToSubmit}>Sign up</SubmitButton>
+
         <p className={`${formStyles.errorMsg} ${formStyles.errorMsgCentered}`}>
           &zwnj;
           {somethingWentWrong &&
