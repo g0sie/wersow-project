@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Navigate } from "react-router-dom";
 
-import Input from "../components/Inputs/Input";
+import Input from "../components/forms/Input";
 
 import buttonStyles from "../assets/css/button.module.css";
-import formStyles from "../assets/css/form.module.css";
+import formStyles from "../components/forms/form.module.css";
 import pageStyles from "./Page.module.css";
 
 const LoginPage = (props: { updateUser: () => void }) => {

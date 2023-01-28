@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Navigate } from "react-router-dom";
 
 import buttonStyles from "../assets/css/button.module.css";
-import formStyles from "../assets/css/form.module.css";
+import formStyles from "../components/forms/form.module.css";
 import pageStyles from "./Page.module.css";
 
 const RegisterPage = () => {

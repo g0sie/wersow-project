@@ -1,6 +1,6 @@
 import React from "react";
 
-import formStyles from "../../assets/css/form.module.css";
+import formStyles from "./form.module.css";
 
 interface InputProps {
   label: string;
