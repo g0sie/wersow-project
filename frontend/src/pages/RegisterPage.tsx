@@ -4,6 +4,7 @@ import { Navigate } from "react-router-dom";
 
 import SubmitButton from "../components/forms/SubmitButton";
 import ErrorMessage from "../components/forms/ErrorMessage";
+import InputWithError from "../components/forms/InputWithError";
 
 import formStyles from "../components/forms/form.module.css";
 import pageStyles from "./Page.module.css";
@@ -92,12 +93,6 @@ const RegisterPage = () => {
     }
   };
 
-  const preventWhiteSpaceOnKeyDown = (event: React.KeyboardEvent) => {
-    if (event.key === " ") {
-      event.preventDefault();
-    }
-  };
-
   const handleSubmit = async (
     event: React.FormEvent<HTMLFormElement>
   ): Promise<void> => {
@@ -129,81 +124,34 @@ const RegisterPage = () => {
       <form className={formStyles.form} onSubmit={handleSubmit}>
         <h2 className={formStyles.formHeading}>Sign up to join #teamsówki</h2>
 
-        {/* NAME */}
-        <div className={formStyles.inputGroup}>
-          <label className={formStyles.label} htmlFor="login-name">
-            username:
-          </label>
-          <input
-            onChange={handleNameInput}
-            id="login-name"
-            name="name"
-            className={`
-              ${formStyles.input} 
-              ${
-                !isNameCorrect && nameErrorMsg !== "" && formStyles.inputInvalid
-              }
-            `}
-            required
-          />
-          <p className={formStyles.errorMsg}>
-            &zwnj;
-            {isNameCorrect ? "" : nameErrorMsg}
-          </p>
-        </div>
+        <InputWithError
+          label="username:"
+          id="register-name"
+          name="name"
+          isValid={isNameCorrect}
+          errorMessage={nameErrorMsg}
+          onChange={handleNameInput}
+        />
 
-        {/* EMAIL */}
-        <div className={formStyles.inputGroup}>
-          <label className={formStyles.label} htmlFor="login-email">
-            email:
-          </label>
-          <input
-            onChange={handleEmailInput}
-            onKeyDown={preventWhiteSpaceOnKeyDown}
-            id="login-email"
-            name="email"
-            type="email"
-            className={`
-              ${formStyles.input} 
-              ${
-                !isEmailCorrect &&
-                emailErrorMsg !== "" &&
-                formStyles.inputInvalid
-              }
-            `}
-            required
-          />
-          <p className={formStyles.errorMsg}>
-            &zwnj;
-            {isEmailCorrect ? "" : emailErrorMsg}
-          </p>
-        </div>
+        <InputWithError
+          label="email:"
+          id="register-email"
+          name="email"
+          type="email"
+          isValid={isEmailCorrect}
+          errorMessage={emailErrorMsg}
+          onChange={handleEmailInput}
+        />
 
-        {/* PASSWORD */}
-        <div className={formStyles.inputGroup}>
-          <label className={formStyles.label} htmlFor="login-email">
-            password:
-          </label>
-          <input
-            onChange={handlePasswordInput}
-            id="login-password"
-            name="password"
-            type="password"
-            className={`
-              ${formStyles.input} 
-              ${
-                !isPasswordCorrect &&
-                passwordErrorMsg !== "" &&
-                formStyles.inputInvalid
-              }
-            `}
-            required
-          />
-          <p className={formStyles.errorMsg}>
-            &zwnj;
-            {isPasswordCorrect ? "" : passwordErrorMsg}
-          </p>
-        </div>
+        <InputWithError
+          label="password:"
+          id="register-password"
+          name="password"
+          type="password"
+          isValid={isPasswordCorrect}
+          errorMessage={passwordErrorMsg}
+          onChange={handlePasswordInput}
+        />
 
         <SubmitButton disabled={!isReadyToSubmit}>Sign up</SubmitButton>
 
