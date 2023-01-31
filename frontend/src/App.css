@@ -1,109 +1,59 @@
+/* RESET */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+a {
+  text-decoration: none;
+}
+
+/* VARIABLES */
 :root {
-  --dark-pink: #874054;
-  --light-pink: #c45172;
-  --purple: #522e59;
-  --light-green: #e4f731;
-  --dark-green: #4f4c20;
+  /* SPACE THEME COLORS */
+  --dark-blue-700: #000814;
+  --dark-blue-600: #001d3d;
+  --dark-blue-500: #003566;
 
-  font-size: 10px;
+  --dark-blue-700-transparent: rgba(0, 8, 20, 0.9);
+  --dark-blue-600-transparent: rgba(0, 29, 61, 0.7);
+  --dark-blue-500-transparent: rgba(0, 53, 102, 0.8);
+
+  --blue-transparent-500: rgba(0, 69, 134, 0.5);
+  --blue-transparent-400: rgba(0, 69, 134, 1);
+
+  --blue-400: #1a759f;
+
+  --light-blue: #4690bb;
+
+  --bright-blue: #4efdfc;
+
+  --bright-yellow-200: #ffc300;
+  --bright-yellow-100: #ffd60a;
+
+  /* HEADER */
+  --header-height: 3rem;
 }
 
+/* STYLING */
 .App {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  background-color: var(--dark-pink);
+  --bg-gradient: radial-gradient(
+    ellipse at bottom,
+    var(--dark-blue-600) 0%,
+    var(--dark-blue-700) 100%
+  );
+
+  min-height: 100vh;
   text-align: center;
-  font-family: "Roboto", sans-serif;
+  font-family: "Sofia Sans Extra Condensed", sans-serif;
+  position: relative;
 }
 
-.page {
-  max-width: 1400px;
-  width: 95%;
-}
-
-.video-title {
-  margin-top: 1vh;
-  color: white;
-  font-size: 40px;
-}
-
-@media (min-width: 300px) {
-  :root {
-    font-size: 11px;
-  }
-}
-
-@media (min-width: 400px) {
-  :root {
-    font-size: 12px;
-  }
-}
-
-@media (min-width: 450px) {
-  :root {
-    font-size: 13px;
-  }
-}
-
-@media (min-width: 500px) {
-  :root {
-    font-size: 14px;
-  }
-}
-
-@media (min-width: 550px) {
-  :root {
-    font-size: 15px;
-  }
-}
-
-@media (min-width: 600px) {
-  :root {
-    font-size: 16px;
-  }
-}
-
-@media (min-width: 650px) {
-  :root {
-    font-size: 17px;
-  }
-}
-
-@media (min-width: 700px) {
-  :root {
-    font-size: 18px;
-  }
-}
-
-@media (min-width: 750px) {
-  :root {
-    font-size: 19px;
-  }
-}
-
-@media (min-width: 800px) {
-  :root {
-    font-size: 20px;
-  }
-}
-
-@media (min-width: 1000px) {
-  :root {
-    font-size: 21px;
-  }
-}
-
-@media (min-width: 1250px) {
-  :root {
-    font-size: 22px;
-  }
+.content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
 }

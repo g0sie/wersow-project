@@ -1,0 +1,85 @@
+:root {
+  --blue-transparent-500: rgba(0, 69, 134, 0.5);
+  --light-blue: #4690bb;
+  --bright-blue: #4efdfc;
+}
+
+.form {
+  align-self: center;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.formHeading {
+  font-size: 4.5rem;
+  color: white;
+  font-family: "Sofia Sans Extra Condensed", sans-serif;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.input {
+  display: block;
+  padding: 0.3rem 0.6rem;
+  font-size: 2.5rem;
+  font-family: "Sofia Sans Extra Condensed", sans-serif;
+
+  color: var(--light-blue);
+  border: 0.15rem solid var(--light-blue);
+  background-color: var(--blue-transparent-500);
+
+  -webkit-box-shadow: inset 0px 0px 0.5rem 0px var(--light-blue);
+  -moz-box-shadow: inset 0px 0px 0.5rem 0px var(--light-blue);
+  box-shadow: inset 0px 0px 0.5rem 0px var(--light-blue);
+}
+
+.input:focus {
+  color: var(--bright-blue);
+  border: 0.15rem solid var(--bright-blue);
+  outline: none;
+
+  -webkit-box-shadow: inset 0px 0px 0.5rem 0px var(--bright-blue);
+  -moz-box-shadow: inset 0px 0px 0.5rem 0px var(--bright-blue);
+  box-shadow: inset 0px 0px 0.5rem 0px var(--bright-blue);
+}
+
+.inputInvalid {
+  border: 0.15rem solid var(--bright-yellow-200);
+  -webkit-box-shadow: inset 0px 0px 0.5rem 0px var(--bright-yellow-200);
+  -moz-box-shadow: inset 0px 0px 0.5rem 0px var(--bright-yellow-200);
+  box-shadow: inset 0px 0px 0.5rem 0px var(--bright-yellow-200);
+}
+
+.label {
+  font-size: 2.5rem;
+  align-self: flex-start;
+  color: var(--light-blue);
+  font-family: "Sofia Sans Extra Condensed", sans-serif;
+}
+
+.label:has(~ .input:focus) {
+  color: var(--bright-blue);
+}
+
+.submitBtn {
+  margin-top: 1.8rem;
+}
+
+.errorMsg {
+  font-size: 1.21rem;
+  margin-top: 0.15rem;
+  margin-left: 0.15rem;
+  color: var(--bright-yellow-200);
+  text-align: left;
+  font-family: "Roboto", sans-serif;
+}
+
+.errorMsgCentered {
+  text-align: center;
+}
