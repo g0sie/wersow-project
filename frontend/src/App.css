@@ -45,6 +45,7 @@ a {
   );
 
   min-height: 100vh;
+  min-height: 100dvh;
   text-align: center;
   font-family: "Sofia Sans Extra Condensed", sans-serif;
   position: relative;
