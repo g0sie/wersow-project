@@ -5,7 +5,7 @@ import SpaceBackground from "./components/SpaceBackground/SpaceBackground";
 import Header from "./components/Header/Header";
 import IndexPage from "./pages/IndexPage";
 import LoginPage from "./pages/LoginPage";
-import RegisterPage from "./pages/RegisterPage";
+import RegisterPage from "./pages/RegisterPage/RegisterPage";
 
 import axios from "./api";
 
