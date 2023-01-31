@@ -7,6 +7,7 @@ import ErrorMessage from "../../components/forms/ErrorMessage";
 import InputWithError from "../../components/forms/InputWithError";
 
 import NameInput from "./NameInput";
+import EmailInput from "./EmailInput";
 
 import formStyles from "../../components/forms/form.module.css";
 import pageStyles from "../Page.module.css";
@@ -28,28 +29,6 @@ const RegisterPage = () => {
 
   const [redirect, setRedirect] = useState(false);
   const [somethingWentWrong, setSomethingWentWrong] = useState(false);
-
-  const handleEmailInput = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ): void => {
-    const inputEmail = event.target.value;
-    setEmail(inputEmail);
-    setIsEmailCorrect(false);
-    setIsReadyToSubmit(false);
-
-    if ((inputEmail.match(/@/g) || []).length !== 1) {
-      setEmailErrorMsg("Email address should contain exactly one '@' sign");
-    } else if (inputEmail.includes(" ")) {
-      setEmailErrorMsg("Email address shouldn't contain whitespaces");
-    } else if (!/.+@/.test(inputEmail)) {
-      setEmailErrorMsg("The username part of email address is invalid");
-    } else if (!/@.+[.]+.+/.test(inputEmail)) {
-      setEmailErrorMsg("The domain part of email address is invalid");
-    } else {
-      setIsEmailCorrect(true);
-      setIsReadyToSubmit(isNameCorrect && isPasswordCorrect);
-    }
-  };
 
   const handlePasswordInput = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -115,14 +94,15 @@ const RegisterPage = () => {
           setIsReadyToSubmit={setIsReadyToSubmit}
         />
 
-        <InputWithError
-          label="email:"
-          id="register-email"
-          name="email"
-          type="email"
-          isValid={isEmailCorrect}
-          errorMessage={emailErrorMsg}
-          onChange={handleEmailInput}
+        <EmailInput
+          setEmail={setEmail}
+          emailErrorMsg={emailErrorMsg}
+          setEmailErrorMsg={setEmailErrorMsg}
+          isEmailCorrect={isEmailCorrect}
+          setIsEmailCorrect={setIsEmailCorrect}
+          isNameCorrect={isNameCorrect}
+          isPasswordCorrect={isPasswordCorrect}
+          setIsReadyToSubmit={setIsReadyToSubmit}
         />
 
         <InputWithError
