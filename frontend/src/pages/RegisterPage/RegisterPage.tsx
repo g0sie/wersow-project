@@ -1,13 +1,12 @@
 import React, { useState } from "react";
-
 import { Navigate } from "react-router-dom";
 
 import SubmitButton from "../../components/forms/SubmitButton";
 import ErrorMessage from "../../components/forms/ErrorMessage";
-import InputWithError from "../../components/forms/InputWithError";
 
 import NameInput from "./NameInput";
 import EmailInput from "./EmailInput";
+import PasswordInput from "./PasswordInput";
 
 import formStyles from "../../components/forms/form.module.css";
 import pageStyles from "../Page.module.css";
@@ -29,28 +28,6 @@ const RegisterPage = () => {
 
   const [redirect, setRedirect] = useState(false);
   const [somethingWentWrong, setSomethingWentWrong] = useState(false);
-
-  const handlePasswordInput = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ): void => {
-    const inputPassword = event.target.value;
-    setPassword(inputPassword);
-    setIsPasswordCorrect(false);
-    setIsReadyToSubmit(false);
-
-    if (inputPassword.startsWith(" ")) {
-      setPasswordErrorMsg("Password shouldn't start with a whitespace");
-    } else if (inputPassword.endsWith(" ")) {
-      setPasswordErrorMsg("Password shouldn't end with a whitespace");
-    } else if (inputPassword.length < 6) {
-      setPasswordErrorMsg("Password should consist of at least 6 characters");
-    } else if (inputPassword.length > 30) {
-      setPasswordErrorMsg("Password should consist of at most 30 characters");
-    } else {
-      setIsPasswordCorrect(true);
-      setIsReadyToSubmit(isNameCorrect && isEmailCorrect);
-    }
-  };
 
   const handleSubmit = async (
     event: React.FormEvent<HTMLFormElement>
@@ -105,14 +82,15 @@ const RegisterPage = () => {
           setIsReadyToSubmit={setIsReadyToSubmit}
         />
 
-        <InputWithError
-          label="password:"
-          id="register-password"
-          name="password"
-          type="password"
-          isValid={isPasswordCorrect}
-          errorMessage={passwordErrorMsg}
-          onChange={handlePasswordInput}
+        <PasswordInput
+          setPassword={setPassword}
+          passwordErrorMsg={passwordErrorMsg}
+          setPasswordErrorMsg={setPasswordErrorMsg}
+          isPasswordCorrect={isPasswordCorrect}
+          setIsPasswordCorrect={setIsPasswordCorrect}
+          isNameCorrect={isNameCorrect}
+          isEmailCorrect={isEmailCorrect}
+          setIsReadyToSubmit={setIsReadyToSubmit}
         />
 
         <SubmitButton disabled={!isReadyToSubmit}>Sign up</SubmitButton>
