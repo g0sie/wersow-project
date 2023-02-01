@@ -1,11 +1,11 @@
 from django.db import models
+from django.core.validators import MinLengthValidator
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 
 
 class UserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
-        extra_fields = {"is_staff": False,
-                        "is_superuser": False, **extra_fields}
+        extra_fields = {"is_staff": False, "is_superuser": False, **extra_fields}
 
         if not email:
             raise ValueError("User must have an email")
@@ -27,13 +27,16 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractUser):
-    name = models.CharField(max_length=30)
+    name = models.CharField(
+        max_length=30,
+        validators=[MinLengthValidator(3)],
+    )
     email = models.EmailField(max_length=255, unique=True)
-    password = models.CharField(max_length=255)
+    password = models.CharField(max_length=30, validators=[MinLengthValidator(6)])
     username = None
 
     # overwrite to log in with email instead of username
-    USERNAME_FIELD = 'email'
+    USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
 
     objects = UserManager()
