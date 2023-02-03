@@ -8,6 +8,7 @@
 
 - the website: https://wersow.netlify.app/
 - api: https://wersow-api.herokuapp.com/
+- api documentation: https://wersow-api.herokuapp.com/docs/
 
 ## Table of Contents
 
@@ -15,7 +16,6 @@
 1. [Frontend](#frontend)
    1. [Custom hooks](#custom-hooks)
 1. [Backend](#backend)
-   1. [API](#api)
    1. [Custom commands](#custom-commands)
 1. [Sources](#sources)
 
@@ -40,34 +40,6 @@ const [windowWidth, windowHeight] = useWindowSize();
 returns current width and height of window
 
 ## Backend
-
-### API
-
-#### users/
-
-##### register
-
-- POST https://wersow-api.herokuapp.com/users/register
-
-  - register a new user from a given json object with fields: name, email and password
-
-##### login
-
-- POST https://wersow-api.herokuapp.com/users/login
-
-  - log in a user from a given json object with fields: email, password
-  - if email and password are correct it gives a response with a jwt token
-
-##### authenticated user
-
-- GET https://wersow-api.herokuapp.com/users/user
-
-  - get a response with an authenticated user
-
-##### logout
-
-- POST https://wersow-api.herokuapp.com/users/logout
-  - log out an authenticated user
 
 ### Custom commands
 
