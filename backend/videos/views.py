@@ -106,10 +106,18 @@ def random_video(request):
             return Response(serializer.data)
         return Response(
             {"error": "there are no videos to pick from"},
-            status=status.HTTP_428_PRECONDITION_REQUIRED,
+            status=status.HTTP_404_NOT_FOUND,
         )
 
 
+@swagger_auto_schema(
+    method="GET",
+    operation_summary="Get today's video",
+    responses={
+        200: schemas.video_schema,
+        404: "There is no today's video in the database",
+    },
+)
 @api_view(["GET"])
 def todays_video(request):
 
@@ -120,5 +128,5 @@ def todays_video(request):
             return Response(serializer.data)
         return Response(
             {"error": "there is no today's video"},
-            status=status.HTTP_503_SERVICE_UNAVAILABLE,
+            status=status.HTTP_404_NOT_FOUND,
         )
