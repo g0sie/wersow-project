@@ -9,41 +9,17 @@ from rest_framework.exceptions import AuthenticationFailed
 from rest_framework import status
 
 from drf_yasg.utils import swagger_auto_schema
-from drf_yasg import openapi
 
 from .serializers import UserSerializer
 from .models import User
-
-email_schema = openapi.Parameter(
-    "email", openapi.IN_BODY, type=openapi.TYPE_STRING, format=openapi.FORMAT_EMAIL
-)
-password_schema = openapi.Parameter(
-    "password",
-    openapi.IN_BODY,
-    type=openapi.TYPE_STRING,
-    format=openapi.FORMAT_PASSWORD,
-)
-login_schema = openapi.Schema(
-    "User",
-    type=openapi.TYPE_OBJECT,
-    properties={"email": email_schema, "password": password_schema},
-    required=["email", "password"],
-)
-
-jwt_schema = openapi.Schema(
-    type=openapi.TYPE_OBJECT,
-    properties={"jwt": openapi.Schema("jwt", type=openapi.TYPE_STRING)},
-)
-
-register_response = openapi.Response("User created", UserSerializer)
-login_response = openapi.Response("User logged in", jwt_schema)
+from . import schemas
 
 
 @swagger_auto_schema(
     method="POST",
     operation_summary="Register a new user",
     request_body=UserSerializer,
-    responses={201: register_response, 400: "Invalid request data"},
+    responses={201: schemas.register_response, 400: "Invalid request data"},
 )
 @api_view(["POST"])
 def register(request):
@@ -60,8 +36,8 @@ def register(request):
     method="POST",
     operation_summary="Log in a user",
     operation_description="Generate a jwt token and set it as a cookie in response",
-    request_body=login_schema,
-    responses={403: "Incorrect data", 200: login_response},
+    request_body=schemas.login_schema,
+    responses={403: "Incorrect data", 200: schemas.login_response},
 )
 @api_view(["POST"])
 def login(request):
