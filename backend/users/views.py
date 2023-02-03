@@ -14,13 +14,34 @@ from drf_yasg import openapi
 from .serializers import UserSerializer
 from .models import User
 
+email_schema = openapi.Parameter(
+    "email", openapi.IN_BODY, type=openapi.TYPE_STRING, format=openapi.FORMAT_EMAIL
+)
+password_schema = openapi.Parameter(
+    "password",
+    openapi.IN_BODY,
+    type=openapi.TYPE_STRING,
+    format=openapi.FORMAT_PASSWORD,
+)
+login_schema = openapi.Schema(
+    "User",
+    type=openapi.TYPE_OBJECT,
+    properties={"email": email_schema, "password": password_schema},
+    required=["email", "password"],
+)
+
+jwt_schema = openapi.Schema(
+    type=openapi.TYPE_OBJECT,
+    properties={"jwt": openapi.Schema("jwt", type=openapi.TYPE_STRING)},
+)
 
 register_response = openapi.Response("User created", UserSerializer)
+login_response = openapi.Response("User logged in", jwt_schema)
 
 
 @swagger_auto_schema(
     method="POST",
-    operation_description="register a new user",
+    operation_summary="Register a new user",
     request_body=UserSerializer,
     responses={201: register_response, 400: "Invalid request data"},
 )
@@ -35,6 +56,13 @@ def register(request):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+@swagger_auto_schema(
+    method="POST",
+    operation_summary="Log in a user",
+    operation_description="Generate a jwt token and set it as a cookie in response",
+    request_body=login_schema,
+    responses={403: "Incorrect data", 200: login_response},
+)
 @api_view(["POST"])
 def login(request):
 
@@ -45,10 +73,10 @@ def login(request):
         user = User.objects.filter(email=email).first()
 
         if user is None:
-            raise AuthenticationFailed("User not found")
+            return Response("User not found", status=status.HTTP_403_FORBIDDEN)
 
         if not user.check_password(password):
-            raise AuthenticationFailed("Incorrect password")
+            return Response("Incorrect password", status=status.HTTP_403_FORBIDDEN)
 
         payload = {
             "id": user.id,
@@ -60,7 +88,7 @@ def login(request):
             "utf-8"
         )
 
-        response = Response()
+        response = Response("User logged in", status=status.HTTP_200_OK)
         response.set_cookie(
             key="jwt", value=token, httponly=True, samesite="None", secure=True
         )
