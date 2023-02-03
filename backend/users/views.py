@@ -73,6 +73,12 @@ def login(request):
         return response
 
 
+@swagger_auto_schema(
+    method="GET",
+    operation_summary="Get an authenticated user",
+    operation_description="Return a user from a given jwt cookie",
+    responses={403: "Unauthenticated", 200: schemas.user_response},
+)
 @api_view(["GET"])
 def user(request):
 
