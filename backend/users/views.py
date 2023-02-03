@@ -93,11 +93,17 @@ def user(request):
         return Response(serializer.data)
 
 
+@swagger_auto_schema(
+    method="POST",
+    operation_summary="Log out a user",
+    operation_description="Delete a jwt token cookie",
+    responses={204: "User logged out"},
+)
 @api_view(["POST"])
 def logout(request):
 
     if request.method == "POST":
         response = Response()
         response.delete_cookie("jwt", samesite="None")
-        response.data = {"message": "success"}
+        response.status_code = status.HTTP_204_NO_CONTENT
         return response
