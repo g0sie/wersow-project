@@ -88,6 +88,14 @@ def video_details(request, id: int):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
+@swagger_auto_schema(
+    method="GET",
+    operation_summary="Get a random video",
+    responses={
+        200: schemas.video_schema,
+        404: "There are no videos in the database",
+    },
+)
 @api_view(["GET"])
 def random_video(request):
 
