@@ -16,6 +16,7 @@ from pathlib import Path
 # Environment variables
 
 import environ
+
 env = environ.Env()
 environ.Env.read_env()
 
@@ -27,10 +28,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env('SECRET_KEY')
+SECRET_KEY = env("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env('DEBUG') == 'True'
+DEBUG = env("DEBUG") == "True"
 
 ALLOWED_HOSTS = []
 
@@ -44,12 +45,11 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-
-    'rest_framework',
-    'corsheaders',
-
-    'users.apps.UsersConfig',
-    'videos.apps.VideosConfig',
+    "rest_framework",
+    "corsheaders",
+    "drf_yasg",
+    "users.apps.UsersConfig",
+    "videos.apps.VideosConfig",
 ]
 
 MIDDLEWARE = [
@@ -88,13 +88,13 @@ WSGI_APPLICATION = "backend.wsgi.application"
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': env('DB_NAME'),
-        'HOST': env('DB_HOST'),
-        'PORT': env('DB_PORT'),
-        'USER': env('DB_USER'),
-        'PASSWORD': env('DB_PASSWORD')
+    "default": {
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": env("DB_NAME"),
+        "HOST": env("DB_HOST"),
+        "PORT": env("DB_PORT"),
+        "USER": env("DB_USER"),
+        "PASSWORD": env("DB_PASSWORD"),
     }
 }
 
@@ -143,6 +143,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # django-cors-headers
 # https://pypi.org/project/django-cors-headers/
 CORS_ALLOWED_ORIGINS = [
+    "http://127.0.0.1:8000",
     "http://localhost:3000",
     "https://wersow.netlify.app",
 ]
@@ -156,4 +157,4 @@ django_heroku.settings(locals())
 # Authentication
 
 AUTH_USER_MODEL = "users.User"
-JWT_SECRET_KEY = env('JWT_SECRET_KEY')
+JWT_SECRET_KEY = env("JWT_SECRET_KEY")
