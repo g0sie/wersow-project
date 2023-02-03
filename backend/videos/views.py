@@ -38,6 +38,32 @@ def videos_list(request):
         return Response("Invalid data", status=status.HTTP_400_BAD_REQUEST)
 
 
+@swagger_auto_schema(
+    method="GET",
+    operation_summary="Get a video by id",
+    responses={
+        200: schemas.video_schema,
+        404: "Video not found",
+    },
+)
+@swagger_auto_schema(
+    method="PUT",
+    operation_summary="Update a video",
+    request_body=VideoSerializer,
+    responses={
+        200: schemas.video_schema,
+        400: "Invalid data",
+        404: "Video not found",
+    },
+)
+@swagger_auto_schema(
+    method="DELETE",
+    operation_summary="Delete a video",
+    responses={
+        204: "Video deleted",
+        404: "Video not found",
+    },
+)
 @api_view(["GET", "PUT", "DELETE"])
 def video_details(request, id: int):
 
