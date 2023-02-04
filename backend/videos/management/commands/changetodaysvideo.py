@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
 
-from videos.models import Video
+from videos.functions import change_todays_video
 
 
 class Command(BaseCommand):
@@ -8,14 +8,6 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
 
-        todays = Video.objects.filter(todays=True)
-        for v in todays:
-            v.todays = False
-            v.save()
+        new_todays = change_todays_video()
 
-        random = Video.objects.random()
-        random.todays = True
-        random.save()
-
-        self.stdout.write(self.style.SUCCESS(
-            f"Now today's video is: {random}"))
+        self.stdout.write(self.style.SUCCESS(f"Now today's video is: {new_todays}"))

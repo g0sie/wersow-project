@@ -37,23 +37,31 @@
 const [windowWidth, windowHeight] = useWindowSize();
 ```
 
-returns current width and height of window
+returns current width and height of the window
 
 ## Backend
 
 ### Custom commands
 
-- **[to fix]** Update database with new Wersow's videos that aren't already in the database
+- #### Update database with new Wersow's videos that aren't already in the database
 
-```
-python manage.py loadvideos
-```
+  - add all possible videos
 
-- Change today's video to another random Wersow's video
+  ```properties
+  python manage.py loadvideos
+  ```
 
-```
-python manage.py changetodaysvideo
-```
+  - add 5 new videos
+
+  ```properties
+  python manage.py loadvideos --limit 5
+  ```
+
+- #### Change today's video for another random Wersow's video
+
+  ```properties
+  python manage.py changetodaysvideo
+  ```
 
 ## To-do
 
