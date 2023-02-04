@@ -2,6 +2,7 @@ from django.core.management.base import BaseCommand
 from pytube import Channel, YouTube
 
 from videos.models import Video
+from videos.functions import add_video
 
 
 class Command(BaseCommand):
@@ -26,13 +27,7 @@ class Command(BaseCommand):
 
             is_video_new = Video.objects.filter(url=video_url).count() < 1
             if is_video_new:
-                yt = YouTube(video_url)
-                Video.objects.create(
-                    url=video_url,
-                    title=yt.title,
-                    thumbnail_url=yt.thumbnail_url,
-                    publish_date=yt.publish_date.date(),
-                )
+                add_video(video_url)
                 added += 1
 
         self.stdout.write(self.style.SUCCESS(f"Added {added} new videos"))
