@@ -9,37 +9,35 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument(
-            '--limit', type=int, help='Amount of videos to add', default=float('inf')
+            "--limit", type=int, help="Amount of videos to add", default=float("inf")
         )
 
     def handle(self, *args, **options):
-        channel = Channel(
-            'https://www.youtube.com/channel/UCtVy1X-hcxAL2ZlS6TqMQFw/videos')
+        channel = Channel("https://www.youtube.com/channel/UCtVy1X-hcxAL2ZlS6TqMQFw")
 
-        limit = options.get('limit')
+        limit = options.get("limit")
         added = 0
-        i = 0
+        added_all = True
 
-        while True:
-            if added < limit:
-                try:
-                    video_url = channel.video_urls[i]
-                    # don't add videos that are already in the database
-                    if Video.objects.filter(url=video_url).count() < 1:
-                        yt = YouTube(video_url)
-                        Video.objects.create(
-                            url=video_url,
-                            title=yt.title,
-                            thumbnail_url=yt.thumbnail_url,
-                            publish_date=yt.publish_date.date()
-                        )
-                        added += 1
-                    i += 1
-                except IndexError:
-                    self.stdout.write(self.style.SUCCESS(
-                        "All Wersow's videos are in the database"))
-                    break
-            else:
+        for video_url in channel.video_urls:
+            if added >= limit:
+                added_all = False
                 break
 
+            is_video_new = Video.objects.filter(url=video_url).count() < 1
+            if is_video_new:
+                yt = YouTube(video_url)
+                Video.objects.create(
+                    url=video_url,
+                    title=yt.title,
+                    thumbnail_url=yt.thumbnail_url,
+                    publish_date=yt.publish_date.date(),
+                )
+                added += 1
+
         self.stdout.write(self.style.SUCCESS(f"Added {added} new videos"))
+
+        if added_all:
+            self.stdout.write(
+                self.style.SUCCESS("All Wersow's videos are in the database")
+            )
