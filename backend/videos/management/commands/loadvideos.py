@@ -25,7 +25,7 @@ class Command(BaseCommand):
                 added_all = False
                 break
 
-            is_video_new = Video.objects.filter(url=video_url).count() < 1
+            is_video_new = Video.objects.filter(url=video_url).count() == 0
             if is_video_new:
                 add_video(video_url)
                 added += 1
