@@ -96,3 +96,4 @@ python manage.py changetodaysvideo
 - [Logo generator](https://logo.com/)
 - [Django API Authentication using JWT Tokens](https://youtu.be/PUzgZrS_piQ)
 - [React JWT Authentication](https://youtu.be/OUP-urBy1k4)
+- [Loading spinner](https://uiverse.io/timlmit/average-fish-52)

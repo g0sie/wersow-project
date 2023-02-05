@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Navigate } from "react-router-dom";
 
 import Input from "../components/forms/Input";
-import SubmitButton from "../components/forms/SubmitButton";
+import SubmitButton from "../components/forms/SubmitButton/SubmitButton";
 import ErrorMessage from "../components/forms/ErrorMessage";
 
 import axios from "../api";
@@ -13,6 +13,8 @@ import pageStyles from "./Page.module.css";
 const LoginPage = (props: { updateUser: () => void }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const [waitingForResponse, setWaitingForResponse] = useState(false);
 
   const [redirect, setRedirect] = useState(false);
 
@@ -25,6 +27,7 @@ const LoginPage = (props: { updateUser: () => void }) => {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setWaitingForResponse(true);
 
     axios
       .post(
@@ -45,6 +48,7 @@ const LoginPage = (props: { updateUser: () => void }) => {
             showRightErrorMsg(res.data);
             break;
         }
+        setWaitingForResponse(false);
       })
       .catch((error) => {
         setFailedToLogIn(true);
@@ -52,6 +56,7 @@ const LoginPage = (props: { updateUser: () => void }) => {
           "You found a problem. Contact with admin to solve that."
         );
         console.error(error.toJSON());
+        setWaitingForResponse(false);
       });
 
     function showRightErrorMsg(responseData: any) {
@@ -96,7 +101,9 @@ const LoginPage = (props: { updateUser: () => void }) => {
           onChange={(e) => setPassword(e.target.value)}
         />
 
-        <SubmitButton>Sign in</SubmitButton>
+        <SubmitButton waitingForResponse={waitingForResponse}>
+          Sign in
+        </SubmitButton>
 
         <ErrorMessage
           center={true}

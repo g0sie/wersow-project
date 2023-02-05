@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Navigate } from "react-router-dom";
 
-import SubmitButton from "../../components/forms/SubmitButton";
+import SubmitButton from "../../components/forms/SubmitButton/SubmitButton";
 import ErrorMessage from "../../components/forms/ErrorMessage";
 
 import NameInput from "./NameInput";
@@ -28,6 +28,8 @@ const RegisterPage = () => {
 
   const [isReadyToSubmit, setIsReadyToSubmit] = useState(false);
 
+  const [waitingForResponse, setWaitingForResponse] = useState(false);
+
   const [redirect, setRedirect] = useState(false);
 
   const [failedToRegister, setFailedToRegister] = useState(false);
@@ -37,6 +39,7 @@ const RegisterPage = () => {
     event: React.FormEvent<HTMLFormElement>
   ): Promise<void> => {
     event.preventDefault();
+    setWaitingForResponse(true);
 
     axios
       .post(
@@ -54,12 +57,14 @@ const RegisterPage = () => {
             showRightErrorMsg(res.data);
             break;
         }
+        setWaitingForResponse(false);
       })
       .catch((error) => {
         setFailedToRegister(true);
         setRegisterErrorMsg(
           "You found a problem. Contact with admin to solve that."
         );
+        setWaitingForResponse(false);
         console.error(error.toJSON());
       });
 
@@ -129,7 +134,12 @@ const RegisterPage = () => {
           setIsReadyToSubmit={setIsReadyToSubmit}
         />
 
-        <SubmitButton disabled={!isReadyToSubmit}>Sign up</SubmitButton>
+        <SubmitButton
+          disabled={!isReadyToSubmit}
+          waitingForResponse={waitingForResponse}
+        >
+          Sign up
+        </SubmitButton>
 
         <ErrorMessage
           center={true}

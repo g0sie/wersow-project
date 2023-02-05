@@ -67,10 +67,6 @@
   color: var(--bright-blue);
 }
 
-.submitBtn {
-  margin-top: 1.8rem;
-}
-
 .errorMsg {
   font-size: 1.21rem;
   margin-top: 0.15rem;
