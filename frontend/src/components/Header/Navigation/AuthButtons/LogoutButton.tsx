@@ -1,3 +1,5 @@
+import axios from "../../../../api";
+
 import styles from "../../Header.module.css";
 
 interface LogoutButtonProps {
@@ -8,12 +10,20 @@ interface LogoutButtonProps {
 
 const LogoutButton = (props: LogoutButtonProps) => {
   const logOut = async () => {
-    await fetch("https://wersow-api.herokuapp.com/users/logout", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-    });
-    props.updateUser();
+    axios
+      .post(
+        "/users/logout",
+        {},
+        {
+          withCredentials: true,
+        }
+      )
+      .then(() => {
+        props.updateUser();
+      })
+      .catch((error) => {
+        console.error(error.toJSON());
+      });
 
     props.turnOffNav();
   };
