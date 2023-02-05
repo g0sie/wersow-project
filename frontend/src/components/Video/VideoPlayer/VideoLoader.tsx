@@ -1,10 +1,19 @@
+import { useState } from "react";
 import styles from "../Video.module.css";
 
-interface loaderProps {
-  message: string;
+interface videoLoaderProps {
+  loadingFailed: boolean;
 }
 
-const Loader = (props: loaderProps) => {
+const VideoLoader = (props: videoLoaderProps) => {
+  const message = props.loadingFailed
+    ? "Failed to load today's video :("
+    : "Looking for inspiration on pinterest";
+
+  if (props.loadingFailed) {
+    return <p>{message}</p>;
+  }
+
   const DURATION = 1.5; // in seconds
   const CHARS_PER_WAVE = 3;
 
@@ -14,7 +23,7 @@ const Loader = (props: loaderProps) => {
 
   return (
     <>
-      {props.message.split("").map((char: string, index: number) => {
+      {message.split("").map((char: string, index: number) => {
         return (
           <pre
             key={index}
@@ -32,4 +41,4 @@ const Loader = (props: loaderProps) => {
   );
 };
 
-export default Loader;
+export default VideoLoader;

@@ -19,12 +19,16 @@ interface VideoInterface {
 
 const Video = () => {
   const [video, setVideo] = useState<VideoInterface>();
+  const [loadingFailed, setLoadingFailed] = useState(false);
 
   const fetchTodaysVideo = () => {
     axios
       .get("/videos/todays")
       .then((res) => setVideo(res.data))
-      .catch((error) => console.error(error.toJSON()));
+      .catch((error) => {
+        setLoadingFailed(true);
+        console.error(error.toJSON().message);
+      });
   };
 
   useEffect(() => {
@@ -38,7 +42,7 @@ const Video = () => {
           <VideoPlayer url={video.url.replace("watch?v=", "embed/")} />
         ) : (
           <VideoPlaceholder>
-            <VideoLoader message="negotiating with a French artist..." />
+            <VideoLoader loadingFailed={loadingFailed} />
           </VideoPlaceholder>
         )}
       </div>
