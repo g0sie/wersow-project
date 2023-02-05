@@ -8,6 +8,8 @@ import NameInput from "./NameInput";
 import EmailInput from "./EmailInput";
 import PasswordInput from "./PasswordInput";
 
+import axios from "../../api";
+
 import formStyles from "../../components/forms/form.module.css";
 import pageStyles from "../Page.module.css";
 
@@ -27,28 +29,62 @@ const RegisterPage = () => {
   const [isReadyToSubmit, setIsReadyToSubmit] = useState(false);
 
   const [redirect, setRedirect] = useState(false);
-  const [somethingWentWrong, setSomethingWentWrong] = useState(false);
+
+  const [failedToRegister, setFailedToRegister] = useState(false);
+  const [registerErrorMsg, setRegisterErrorMsg] = useState("error");
 
   const handleSubmit = async (
     event: React.FormEvent<HTMLFormElement>
   ): Promise<void> => {
     event.preventDefault();
 
-    const response = await fetch(
-      "https://wersow-api.herokuapp.com/users/register",
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name,
-          email,
-          password,
-        }),
-      }
-    );
+    axios
+      .post(
+        "/users/register",
+        { name, email, password },
+        { validateStatus: (status) => [201, 400].includes(status) }
+      )
+      .then((res) => {
+        switch (res.status) {
+          case 201:
+            setRedirect(true);
+            break;
+          case 400:
+            setFailedToRegister(true);
+            showRightErrorMsg(res.data);
+            break;
+        }
+      })
+      .catch((error) => {
+        setFailedToRegister(true);
+        setRegisterErrorMsg(
+          "You found a problem. Contact with admin to solve that."
+        );
+        console.error(error.toJSON());
+      });
 
-    if (response.ok) setRedirect(true);
-    else setSomethingWentWrong(true);
+    function showRightErrorMsg(responseData: any) {
+      let errorMsg;
+
+      if (responseData.email) {
+        errorMsg = "Try again with different email";
+        if (
+          responseData.email.includes("user with this email already exists.")
+        ) {
+          errorMsg =
+            "User with that email address already signed up to #teamsówki";
+        }
+      } else if (responseData.name) {
+        errorMsg = "Try again with different username";
+      } else if (responseData.password) {
+        errorMsg = "Try again with different password";
+      } else {
+        errorMsg = "Something went wrong...";
+      }
+
+      setFailedToRegister(true);
+      setRegisterErrorMsg(errorMsg);
+    }
   };
 
   if (redirect) {
@@ -97,8 +133,8 @@ const RegisterPage = () => {
 
         <ErrorMessage
           center={true}
-          visible={somethingWentWrong}
-          message="Something went wrong... Try again with different data"
+          visible={failedToRegister}
+          message={registerErrorMsg}
         />
       </form>
     </div>
