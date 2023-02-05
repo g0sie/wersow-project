@@ -1,4 +1,3 @@
-import { useState } from "react";
 import styles from "../Video.module.css";
 
 interface videoLoaderProps {
