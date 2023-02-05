@@ -46,6 +46,7 @@ const LoginPage = (props: { updateUser: () => void }) => {
             break;
           case 403:
             showRightErrorMsg(res.data);
+            console.log(res.data);
             break;
         }
         setWaitingForResponse(false);
@@ -67,8 +68,8 @@ const LoginPage = (props: { updateUser: () => void }) => {
           errorMsg =
             "User with that email address doesn't belong to #teamsówki";
           break;
-        case "Invalid password": {
-          errorMsg = "Try againt with a correct password";
+        case "Incorrect password": {
+          errorMsg = "Try again with a correct password";
           break;
         }
         default:
