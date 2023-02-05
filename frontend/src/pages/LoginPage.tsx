@@ -5,6 +5,8 @@ import Input from "../components/forms/Input";
 import SubmitButton from "../components/forms/SubmitButton";
 import ErrorMessage from "../components/forms/ErrorMessage";
 
+import axios from "../api";
+
 import formStyles from "../components/forms/form.module.css";
 import pageStyles from "./Page.module.css";
 
@@ -13,33 +15,65 @@ const LoginPage = (props: { updateUser: () => void }) => {
   const [password, setPassword] = useState("");
 
   const [redirect, setRedirect] = useState(false);
-  const [somethingWentWrong, setSomethingWentWrong] = useState(false);
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    const response = await fetch(
-      "https://wersow-api.herokuapp.com/users/login",
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({
-          email,
-          password,
-        }),
-      }
-    );
-
-    if (response.ok) {
-      props.updateUser();
-      setRedirect(true);
-    } else setSomethingWentWrong(true);
-  };
+  const [failedToLogIn, setFailedToLogIn] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("error");
 
   if (redirect) {
     return <Navigate to=".." />;
   }
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    axios
+      .post(
+        "/users/login",
+        { email, password },
+        {
+          withCredentials: true,
+          validateStatus: (status) => [200, 403].includes(status),
+        }
+      )
+      .then((res) => {
+        switch (res.status) {
+          case 200:
+            props.updateUser();
+            setRedirect(true);
+            break;
+          case 403:
+            showRightErrorMsg(res.data);
+            break;
+        }
+      })
+      .catch((error) => {
+        setFailedToLogIn(true);
+        setErrorMessage(
+          "You found a problem. Contact with admin to solve that."
+        );
+        console.error(error.toJSON());
+      });
+
+    function showRightErrorMsg(responseData: any) {
+      let errorMsg;
+
+      switch (responseData) {
+        case "User not found":
+          errorMsg =
+            "User with that email address doesn't belong to #teamsówki";
+          break;
+        case "Invalid password": {
+          errorMsg = "Try againt with a correct password";
+          break;
+        }
+        default:
+          errorMsg = "Something went wrong...";
+      }
+
+      setFailedToLogIn(true);
+      setErrorMessage(errorMsg);
+    }
+  };
 
   return (
     <div className={`${pageStyles.page} ${pageStyles.pageCentered}`}>
@@ -66,8 +100,8 @@ const LoginPage = (props: { updateUser: () => void }) => {
 
         <ErrorMessage
           center={true}
-          visible={somethingWentWrong}
-          message="Something went wrong... Try again with different data"
+          visible={failedToLogIn}
+          message={errorMessage}
         />
       </form>
     </div>
