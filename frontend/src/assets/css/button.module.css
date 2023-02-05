@@ -30,10 +30,19 @@
 
 .btn:disabled {
   cursor: default;
-  background-color: lightslategray;
-  box-shadow: none;
-  color: var(--blue-400);
+  background-color: var(--light-blue);
+  color: var(--dark-blue-500);
   translate: 0;
+
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+
+.btn:disabled:hover {
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
 }
 
 .btnBig {

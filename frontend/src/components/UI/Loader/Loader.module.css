@@ -19,7 +19,7 @@
   width: 0.1875rem;
   height: 0.5625rem;
   border-radius: 25%;
-  background: var(--dark-blue-600);
+  background: var(--dark-blue-500);
 }
 
 .loader div:nth-child(1) {
