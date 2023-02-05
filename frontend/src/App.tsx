@@ -5,7 +5,9 @@ import SpaceBackground from "./components/SpaceBackground/SpaceBackground";
 import Header from "./components/Header/Header";
 import IndexPage from "./pages/IndexPage";
 import LoginPage from "./pages/LoginPage";
-import RegisterPage from "./pages/RegisterPage";
+import RegisterPage from "./pages/RegisterPage/RegisterPage";
+
+import axios from "./api";
 
 import "./App.css";
 
@@ -19,20 +21,22 @@ function App() {
   const [loggedInUser, setLoggedInUser] = useState<UserInterface | null>(null);
 
   const getAuthenticatedUser = async () => {
-    const response = await fetch(
-      "https://wersow-api.herokuapp.com/users/user",
-      {
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-      }
-    );
-
-    if (response.ok) {
-      const user = await response.json();
-      setLoggedInUser(user);
-    } else {
-      setLoggedInUser(null);
-    }
+    axios
+      .get("/users/user", {
+        withCredentials: true,
+        validateStatus: (status) => [200, 403].includes(status),
+      })
+      .then((res) => {
+        switch (res.status) {
+          case 200:
+            setLoggedInUser(res.data);
+            break;
+          case 403:
+            setLoggedInUser(null);
+            break;
+        }
+      })
+      .catch((error) => console.error(error.toJSON()));
   };
 
   useEffect(() => {
