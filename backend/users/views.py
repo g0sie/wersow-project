@@ -15,6 +15,7 @@ from .models import User
 from . import schemas
 from videos.models import Video
 from videos.serializers import VideoSerializer
+from videos.schemas import videos_schema
 
 
 @swagger_auto_schema(
@@ -118,10 +119,15 @@ def logout(request):
 
 
 @swagger_auto_schema(
+    method="GET",
+    operation_summary="Get user's video collection",
+    responses={200: videos_schema, 404: "Not found"},
+)
+@swagger_auto_schema(
     method="POST",
     operation_summary="Add a video to user's collection",
     request_body=schemas.user_id_schema,
-    responses={201: schemas.collect_video_response, 404: "Not found"},
+    responses={201: schemas.collect_video_response, 404: "User not found"},
 )
 @api_view(["GET", "POST"])
 def videos(request, user_id: int):
