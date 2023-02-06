@@ -2,6 +2,8 @@ from django.db import models
 from django.core.validators import MinLengthValidator
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 
+from videos.models import Video
+
 
 class UserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
@@ -32,8 +34,9 @@ class User(AbstractUser):
         validators=[MinLengthValidator(3)],
     )
     email = models.EmailField(max_length=255, unique=True)
-    password = models.CharField(max_length=30, validators=[MinLengthValidator(6)])
+    password = models.CharField(max_length=255)
     username = None
+    videos = models.ManyToManyField(Video, related_name="users")
 
     # overwrite to log in with email instead of username
     USERNAME_FIELD = "email"

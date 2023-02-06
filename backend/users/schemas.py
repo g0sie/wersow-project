@@ -28,8 +28,16 @@ user_schema = openapi.Schema(
     type=openapi.TYPE_OBJECT,
     properties={"id": id_parameter, "name": name_parameter, "email": email_parameter},
 )
+user_id_schema = openapi.Schema(
+    type=openapi.TYPE_OBJECT, properties={"video_id": id_parameter}
+)
+collection_schema = openapi.Schema(
+    type=openapi.TYPE_OBJECT,
+    properties={"user_id": id_parameter, "video_id": id_parameter},
+)
 
 # Responses
 register_response = openapi.Response("User created", user_schema)
 login_response = openapi.Response("User logged in", jwt_schema)
 user_response = openapi.Response("Authenticated", user_schema)
+collect_video_response = openapi.Response("Video added", collection_schema)
