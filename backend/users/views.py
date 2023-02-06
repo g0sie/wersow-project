@@ -12,6 +12,7 @@ from drf_yasg.utils import swagger_auto_schema
 
 from .serializers import UserSerializer
 from .models import User
+from videos.models import Video
 from . import schemas
 
 
@@ -113,3 +114,23 @@ def logout(request):
         response.delete_cookie("jwt", samesite="None")
         response.status_code = status.HTTP_204_NO_CONTENT
         return response
+
+
+@api_view(["POST"])
+def videos(request, user_id: int):
+
+    # add a video to user's collection
+    if request.method == "POST":
+        user = User.objects.filter(id=user_id).first()
+        if user is None:
+            return Response("User not found", status=status.HTTP_404_NOT_FOUND)
+
+        video_id = request.data.get("video_id")
+        video = Video.objects.filter(id=video_id).first()
+        if video is None:
+            return Response("Video not found", status=status.HTTP_404_NOT_FOUND)
+
+        user.videos.add(video)
+        return Response(
+            {"user_id": user_id, "video_id": video_id}, status=status.HTTP_201_CREATED
+        )
