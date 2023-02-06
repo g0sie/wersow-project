@@ -36,6 +36,7 @@ class User(AbstractUser):
     email = models.EmailField(max_length=255, unique=True)
     password = models.CharField(max_length=255)
     username = None
+    videos = models.ManyToManyField(Video, related_name="users")
 
     # overwrite to log in with email instead of username
     USERNAME_FIELD = "email"
