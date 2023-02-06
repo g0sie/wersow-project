@@ -116,6 +116,12 @@ def logout(request):
         return response
 
 
+@swagger_auto_schema(
+    method="POST",
+    operation_summary="Add a video to user's collection",
+    request_body=schemas.user_id_schema,
+    responses={201: schemas.collect_video_response, 404: "Not found"},
+)
 @api_view(["POST"])
 def videos(request, user_id: int):
 
