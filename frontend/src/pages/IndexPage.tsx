@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import axios from "../api";
 import TodaysVideo from "../components/Video/TodaysVideo";
 import pageStyles from "./Page.module.css";
@@ -13,26 +13,14 @@ export interface VideoInterface {
 }
 
 export const IndexPage = () => {
-  const [todaysVideo, setTodaysVideo] = useState<VideoInterface | null>(null);
-  const [loadingFailed, setLoadingFailed] = useState(false);
-
-  const fetchTodaysVideo = () => {
-    axios
-      .get("/videos/todays")
-      .then((res) => setTodaysVideo(res.data))
-      .catch((error) => {
-        setLoadingFailed(true);
-        console.error(error.toJSON().message);
-      });
-  };
-
-  useEffect(() => {
-    fetchTodaysVideo();
-  }, []);
+  const todaysVideoQuery = useQuery<VideoInterface, Error>({
+    queryKey: ["todaysVideo"],
+    queryFn: () => axios.get("/videos/todays").then((res) => res.data),
+  });
 
   return (
     <div className={`${pageStyles.page} ${pageStyles.pageCentered}`}>
-      <TodaysVideo video={todaysVideo} loadingFailed={loadingFailed} />
+      <TodaysVideo todaysVideoQuery={todaysVideoQuery} />
     </div>
   );
 };
