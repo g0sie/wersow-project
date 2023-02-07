@@ -1,0 +1,10 @@
+.indexPage {
+  display: grid;
+  /* grid-template-areas:
+    "video video"
+    "title buton"; */
+}
+
+/* .collectButton {
+  grid-area: "buton";
+} */

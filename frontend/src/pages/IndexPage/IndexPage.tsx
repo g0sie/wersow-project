@@ -5,9 +5,11 @@ import axios from "../../api";
 import { LoggedInUserContext } from "../../App";
 
 import TodaysVideo from "../../components/Video/TodaysVideo";
+import VideoTitle from "../../components/Video/VideoTitle/VideoTitle";
 import Button from "../../components/UI/Button/Button";
 
 import pageStyles from "../Page.module.css";
+import styles from "./IndexPage.module.css";
 
 export interface VideoInterface {
   id: number;
@@ -27,9 +29,16 @@ export const IndexPage = () => {
   });
 
   return (
-    <div className={`${pageStyles.page} ${pageStyles.pageCentered}`}>
+    <div className={[styles.indexPage, pageStyles.page].join(" ")}>
       <TodaysVideo todaysVideoQuery={todaysVideoQuery} />
-      <Button type="button" waitingForResponse={todaysVideoQuery.isLoading}>
+
+      <VideoTitle title={todaysVideoQuery.data?.title} />
+
+      <Button
+        type="button"
+        waitingForResponse={todaysVideoQuery.isLoading}
+        className={styles.collectButton}
+      >
         {loggedInUser ? "Collect" : "Sign to #teamsówki to collect videos"}
       </Button>
     </div>
