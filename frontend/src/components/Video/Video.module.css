@@ -1,9 +1,3 @@
-.video {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
 .videoPlayerWrapper {
   position: relative;
   padding-bottom: 56.25%; /* equals 16:9 */
@@ -32,45 +26,6 @@
   left: 0;
   width: 100%;
   height: 100%; /* of padding-bottom of videoWrapper */
-}
-
-.character {
-  font-family: "Roboto", sans-serif;
-  animation: loading infinite linear;
-}
-
-@keyframes loading {
-  0% {
-    translate: 0 0;
-  }
-  25% {
-    translate: 0 0.2rem;
-  }
-  75% {
-    translate: 0 -0.2rem;
-  }
-  100% {
-    translate: 0 0;
-  }
-}
-
-.videoTitleWrapper {
-  margin-top: 0.5rem;
-  min-height: 3rem;
-}
-
-.videoTitle {
-  font-size: 2.7rem;
-  line-height: 3rem;
-  font-weight: 500;
-  color: white;
-  font-family: "Roboto", sans-serif;
-}
-
-.videoTitlePlaceholder {
-  display: block;
-  height: 3rem;
-  background-color: var(--dark-blue-500);
 }
 
 .placeholder {

@@ -1,0 +1,52 @@
+.indexPage {
+  display: grid;
+  gap: 1rem;
+
+  grid-template-areas:
+    "video video"
+    "title buton"
+    "empty error";
+
+  grid-template-columns: 1fr auto;
+}
+
+.todaysVideo {
+  grid-area: video;
+}
+
+.videoTitle {
+  grid-area: title;
+  align-self: center;
+  text-align: left;
+}
+
+.collectButton {
+  grid-area: buton;
+  align-self: center;
+  justify-self: end;
+}
+
+.errorMsg {
+  grid-area: error;
+}
+
+@media (max-width: 1024px) {
+  .indexPage {
+    grid-template-areas:
+      "video"
+      "title"
+      "buton"
+      "error";
+
+    grid-template-columns: 1fr;
+  }
+  .videoTitle {
+    text-align: center;
+  }
+  .collectButton {
+    justify-self: center;
+  }
+  .errorMsg {
+    text-align: center;
+  }
+}

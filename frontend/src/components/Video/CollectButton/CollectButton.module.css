@@ -1,0 +1,13 @@
+.collectBtn {
+  --padding-left-right: 2.5rem;
+
+  padding: 0.5rem var(--padding-left-right);
+  font-size: 2rem;
+  line-height: 2rem;
+}
+
+@media (max-width: 1024px) {
+  .collectBtn {
+    --padding-left-right: 6rem;
+  }
+}

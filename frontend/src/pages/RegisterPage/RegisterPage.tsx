@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Navigate } from "react-router-dom";
 
-import SubmitButton from "../../components/forms/SubmitButton/SubmitButton";
+import Button from "../../components/UI/Button/Button";
 import ErrorMessage from "../../components/forms/ErrorMessage";
 
 import NameInput from "./NameInput";
@@ -12,6 +12,7 @@ import axios from "../../api";
 
 import formStyles from "../../components/forms/form.module.css";
 import pageStyles from "../Page.module.css";
+import styles from "./RegisterPage.module.css";
 
 const RegisterPage = () => {
   const [name, setName] = useState("");
@@ -134,12 +135,14 @@ const RegisterPage = () => {
           setIsReadyToSubmit={setIsReadyToSubmit}
         />
 
-        <SubmitButton
+        <Button
+          type="submit"
+          className={styles.submitBtn}
           disabled={!isReadyToSubmit}
           waitingForResponse={waitingForResponse}
         >
           Sign up
-        </SubmitButton>
+        </Button>
 
         <ErrorMessage
           center={true}

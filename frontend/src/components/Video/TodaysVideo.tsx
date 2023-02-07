@@ -1,54 +1,32 @@
-import { useEffect, useState } from "react";
-import axios from "../../api";
+import { UseQueryResult } from "@tanstack/react-query";
 
 import VideoPlayer from "./VideoPlayer/VideoPlayer";
 import VideoPlaceholder from "./VideoPlayer/VideoPlaceholder";
-import VideoLoader from "./VideoPlayer/VideoLoader";
-import VideoTitle from "./VideoTitle";
+import LoadingMessage from "./VideoPlayer/LoadingMessage/LoadingMessage";
+
+import { VideoInterface } from "../../pages/IndexPage/IndexPage";
 
 import styles from "./Video.module.css";
 
-interface VideoInterface {
-  id: number;
-  title: string;
-  url: string;
-  thumbnailUrl: string;
-  publish_date: string;
-  todays: boolean;
+interface TodaysVideoProps {
+  todaysVideoQuery: UseQueryResult<VideoInterface, Error>;
+  className?: string;
 }
 
-const Video = () => {
-  const [video, setVideo] = useState<VideoInterface>();
-  const [loadingFailed, setLoadingFailed] = useState(false);
-
-  const fetchTodaysVideo = () => {
-    axios
-      .get("/videos/todays")
-      .then((res) => setVideo(res.data))
-      .catch((error) => {
-        setLoadingFailed(true);
-        console.error(error.toJSON().message);
-      });
-  };
-
-  useEffect(() => {
-    fetchTodaysVideo();
-  }, []);
-
+const TodaysVideo = (props: TodaysVideoProps) => {
   return (
-    <div className={styles.video}>
-      <div className={styles.videoPlayerWrapper}>
-        {video ? (
-          <VideoPlayer url={video.url.replace("watch?v=", "embed/")} />
-        ) : (
-          <VideoPlaceholder>
-            <VideoLoader loadingFailed={loadingFailed} />
-          </VideoPlaceholder>
-        )}
-      </div>
-      <VideoTitle title={video?.title} />
+    <div className={[styles.videoPlayerWrapper, props?.className].join(" ")}>
+      {props.todaysVideoQuery.isSuccess ? (
+        <VideoPlayer
+          url={props.todaysVideoQuery.data.url.replace("watch?v=", "embed/")}
+        />
+      ) : (
+        <VideoPlaceholder>
+          <LoadingMessage loadingFailed={props.todaysVideoQuery.isError} />
+        </VideoPlaceholder>
+      )}
     </div>
   );
 };
 
-export default Video;
+export default TodaysVideo;
