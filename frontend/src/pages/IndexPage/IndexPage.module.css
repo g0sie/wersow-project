@@ -5,6 +5,8 @@
   grid-template-areas:
     "video video"
     "title buton";
+
+  grid-template-columns: 1fr auto;
 }
 
 .todaysVideo {
@@ -13,11 +15,29 @@
 
 .videoTitle {
   grid-area: title;
-  justify-self: center;
+  align-self: center;
+  text-align: left;
 }
 
 .collectButton {
   grid-area: buton;
   align-self: center;
-  justify-self: center;
+  justify-self: end;
+}
+
+@media (max-width: 1024px) {
+  .indexPage {
+    grid-template-areas:
+      "video"
+      "title"
+      "buton";
+
+    grid-template-columns: 1fr;
+  }
+  .videoTitle {
+    text-align: center;
+  }
+  .collectButton {
+    justify-self: center;
+  }
 }

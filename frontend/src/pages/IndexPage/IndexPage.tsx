@@ -35,6 +35,7 @@ export const IndexPage = () => {
         <VideoTitle
           className={styles.videoTitle}
           title={todaysVideoQuery.data?.title}
+          // title={undefined}
         />
 
         <CollectButton className={styles.collectButton} />
