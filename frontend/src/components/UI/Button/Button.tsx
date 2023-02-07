@@ -9,6 +9,7 @@ interface ButtonProps {
   disabled?: boolean;
   type: "button" | "submit";
   className?: string;
+  onClick?: () => void;
 }
 
 const Button = (props: ButtonProps) => {
@@ -22,6 +23,7 @@ const Button = (props: ButtonProps) => {
   return (
     <button
       type={props.type}
+      onClick={props.onClick}
       className={classNames.join(" ")}
       disabled={props.disabled || props.waitingForResponse}
     >
