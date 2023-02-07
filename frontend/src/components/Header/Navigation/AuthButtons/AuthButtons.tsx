@@ -8,7 +8,7 @@ import LoginButton from "./LoginButton";
 import RegisterButton from "./RegisterButton";
 import LogoutButton from "./LogoutButton";
 
-import buttonStyles from "../../../../assets/css/button.module.css";
+import buttonStyles from "../../../UI/Button/Button.module.css";
 import styles from "../../Header.module.css";
 
 interface AuthButtonsProps {

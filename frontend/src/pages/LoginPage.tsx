@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Navigate } from "react-router-dom";
 
 import Input from "../components/forms/Input";
-import SubmitButton from "../components/forms/SubmitButton/SubmitButton";
+import Button from "../components/UI/Button/Button";
 import ErrorMessage from "../components/forms/ErrorMessage";
 
 import axios from "../api";
@@ -102,9 +102,9 @@ const LoginPage = (props: { updateUser: () => void }) => {
           onChange={(e) => setPassword(e.target.value)}
         />
 
-        <SubmitButton waitingForResponse={waitingForResponse}>
+        <Button type="submit" waitingForResponse={waitingForResponse}>
           Sign in
-        </SubmitButton>
+        </Button>
 
         <ErrorMessage
           center={true}
