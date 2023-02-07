@@ -1,0 +1,9 @@
+.collectBtn {
+  grid-area: buton;
+  align-self: center;
+  justify-self: center;
+
+  padding: 0.5rem 2.5rem;
+  font-size: 2rem;
+  line-height: 2rem;
+}

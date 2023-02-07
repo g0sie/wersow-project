@@ -3,9 +3,8 @@
   gap: 1rem;
 
   grid-template-areas:
-    "video"
-    "title"
-    "buton";
+    "video video"
+    "title buton";
 }
 
 .todaysVideo {
@@ -18,13 +17,7 @@
 }
 
 .collectButton {
-  --padding: 3rem;
-
   grid-area: buton;
   align-self: center;
   justify-self: center;
-
-  padding-left: var(--padding);
-  padding-right: var(--padding);
-  font-size: 2rem;
 }

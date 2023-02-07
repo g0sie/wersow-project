@@ -1,12 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
-import { useContext } from "react";
 
 import axios from "../../api";
-import { LoggedInUserContext } from "../../App";
 
 import TodaysVideo from "../../components/Video/TodaysVideo";
 import VideoTitle from "../../components/Video/VideoTitle/VideoTitle";
-import Button from "../../components/UI/Button/Button";
+import CollectButton from "../../components/Video/CollectButton/CollectButton";
 
 import pageStyles from "../Page.module.css";
 import styles from "./IndexPage.module.css";
@@ -21,8 +19,6 @@ export interface VideoInterface {
 }
 
 export const IndexPage = () => {
-  const loggedInUser = useContext(LoggedInUserContext);
-
   const todaysVideoQuery = useQuery<VideoInterface, Error>({
     queryKey: ["todaysVideo"],
     queryFn: () => axios.get("/videos/todays").then((res) => res.data),
@@ -41,13 +37,7 @@ export const IndexPage = () => {
           title={todaysVideoQuery.data?.title}
         />
 
-        <Button
-          type="button"
-          waitingForResponse={todaysVideoQuery.isLoading}
-          className={styles.collectButton}
-        >
-          {loggedInUser ? "Collect" : "Join #teamsówki to collect videos"}
-        </Button>
+        <CollectButton className={styles.collectButton} />
       </div>
     </div>
   );
