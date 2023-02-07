@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 
 import axios from "../../api";
@@ -5,6 +6,7 @@ import axios from "../../api";
 import TodaysVideo from "../../components/Video/TodaysVideo";
 import VideoTitle from "../../components/Video/VideoTitle/VideoTitle";
 import CollectButton from "../../components/Video/CollectButton/CollectButton";
+import ErrorMessage from "../../components/forms/ErrorMessage";
 
 import pageStyles from "../Page.module.css";
 import styles from "./IndexPage.module.css";
@@ -19,6 +21,7 @@ export interface VideoInterface {
 }
 
 export const IndexPage = () => {
+  const [showError, setShowError] = useState(false);
   const todaysVideoQuery = useQuery<VideoInterface, Error>({
     queryKey: ["todaysVideo"],
     queryFn: () => axios.get("/videos/todays").then((res) => res.data),
@@ -38,7 +41,17 @@ export const IndexPage = () => {
           // title={undefined}
         />
 
-        <CollectButton className={styles.collectButton} />
+        <CollectButton
+          className={styles.collectButton}
+          showError={showError}
+          setShowError={setShowError}
+        />
+
+        <ErrorMessage
+          className={styles.errorMsg}
+          visible={showError}
+          message={"Join #teamsówki to collect videos"}
+        />
       </div>
     </div>
   );

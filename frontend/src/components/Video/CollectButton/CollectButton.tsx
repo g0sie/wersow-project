@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { LoggedInUserContext } from "../../../App";
 import Button from "../../UI/Button/Button";
 
@@ -6,6 +6,8 @@ import styles from "./CollectButton.module.css";
 
 interface CollectButtonProps {
   className?: string;
+  showError: boolean;
+  setShowError: (showError: boolean) => void;
 }
 
 const CollectButton = (props: CollectButtonProps) => {
@@ -15,6 +17,7 @@ const CollectButton = (props: CollectButtonProps) => {
     console.log("collected");
   };
   const tellToSignup = () => {
+    props.setShowError(true);
     console.log("join #teamsówki to collect videos");
   };
 
@@ -24,14 +27,16 @@ const CollectButton = (props: CollectButtonProps) => {
   };
 
   return (
-    <Button
-      type="button"
-      onClick={handleClick}
-      waitingForResponse={false}
-      className={[styles.collectBtn, props.className].join(" ")}
-    >
-      Collect
-    </Button>
+    <>
+      <Button
+        type="button"
+        onClick={handleClick}
+        waitingForResponse={false}
+        className={[styles.collectBtn, props.className].join(" ")}
+      >
+        {props.showError ? "Sign up" : "Collect"}
+      </Button>
+    </>
   );
 };
 
