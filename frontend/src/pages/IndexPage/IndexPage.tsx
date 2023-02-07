@@ -43,8 +43,8 @@ export const IndexPage = () => {
 
         <CollectButton
           className={styles.collectButton}
-          showError={showError}
-          setShowError={setShowError}
+          tellToSignUp={showError}
+          setTellToSignUp={setShowError}
         />
 
         <ErrorMessage

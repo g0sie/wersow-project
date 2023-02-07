@@ -1,4 +1,5 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { LoggedInUserContext } from "../../../App";
 import Button from "../../UI/Button/Button";
 
@@ -6,24 +7,22 @@ import styles from "./CollectButton.module.css";
 
 interface CollectButtonProps {
   className?: string;
-  showError: boolean;
-  setShowError: (showError: boolean) => void;
+  tellToSignUp: boolean;
+  setTellToSignUp: (tellToSignUp: boolean) => void;
 }
 
 const CollectButton = (props: CollectButtonProps) => {
   const loggedInUser = useContext(LoggedInUserContext);
+  const navigate = useNavigate();
 
   const collectVideo = () => {
     console.log("collected");
   };
-  const tellToSignup = () => {
-    props.setShowError(true);
-    console.log("join #teamsówki to collect videos");
-  };
 
   const handleClick = () => {
-    if (loggedInUser) collectVideo();
-    else tellToSignup();
+    if (props.tellToSignUp) return navigate("/register");
+    else if (loggedInUser) collectVideo();
+    else props.setTellToSignUp(true);
   };
 
   return (
@@ -34,7 +33,7 @@ const CollectButton = (props: CollectButtonProps) => {
         waitingForResponse={false}
         className={[styles.collectBtn, props.className].join(" ")}
       >
-        {props.showError ? "Sign up" : "Collect"}
+        {props.tellToSignUp ? "Sign up" : "Collect"}
       </Button>
     </>
   );
