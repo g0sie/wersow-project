@@ -35,11 +35,15 @@ const CollectButton = (props: CollectButtonProps) => {
       <Button
         type="button"
         onClick={handleClick}
-        disabled={!props.todaysVideoQuery.isSuccess}
+        disabled={!props.todaysVideoQuery.isSuccess || loggedInUser != null}
         waitingForResponse={false}
         className={[styles.collectBtn, props.className].join(" ")}
       >
-        {props.tellToSignUp ? "Sign up" : "Collect"}
+        {props.tellToSignUp
+          ? "Sign up"
+          : loggedInUser === null
+          ? "Collect"
+          : "Soon"}
       </Button>
     </>
   );
