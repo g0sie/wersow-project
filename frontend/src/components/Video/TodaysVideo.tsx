@@ -2,7 +2,7 @@ import { UseQueryResult } from "@tanstack/react-query";
 
 import VideoPlayer from "./VideoPlayer/VideoPlayer";
 import VideoPlaceholder from "./VideoPlayer/VideoPlaceholder";
-import VideoLoader from "./VideoPlayer/VideoLoader";
+import LoadingMessage from "./VideoPlayer/LoadingMessage/LoadingMessage";
 import VideoTitle from "./VideoTitle";
 
 import { VideoInterface } from "../../pages/IndexPage";
@@ -23,7 +23,7 @@ const TodaysVideo = (props: TodaysVideoProps) => {
           />
         ) : (
           <VideoPlaceholder>
-            <VideoLoader loadingFailed={props.todaysVideoQuery.isError} />
+            <LoadingMessage loadingFailed={props.todaysVideoQuery.isError} />
           </VideoPlaceholder>
         )}
       </div>

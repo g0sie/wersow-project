@@ -34,26 +34,6 @@
   height: 100%; /* of padding-bottom of videoWrapper */
 }
 
-.character {
-  font-family: "Roboto", sans-serif;
-  animation: loading infinite linear;
-}
-
-@keyframes loading {
-  0% {
-    translate: 0 0;
-  }
-  25% {
-    translate: 0 0.2rem;
-  }
-  75% {
-    translate: 0 -0.2rem;
-  }
-  100% {
-    translate: 0 0;
-  }
-}
-
 .videoTitleWrapper {
   margin-top: 0.5rem;
   min-height: 3rem;
