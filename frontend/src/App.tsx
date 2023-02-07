@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import SpaceBackground from "./components/SpaceBackground/SpaceBackground";
 import Header from "./components/Header/Header";
-import IndexPage from "./pages/IndexPage";
+import IndexPage from "./pages/IndexPage/IndexPage";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import RegisterPage from "./pages/RegisterPage/RegisterPage";
 

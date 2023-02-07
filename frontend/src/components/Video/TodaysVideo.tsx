@@ -5,7 +5,7 @@ import VideoPlaceholder from "./VideoPlayer/VideoPlaceholder";
 import LoadingMessage from "./VideoPlayer/LoadingMessage/LoadingMessage";
 import VideoTitle from "./VideoTitle";
 
-import { VideoInterface } from "../../pages/IndexPage";
+import { VideoInterface } from "../../pages/IndexPage/IndexPage";
 
 import styles from "./Video.module.css";
 
