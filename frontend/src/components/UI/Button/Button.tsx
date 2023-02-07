@@ -8,15 +8,21 @@ interface ButtonProps {
   waitingForResponse: boolean;
   disabled?: boolean;
   type: "button" | "submit";
+  className?: string;
 }
 
 const Button = (props: ButtonProps) => {
+  const classNames = [
+    styles.btnWithLoader,
+    buttonStyles.btn,
+    buttonStyles.btnBig,
+    props?.className,
+  ];
+
   return (
     <button
       type={props.type}
-      className={[styles.submitBtn, buttonStyles.btn, buttonStyles.btnBig].join(
-        " "
-      )}
+      className={classNames.join(" ")}
       disabled={props.disabled || props.waitingForResponse}
     >
       {props.waitingForResponse ? <Loader /> : props.children}

@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import { Navigate } from "react-router-dom";
 
-import Input from "../components/forms/Input";
-import Button from "../components/UI/Button/Button";
-import ErrorMessage from "../components/forms/ErrorMessage";
+import Input from "../../components/forms/Input";
+import Button from "../../components/UI/Button/Button";
+import ErrorMessage from "../../components/forms/ErrorMessage";
 
-import axios from "../api";
+import axios from "../../api";
 
-import formStyles from "../components/forms/form.module.css";
-import pageStyles from "./Page.module.css";
+import formStyles from "../../components/forms/form.module.css";
+import pageStyles from "../Page.module.css";
+import styles from "./LoginPage.module.css";
 
 const LoginPage = (props: { updateUser: () => void }) => {
   const [email, setEmail] = useState("");
@@ -102,7 +103,11 @@ const LoginPage = (props: { updateUser: () => void }) => {
           onChange={(e) => setPassword(e.target.value)}
         />
 
-        <Button type="submit" waitingForResponse={waitingForResponse}>
+        <Button
+          className={styles.submitBtn}
+          type="submit"
+          waitingForResponse={waitingForResponse}
+        >
           Sign in
         </Button>
 

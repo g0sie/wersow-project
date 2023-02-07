@@ -12,6 +12,7 @@ import axios from "../../api";
 
 import formStyles from "../../components/forms/form.module.css";
 import pageStyles from "../Page.module.css";
+import styles from "./RegisterPage.module.css";
 
 const RegisterPage = () => {
   const [name, setName] = useState("");
@@ -136,6 +137,7 @@ const RegisterPage = () => {
 
         <Button
           type="submit"
+          className={styles.submitBtn}
           disabled={!isReadyToSubmit}
           waitingForResponse={waitingForResponse}
         >
