@@ -1,6 +1,10 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { UseQueryResult } from "@tanstack/react-query";
+
 import { LoggedInUserContext } from "../../../App";
+import { VideoInterface } from "../../../pages/IndexPage/IndexPage";
+
 import Button from "../../UI/Button/Button";
 
 import styles from "./CollectButton.module.css";
@@ -9,6 +13,7 @@ interface CollectButtonProps {
   className?: string;
   tellToSignUp: boolean;
   setTellToSignUp: (tellToSignUp: boolean) => void;
+  todaysVideoQuery: UseQueryResult<VideoInterface, Error>;
 }
 
 const CollectButton = (props: CollectButtonProps) => {
@@ -30,6 +35,7 @@ const CollectButton = (props: CollectButtonProps) => {
       <Button
         type="button"
         onClick={handleClick}
+        disabled={!props.todaysVideoQuery.isSuccess}
         waitingForResponse={false}
         className={[styles.collectBtn, props.className].join(" ")}
       >
