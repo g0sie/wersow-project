@@ -29,18 +29,26 @@ export const IndexPage = () => {
   });
 
   return (
-    <div className={[styles.indexPage, pageStyles.page].join(" ")}>
-      <TodaysVideo todaysVideoQuery={todaysVideoQuery} />
+    <div className={[pageStyles.page, pageStyles.pageCentered].join(" ")}>
+      <div className={styles.indexPage}>
+        <TodaysVideo
+          className={styles.todaysVideo}
+          todaysVideoQuery={todaysVideoQuery}
+        />
 
-      <VideoTitle title={todaysVideoQuery.data?.title} />
+        <VideoTitle
+          className={styles.videoTitle}
+          title={todaysVideoQuery.data?.title}
+        />
 
-      <Button
-        type="button"
-        waitingForResponse={todaysVideoQuery.isLoading}
-        className={styles.collectButton}
-      >
-        {loggedInUser ? "Collect" : "Sign to #teamsówki to collect videos"}
-      </Button>
+        <Button
+          type="button"
+          waitingForResponse={todaysVideoQuery.isLoading}
+          className={styles.collectButton}
+        >
+          {loggedInUser ? "Collect" : "Join #teamsówki to collect videos"}
+        </Button>
+      </div>
     </div>
   );
 };

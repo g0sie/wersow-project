@@ -1,11 +1,9 @@
 .videoTitleWrapper {
-  margin-top: 0.5rem;
-  min-height: 3rem;
+  min-height: 2rem;
 }
 
 .videoTitle {
-  font-size: 2.7rem;
-  line-height: 3rem;
+  font-size: 2rem;
   font-weight: 500;
   color: white;
   font-family: "Roboto", sans-serif;
@@ -13,6 +11,6 @@
 
 .videoTitlePlaceholder {
   display: block;
-  height: 3rem;
+  height: 2rem;
   background-color: var(--dark-blue-500);
 }

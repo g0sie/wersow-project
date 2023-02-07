@@ -3,6 +3,7 @@ import titleStyles from "./VideoTitle.module.css";
 
 interface VideoTitleProps {
   title?: string;
+  className?: string;
 }
 
 const VideoTitle = (props: VideoTitleProps) => {
@@ -11,7 +12,9 @@ const VideoTitle = (props: VideoTitleProps) => {
     : [titleStyles.videoTitlePlaceholder, videoStyles.placeholder].join(" ");
 
   return (
-    <div className={titleStyles.videoTitleWrapper}>
+    <div
+      className={[titleStyles.videoTitleWrapper, props?.className].join(" ")}
+    >
       <h2 className={titleClassName}>{props.title}</h2>
     </div>
   );

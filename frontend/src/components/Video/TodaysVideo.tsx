@@ -10,11 +10,12 @@ import styles from "./Video.module.css";
 
 interface TodaysVideoProps {
   todaysVideoQuery: UseQueryResult<VideoInterface, Error>;
+  className?: string;
 }
 
 const TodaysVideo = (props: TodaysVideoProps) => {
   return (
-    <div className={styles.videoPlayerWrapper}>
+    <div className={[styles.videoPlayerWrapper, props?.className].join(" ")}>
       {props.todaysVideoQuery.isSuccess ? (
         <VideoPlayer
           url={props.todaysVideoQuery.data.url.replace("watch?v=", "embed/")}

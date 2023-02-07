@@ -1,10 +1,30 @@
 .indexPage {
   display: grid;
-  /* grid-template-areas:
-    "video video"
-    "title buton"; */
+  gap: 1rem;
+
+  grid-template-areas:
+    "video"
+    "title"
+    "buton";
 }
 
-/* .collectButton {
-  grid-area: "buton";
-} */
+.todaysVideo {
+  grid-area: video;
+}
+
+.videoTitle {
+  grid-area: title;
+  justify-self: center;
+}
+
+.collectButton {
+  --padding: 3rem;
+
+  grid-area: buton;
+  align-self: center;
+  justify-self: center;
+
+  padding-left: var(--padding);
+  padding-right: var(--padding);
+  font-size: 2rem;
+}
