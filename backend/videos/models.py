@@ -1,7 +1,7 @@
 from django.db import models
 from django.db.models.aggregates import Max
 from random import randint
-from pytube import YouTube
+from pytube import YouTube, Channel
 
 
 class VideoManager(models.Manager):
@@ -40,6 +40,14 @@ class VideoManager(models.Manager):
         new_todays.save()
 
         return new_todays
+
+    def add_latest_video(self):
+        channel = Channel("https://www.youtube.com/channel/UCtVy1X-hcxAL2ZlS6TqMQFw")
+        video_url = channel.video_urls[0]
+
+        is_video_new = self.filter(url=video_url).count() == 0
+        if is_video_new:
+            self.add_video(video_url)
 
 
 class Video(models.Model):
