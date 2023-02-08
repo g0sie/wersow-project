@@ -11,7 +11,7 @@ from rest_framework import status
 from drf_yasg.utils import swagger_auto_schema
 
 from .serializers import UserSerializer
-from .models import User
+from .models import User, VideoCollection
 from . import schemas
 from videos.models import Video
 from videos.serializers import VideoSerializer
@@ -138,7 +138,10 @@ def videos(request, user_id: int):
         if user is None:
             return Response("User not found", status=status.HTTP_404_NOT_FOUND)
 
-        serializer = VideoSerializer(user.videos, many=True)
+        collection = VideoCollection.objects.filter(user=user).select_related("video")
+        videos = [user_video.video for user_video in collection]
+
+        serializer = VideoSerializer(videos, many=True)
         return Response({"videos": serializer.data})
 
     # add a video to user's collection
