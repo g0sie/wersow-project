@@ -2,11 +2,21 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
+import django_heroku
+from pathlib import Path
+import environ
+import os
+
+
+BASE_DIR = Path(__file__).resolve().parent
+env = environ.Env()
+environ.Env.read_env(os.path.join(BASE_DIR, "backend/settings/which_settings.env"))
+settings_module = "backend.settings." + env("SETTINGS_MODULE")
 
 
 def main():
     """Run administrative tasks."""
-    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "backend.settings")
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", settings_module)
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:

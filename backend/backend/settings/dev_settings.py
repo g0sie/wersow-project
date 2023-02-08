@@ -12,16 +12,17 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 import django_heroku
 from pathlib import Path
+import environ
+import os
+
+
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 # Environment variables
 
-import environ
-
 env = environ.Env()
-environ.Env.read_env()
-
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+environ.Env.read_env(os.path.join(BASE_DIR, "backend/settings/dev.env"))
 
 
 # Quick-start development settings - unsuitable for production
@@ -31,7 +32,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = env("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env("DEBUG") == "True"
+DEBUG = True
 
 ALLOWED_HOSTS = []
 
@@ -123,7 +124,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = "UTC"
+TIME_ZONE = "Europe/Warsaw"
 
 USE_I18N = True
 
@@ -149,9 +150,6 @@ CORS_ALLOWED_ORIGINS = [
 ]
 
 CORS_ALLOW_CREDENTIALS = True
-
-# Configure Django App for Heroku
-django_heroku.settings(locals())
 
 
 # Authentication
