@@ -13,9 +13,8 @@ from drf_yasg.utils import swagger_auto_schema
 from .serializers import UserSerializer
 from .models import User, VideoCollection
 from . import schemas
-from videos.models import Video
 from videos.serializers import VideoSerializer
-from videos.schemas import videos_schema
+from videos.models import Video
 
 
 @swagger_auto_schema(
@@ -121,7 +120,7 @@ def logout(request):
 @swagger_auto_schema(
     method="GET",
     operation_summary="Get user's video collection",
-    responses={200: videos_schema, 404: "Not found"},
+    responses={200: schemas.videos_response, 404: "Not found"},
 )
 @swagger_auto_schema(
     method="POST",
@@ -139,10 +138,13 @@ def videos(request, user_id: int):
             return Response("User not found", status=status.HTTP_404_NOT_FOUND)
 
         collection = VideoCollection.objects.filter(user=user).select_related("video")
-        videos = [user_video.video for user_video in collection]
+        videos = []
+        for user_video in collection:
+            video = VideoSerializer(user_video.video).data
+            video["collected"] = user_video.collected
+            videos.append(video)
 
-        serializer = VideoSerializer(videos, many=True)
-        return Response({"videos": serializer.data})
+        return Response({"videos": videos})
 
     # add a video to user's collection
     if request.method == "POST":

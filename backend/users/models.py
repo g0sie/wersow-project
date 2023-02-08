@@ -49,4 +49,4 @@ class VideoCollection(models.Model):
     video = models.ForeignKey(
         Video, on_delete=models.CASCADE, related_name="collection"
     )
-    collected = models.DateField(auto_now_add=True, null=True)
+    collected = models.DateField(auto_now_add=True)
