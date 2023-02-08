@@ -1,5 +1,8 @@
 from apscheduler.schedulers.blocking import BlockingScheduler
 
+import django
+
+django.setup()
 from videos.models import Video
 
 sched = BlockingScheduler({"apscheduler.timezone": "Europe/Warsaw"})
