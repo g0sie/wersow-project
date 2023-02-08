@@ -28,6 +28,19 @@ class VideoManager(models.Manager):
             publish_date=video.publish_date.date(),
         )
 
+    def change_todays_video(self):
+        old_todays = self.filter(todays=True)
+
+        for video in old_todays:
+            video.todays = False
+            video.save()
+
+        new_todays = self.random()
+        new_todays.todays = True
+        new_todays.save()
+
+        return new_todays
+
 
 class Video(models.Model):
     title = models.CharField(max_length=100)
