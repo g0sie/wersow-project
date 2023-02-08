@@ -136,8 +136,8 @@ def logout(request):
 def videos(request, user_id: int):
     user = User.objects.filter(id=user_id).first()
 
-    # get user's video collection
     if request.method == "GET":
+        """get user's video collection"""
         if user is None:
             return Response("User not found", status=status.HTTP_404_NOT_FOUND)
 
@@ -150,8 +150,8 @@ def videos(request, user_id: int):
 
         return Response({"videos": videos})
 
-    # add a video to user's collection
     if request.method == "POST":
+        """add a video to user's collection"""
         if user is None:
             return Response("User not found", status=status.HTTP_404_NOT_FOUND)
 
@@ -161,19 +161,46 @@ def videos(request, user_id: int):
             return Response("Video not found", status=status.HTTP_404_NOT_FOUND)
 
         user_video = VideoCollection.objects.filter(user=user, video=video).first()
-        if user_video is None:
-            user_video = VideoCollection.objects.create(user=user, video=video)
-            return Response(
-                {
-                    "user_id": user_id,
-                    "video_id": video_id,
-                    "collected": user_video.collected,
-                },
-                status=status.HTTP_201_CREATED,
-            )
-
-        if user_video.collected <= datetime.date.today():
+        if user_video:
             return Response(
                 "Video already collected",
                 status=status.HTTP_403_FORBIDDEN,
             )
+
+        user_video = VideoCollection.objects.create(user=user, video=video)
+        return Response(
+            {
+                "user_id": user_id,
+                "video_id": video_id,
+                "collected": user_video.collected,
+            },
+            status=status.HTTP_201_CREATED,
+        )
+
+
+@swagger_auto_schema(
+    method="GET",
+    operation_summary="Get a video from user's collection",
+    responses={200: schemas.collected_video_schema, 404: "Not found"},
+)
+@api_view(["GET"])
+def video(request, user_id: int, video_id: int):
+    """get a video from user's collection"""
+
+    if request.method == "GET":
+        user = User.objects.filter(id=user_id).first()
+        if user is None:
+            return Response("User not found", status=status.HTTP_404_NOT_FOUND)
+
+        video = Video.objects.filter(id=video_id).first()
+        if video is None:
+            return Response("Video not found", status=status.HTTP_404_NOT_FOUND)
+
+        user_video = VideoCollection.objects.filter(user=user, video=video).first()
+        if user_video is None:
+            return Response("Video not collected", status=status.HTTP_404_NOT_FOUND)
+
+        video = VideoSerializer(user_video.video).data
+        video["collected"] = user_video.collected
+
+        return Response(video)
