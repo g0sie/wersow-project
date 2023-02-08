@@ -1,11 +1,12 @@
 from django.db import models
 from django.db.models.aggregates import Max
 from random import randint
+from pytube import YouTube
 
 
 class VideoManager(models.Manager):
     def random(self):
-        max_id = self.all().aggregate(max_id=Max("id"))['max_id']
+        max_id = self.all().aggregate(max_id=Max("id"))["max_id"]
         if max_id:
             while True:
                 pk = randint(1, max_id)
@@ -17,6 +18,15 @@ class VideoManager(models.Manager):
         todays = self.filter(todays=True)
         if todays.count() > 0:
             return todays[0]
+
+    def add_video(self, video_url: str):
+        video = YouTube(video_url)
+        return self.create(
+            url=video_url,
+            title=video.title,
+            thumbnail_url=video.thumbnail_url,
+            publish_date=video.publish_date.date(),
+        )
 
 
 class Video(models.Model):
