@@ -47,7 +47,7 @@ class VideoManager(models.Manager):
 
         is_video_new = self.filter(url=video_url).count() == 0
         if is_video_new:
-            self.add_video(video_url)
+            return self.add_video(video_url)
 
 
 class Video(models.Model):

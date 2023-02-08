@@ -57,6 +57,12 @@ returns current width and height of the window
   python manage.py loadvideos --limit 5
   ```
 
+- #### Add latest Wersow's video if it isn't already in the database
+
+  ```properties
+  python manage.py addlatestvideo
+  ```
+
 - #### Change today's video for another random Wersow's video
 
   ```properties
