@@ -21,7 +21,7 @@
 ## Technologies
 
 - Python 3.10
-- Django 4.1
+- Django 4.0
 - Django REST Framework 3.13
 - Node 19.5
 - TypeScript 4.8
