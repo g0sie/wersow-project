@@ -8,7 +8,6 @@
 
 - the website: https://wersow.netlify.app/
 - api: https://wersow-api.herokuapp.com/
-- api documentation: https://wersow-api.herokuapp.com/docs/
 
 ## Table of Contents
 

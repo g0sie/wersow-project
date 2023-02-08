@@ -16,12 +16,8 @@ schema_view = swagger_get_schema_view(
 )
 
 urlpatterns = [
+    path("", schema_view.with_ui("swagger", cache_timeout=0)),
     path("admin/", admin.site.urls),
-    path(
-        "docs/",
-        schema_view.with_ui("swagger", cache_timeout=0),
-        name="swagger-schema",
-    ),
     path("users/", include("users.urls")),
     path("videos/", include("videos.urls")),
 ]
