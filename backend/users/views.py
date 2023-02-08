@@ -126,7 +126,11 @@ def logout(request):
     method="POST",
     operation_summary="Add a video to user's collection",
     request_body=schemas.user_id_schema,
-    responses={201: schemas.collect_video_response, 404: "User not found"},
+    responses={
+        201: schemas.collect_video_response,
+        403: "Video already collected",
+        404: "User not found",
+    },
 )
 @api_view(["GET", "POST"])
 def videos(request, user_id: int):
@@ -156,7 +160,20 @@ def videos(request, user_id: int):
         if video is None:
             return Response("Video not found", status=status.HTTP_404_NOT_FOUND)
 
-        user.videos.add(video)
-        return Response(
-            {"user_id": user_id, "video_id": video_id}, status=status.HTTP_201_CREATED
-        )
+        user_video = VideoCollection.objects.filter(user=user, video=video).first()
+        if user_video is None:
+            user_video = VideoCollection.objects.create(user=user, video=video)
+            return Response(
+                {
+                    "user_id": user_id,
+                    "video_id": video_id,
+                    "collected": user_video.collected,
+                },
+                status=status.HTTP_201_CREATED,
+            )
+
+        if user_video.collected <= datetime.date.today():
+            return Response(
+                "Video already collected",
+                status=status.HTTP_403_FORBIDDEN,
+            )
