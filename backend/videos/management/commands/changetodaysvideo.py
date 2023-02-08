@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
 
-from videos.functions import change_todays_video
+from videos.models import Video
 
 
 class Command(BaseCommand):
@@ -8,6 +8,6 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
 
-        new_todays = change_todays_video()
+        new_todays = Video.objects.change_todays_video()
 
         self.stdout.write(self.style.SUCCESS(f"Now today's video is: {new_todays}"))

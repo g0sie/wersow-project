@@ -36,10 +36,17 @@ class User(AbstractUser):
     email = models.EmailField(max_length=255, unique=True)
     password = models.CharField(max_length=255)
     username = None
-    videos = models.ManyToManyField(Video, related_name="users")
 
     # overwrite to log in with email instead of username
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
 
     objects = UserManager()
+
+
+class VideoCollection(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="collection")
+    video = models.ForeignKey(
+        Video, on_delete=models.CASCADE, related_name="collection"
+    )
+    collected = models.DateField(auto_now_add=True)

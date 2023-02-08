@@ -11,11 +11,10 @@ from rest_framework import status
 from drf_yasg.utils import swagger_auto_schema
 
 from .serializers import UserSerializer
-from .models import User
+from .models import User, VideoCollection
 from . import schemas
-from videos.models import Video
 from videos.serializers import VideoSerializer
-from videos.schemas import videos_schema
+from videos.models import Video
 
 
 @swagger_auto_schema(
@@ -121,28 +120,38 @@ def logout(request):
 @swagger_auto_schema(
     method="GET",
     operation_summary="Get user's video collection",
-    responses={200: videos_schema, 404: "Not found"},
+    responses={200: schemas.videos_response, 404: "Not found"},
 )
 @swagger_auto_schema(
     method="POST",
     operation_summary="Add a video to user's collection",
     request_body=schemas.user_id_schema,
-    responses={201: schemas.collect_video_response, 404: "User not found"},
+    responses={
+        201: schemas.collect_video_response,
+        403: "Video already collected",
+        404: "User not found",
+    },
 )
 @api_view(["GET", "POST"])
 def videos(request, user_id: int):
     user = User.objects.filter(id=user_id).first()
 
-    # get user's video collection
     if request.method == "GET":
+        """get user's video collection"""
         if user is None:
             return Response("User not found", status=status.HTTP_404_NOT_FOUND)
 
-        serializer = VideoSerializer(user.videos, many=True)
-        return Response({"videos": serializer.data})
+        collection = VideoCollection.objects.filter(user=user).select_related("video")
+        videos = []
+        for user_video in collection:
+            video = VideoSerializer(user_video.video).data
+            video["collected"] = user_video.collected
+            videos.append(video)
 
-    # add a video to user's collection
+        return Response({"videos": videos})
+
     if request.method == "POST":
+        """add a video to user's collection"""
         if user is None:
             return Response("User not found", status=status.HTTP_404_NOT_FOUND)
 
@@ -151,7 +160,47 @@ def videos(request, user_id: int):
         if video is None:
             return Response("Video not found", status=status.HTTP_404_NOT_FOUND)
 
-        user.videos.add(video)
+        user_video = VideoCollection.objects.filter(user=user, video=video).first()
+        if user_video:
+            return Response(
+                "Video already collected",
+                status=status.HTTP_403_FORBIDDEN,
+            )
+
+        user_video = VideoCollection.objects.create(user=user, video=video)
         return Response(
-            {"user_id": user_id, "video_id": video_id}, status=status.HTTP_201_CREATED
+            {
+                "user_id": user_id,
+                "video_id": video_id,
+                "collected": user_video.collected,
+            },
+            status=status.HTTP_201_CREATED,
         )
+
+
+@swagger_auto_schema(
+    method="GET",
+    operation_summary="Get a video from user's collection",
+    responses={200: schemas.collected_video_schema, 404: "Not found"},
+)
+@api_view(["GET"])
+def video(request, user_id: int, video_id: int):
+    """get a video from user's collection"""
+
+    if request.method == "GET":
+        user = User.objects.filter(id=user_id).first()
+        if user is None:
+            return Response("User not found", status=status.HTTP_404_NOT_FOUND)
+
+        video = Video.objects.filter(id=video_id).first()
+        if video is None:
+            return Response("Video not found", status=status.HTTP_404_NOT_FOUND)
+
+        user_video = VideoCollection.objects.filter(user=user, video=video).first()
+        if user_video is None:
+            return Response("Video not collected", status=status.HTTP_404_NOT_FOUND)
+
+        video = VideoSerializer(user_video.video).data
+        video["collected"] = user_video.collected
+
+        return Response(video)
