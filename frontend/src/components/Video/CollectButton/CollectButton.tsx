@@ -1,12 +1,13 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { UseQueryResult } from "@tanstack/react-query";
+import { useMutation, UseQueryResult } from "@tanstack/react-query";
 
 import Button from "../../UI/Button/Button";
 
 import { LoggedInUserContext } from "../../../context/LoggedInUserContext";
 import { VideoInterface } from "../../../interfaces/VideoInterface";
 
+import axios from "../../../api";
 import styles from "./CollectButton.module.css";
 
 interface CollectButtonProps {
@@ -17,17 +18,28 @@ interface CollectButtonProps {
 }
 
 const CollectButton = (props: CollectButtonProps) => {
+  const { isSuccess: isVideoThere, data: video } = props.todaysVideoQuery;
   const { user: loggedInUser } = useContext(LoggedInUserContext);
+
   const navigate = useNavigate();
 
-  const collectVideo = () => {
-    console.log("collected");
-  };
+  const mutation = useMutation({
+    mutationFn: (obj: { user_id: number; video_id: number }) => {
+      return axios.post(`/users/${obj.user_id}/videos`, {
+        video_id: obj.video_id,
+      });
+    },
+  });
 
   const handleClick = () => {
     if (props.tellToSignUp) return navigate("/register");
-    else if (loggedInUser) collectVideo();
-    else props.setTellToSignUp(true);
+    else if (!loggedInUser) props.setTellToSignUp(true);
+    else if (loggedInUser && isVideoThere) {
+      mutation.mutate({
+        user_id: loggedInUser.id,
+        video_id: video.id,
+      });
+    }
   };
 
   return (
@@ -35,15 +47,11 @@ const CollectButton = (props: CollectButtonProps) => {
       <Button
         type="button"
         onClick={handleClick}
-        disabled={!props.todaysVideoQuery.isSuccess || loggedInUser != null}
-        waitingForResponse={false}
+        disabled={!isVideoThere}
+        waitingForResponse={mutation.isLoading}
         className={[styles.collectBtn, props.className].join(" ")}
       >
-        {props.tellToSignUp
-          ? "Sign up"
-          : loggedInUser === null
-          ? "Collect"
-          : "Soon"}
+        {props.tellToSignUp ? "Sign up" : "Collect"}
       </Button>
     </>
   );
