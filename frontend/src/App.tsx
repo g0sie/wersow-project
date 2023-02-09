@@ -8,12 +8,9 @@ import LoginPage from "./pages/LoginPage/LoginPage";
 import RegisterPage from "./pages/RegisterPage/RegisterPage";
 
 import axios from "./api";
+import { UserInterface } from "./interfaces/UserInterface";
 
 import "./App.css";
-
-interface UserInterface {
-  name: "string";
-}
 
 export const LoggedInUserContext = createContext<UserInterface | null>(null);
 
