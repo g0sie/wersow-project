@@ -2,10 +2,10 @@ import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { UseQueryResult } from "@tanstack/react-query";
 
-import { LoggedInUserContext } from "../../../context/LoggedInUserContext";
-import { VideoInterface } from "../../../pages/IndexPage/IndexPage";
-
 import Button from "../../UI/Button/Button";
+
+import { LoggedInUserContext } from "../../../context/LoggedInUserContext";
+import { VideoInterface } from "../../../interfaces/VideoInterface";
 
 import styles from "./CollectButton.module.css";
 

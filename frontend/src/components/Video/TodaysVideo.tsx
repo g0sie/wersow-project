@@ -4,7 +4,7 @@ import VideoPlayer from "./VideoPlayer/VideoPlayer";
 import VideoPlaceholder from "./VideoPlayer/VideoPlaceholder";
 import LoadingMessage from "./VideoPlayer/LoadingMessage/LoadingMessage";
 
-import { VideoInterface } from "../../pages/IndexPage/IndexPage";
+import { VideoInterface } from "../../interfaces/VideoInterface";
 
 import styles from "./Video.module.css";
 
