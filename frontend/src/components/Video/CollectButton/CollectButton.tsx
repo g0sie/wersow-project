@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { UseQueryResult } from "@tanstack/react-query";
 
-import { LoggedInUserContext } from "../../../App";
+import { LoggedInUserContext } from "../../../context/LoggedInUserContext";
 import { VideoInterface } from "../../../pages/IndexPage/IndexPage";
 
 import Button from "../../UI/Button/Button";
@@ -17,7 +17,7 @@ interface CollectButtonProps {
 }
 
 const CollectButton = (props: CollectButtonProps) => {
-  const loggedInUser = useContext(LoggedInUserContext);
+  const { user: loggedInUser } = useContext(LoggedInUserContext);
   const navigate = useNavigate();
 
   const collectVideo = () => {

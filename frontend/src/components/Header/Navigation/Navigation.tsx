@@ -8,7 +8,6 @@ import styles from "../Header.module.css";
 interface NavigationProps {
   isNavActive: boolean;
   turnOffNav: () => void;
-  updateUser: () => void;
 }
 
 const Navigation = (props: NavigationProps) => {
@@ -33,7 +32,6 @@ const Navigation = (props: NavigationProps) => {
 
       <AuthButtons
         isNavActive={props.isNavActive}
-        updateUser={props.updateUser}
         turnOffNav={props.turnOffNav}
       />
 

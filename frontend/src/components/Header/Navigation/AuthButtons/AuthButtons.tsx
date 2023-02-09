@@ -1,6 +1,6 @@
 import { useContext } from "react";
 
-import { LoggedInUserContext } from "../../../../App";
+import { LoggedInUserContext } from "../../../../context/LoggedInUserContext";
 
 import useWindowSize from "../../../../hooks/useWindowSize";
 
@@ -13,14 +13,13 @@ import styles from "../../Header.module.css";
 
 interface AuthButtonsProps {
   isNavActive: boolean;
-  updateUser: () => void;
   turnOffNav: () => void;
 }
 
 const authButtonsActiveClassName = `${styles.authButtons} ${styles.authButtonsActive}`;
 
 const AuthButtons = (props: AuthButtonsProps) => {
-  const loggedInUser = useContext(LoggedInUserContext);
+  const { user: loggedInUser } = useContext(LoggedInUserContext);
 
   const windowWidth = useWindowSize()[0];
 
@@ -34,11 +33,7 @@ const AuthButtons = (props: AuthButtonsProps) => {
   let buttons;
   if (loggedInUser) {
     buttons = (
-      <LogoutButton
-        className={buttonClassName}
-        updateUser={props.updateUser}
-        turnOffNav={props.turnOffNav}
-      />
+      <LogoutButton className={buttonClassName} turnOffNav={props.turnOffNav} />
     );
   } else {
     buttons = (

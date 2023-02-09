@@ -1,14 +1,17 @@
-import axios from "../../../../api";
+import { useContext } from "react";
+import { LoggedInUserContext } from "../../../../context/LoggedInUserContext";
 
+import axios from "../../../../api";
 import styles from "../../Header.module.css";
 
 interface LogoutButtonProps {
-  updateUser: () => void;
   turnOffNav: () => void;
   className: string;
 }
 
 const LogoutButton = (props: LogoutButtonProps) => {
+  const { update: updateUser } = useContext(LoggedInUserContext);
+
   const logOut = async () => {
     axios
       .post(
@@ -19,7 +22,7 @@ const LogoutButton = (props: LogoutButtonProps) => {
         }
       )
       .then(() => {
-        props.updateUser();
+        updateUser();
       })
       .catch((error) => {
         console.error(error.toJSON());

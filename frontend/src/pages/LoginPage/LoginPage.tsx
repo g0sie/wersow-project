@@ -5,13 +5,18 @@ import Input from "../../components/forms/Input";
 import Button from "../../components/UI/Button/Button";
 import ErrorMessage from "../../components/forms/ErrorMessage";
 
+import { useContext } from "react";
+import { LoggedInUserContext } from "../../context/LoggedInUserContext";
+
 import axios from "../../api";
 
 import formStyles from "../../components/forms/form.module.css";
 import pageStyles from "../Page.module.css";
 import styles from "./LoginPage.module.css";
 
-const LoginPage = (props: { updateUser: () => void }) => {
+const LoginPage = () => {
+  const { update: updateUser } = useContext(LoggedInUserContext);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -42,7 +47,7 @@ const LoginPage = (props: { updateUser: () => void }) => {
       .then((res) => {
         switch (res.status) {
           case 200:
-            props.updateUser();
+            updateUser();
             setRedirect(true);
             break;
           case 403:
