@@ -50,7 +50,8 @@ const CollectButton = (props: CollectButtonProps) => {
         disabled={!isVideoThere}
         loading={mutation.isLoading}
         className={[styles.collectBtn, props.className].join(" ")}
-        success={false}
+        // success={false}
+        success={true}
       >
         {props.tellToSignUp ? "Sign up" : "Collect"}
       </Button>

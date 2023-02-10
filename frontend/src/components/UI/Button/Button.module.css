@@ -57,3 +57,15 @@
   align-items: center;
   gap: 1rem;
 }
+
+.btnSuccess:is(:disabled, :disabled:hover) {
+  --success-color: #96b597;
+  --success-bg-color: rgba(118, 233, 120, 0.3);
+
+  background-color: var(--success-bg-color);
+  color: var(--success-color);
+
+  -webkit-box-shadow: inset 0px 0px 10px 0px var(--success-color);
+  -moz-box-shadow: inset 0px 0px 10px 0px var(--success-color);
+  box-shadow: inset 0px 0px 10px 0px var(--success-color);
+}

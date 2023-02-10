@@ -1,7 +1,7 @@
 import Loader from "../Loader/Loader";
 import SuccessIcon from "../SuccessIcon/SuccessIcon";
 
-import buttonStyles from "./Button.module.css";
+import btnStyles from "./Button.module.css";
 import styles from "./Button.module.css";
 
 interface ButtonProps {
@@ -17,8 +17,8 @@ interface ButtonProps {
 const Button = (props: ButtonProps) => {
   const classNames = [
     styles.btnWithLoader,
-    buttonStyles.btn,
-    buttonStyles.btnBig,
+    btnStyles.btn,
+    btnStyles.btnBig,
     props?.className,
   ];
 
@@ -28,6 +28,7 @@ const Button = (props: ButtonProps) => {
   if (props.success) {
     disabled = true;
     children = <SuccessIcon />;
+    classNames.push(btnStyles.btnSuccess);
   } else if (props.loading) {
     disabled = true;
     children = <Loader />;
