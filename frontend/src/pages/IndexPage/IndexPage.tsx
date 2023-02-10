@@ -15,6 +15,8 @@ import styles from "./IndexPage.module.css";
 
 export const IndexPage = () => {
   const [showError, setShowError] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("Join #teamsówki to collect videos");
+
   const todaysVideoQuery = useQuery<VideoInterface, Error>({
     queryKey: ["todaysVideo"],
     queryFn: () => axios.get("/videos/todays").then((res) => res.data),
@@ -35,15 +37,15 @@ export const IndexPage = () => {
 
         <CollectButton
           className={styles.collectButton}
-          tellToSignUp={showError}
-          setTellToSignUp={setShowError}
           todaysVideoQuery={todaysVideoQuery}
+          setShowError={setShowError}
+          setErrorMsg={setErrorMsg}
         />
 
         <ErrorMessage
           className={styles.errorMsg}
           visible={showError}
-          message={"Join #teamsówki to collect videos"}
+          message={errorMsg}
         />
       </div>
     </div>
