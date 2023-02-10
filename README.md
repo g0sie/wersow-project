@@ -2,7 +2,7 @@
 
 **wersow-project** is an app that allows you to watch a different Wersow's video every day (she's a Polish youtuber). Design of the app is inspired by Chicken Invaders.
 
-![Screenshot of the](screenshot.png)
+![home page](index.GIF)
 
 ## Links
 
