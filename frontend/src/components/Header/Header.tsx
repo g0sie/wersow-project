@@ -6,7 +6,7 @@ import Navigation from "./Navigation/Navigation";
 
 import styles from "./Header.module.css";
 
-const Header = (props: { updateUser: () => void }) => {
+const Header = () => {
   const [isNavActive, setIsNavActive] = useState(false);
 
   const toggleNav = () => setIsNavActive(!isNavActive);
@@ -17,11 +17,7 @@ const Header = (props: { updateUser: () => void }) => {
   return (
     <header className={styles.header}>
       <Logo turnOffNav={turnOffNav} />
-      <Navigation
-        isNavActive={isNavActive}
-        turnOffNav={turnOffNav}
-        updateUser={props.updateUser}
-      />
+      <Navigation isNavActive={isNavActive} turnOffNav={turnOffNav} />
       <Hamburger isNavActive={isNavActive} toggleNav={toggleNav} />
     </header>
   );

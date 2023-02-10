@@ -139,7 +139,7 @@ const RegisterPage = () => {
           type="submit"
           className={styles.submitBtn}
           disabled={!isReadyToSubmit}
-          waitingForResponse={waitingForResponse}
+          loading={waitingForResponse}
         >
           Sign up
         </Button>

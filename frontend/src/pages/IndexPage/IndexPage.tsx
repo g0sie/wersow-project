@@ -1,27 +1,22 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 
-import axios from "../../api";
-
 import TodaysVideo from "../../components/Video/TodaysVideo";
 import VideoTitle from "../../components/Video/VideoTitle/VideoTitle";
 import CollectButton from "../../components/Video/CollectButton/CollectButton";
 import ErrorMessage from "../../components/forms/ErrorMessage";
 
+import { VideoInterface } from "../../interfaces/VideoInterface";
+
+import axios from "../../api";
+
 import pageStyles from "../Page.module.css";
 import styles from "./IndexPage.module.css";
 
-export interface VideoInterface {
-  id: number;
-  title: string;
-  url: string;
-  thumbnailUrl: string;
-  publish_date: string;
-  todays: boolean;
-}
-
 export const IndexPage = () => {
   const [showError, setShowError] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("Join #teamsówki to collect videos");
+
   const todaysVideoQuery = useQuery<VideoInterface, Error>({
     queryKey: ["todaysVideo"],
     queryFn: () => axios.get("/videos/todays").then((res) => res.data),
@@ -42,15 +37,15 @@ export const IndexPage = () => {
 
         <CollectButton
           className={styles.collectButton}
-          tellToSignUp={showError}
-          setTellToSignUp={setShowError}
           todaysVideoQuery={todaysVideoQuery}
+          setShowError={setShowError}
+          setErrorMsg={setErrorMsg}
         />
 
         <ErrorMessage
           className={styles.errorMsg}
           visible={showError}
-          message={"Join #teamsówki to collect videos"}
+          message={errorMsg}
         />
       </div>
     </div>

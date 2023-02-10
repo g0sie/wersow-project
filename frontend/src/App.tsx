@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import SpaceBackground from "./components/SpaceBackground/SpaceBackground";
@@ -7,20 +7,16 @@ import IndexPage from "./pages/IndexPage/IndexPage";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import RegisterPage from "./pages/RegisterPage/RegisterPage";
 
+import { UserInterface } from "./interfaces/UserInterface";
+import { LoggedInUserContext } from "./context/LoggedInUserContext";
 import axios from "./api";
 
 import "./App.css";
 
-interface UserInterface {
-  name: "string";
-}
-
-export const LoggedInUserContext = createContext<UserInterface | null>(null);
-
 function App() {
   const [loggedInUser, setLoggedInUser] = useState<UserInterface | null>(null);
 
-  const getAuthenticatedUser = async () => {
+  const updateUser = async () => {
     axios
       .get("/users/user", {
         withCredentials: true,
@@ -40,7 +36,7 @@ function App() {
   };
 
   useEffect(() => {
-    getAuthenticatedUser();
+    updateUser();
   }, []);
 
   return (
@@ -48,15 +44,14 @@ function App() {
       <SpaceBackground />
 
       <main className="content">
-        <LoggedInUserContext.Provider value={loggedInUser}>
+        <LoggedInUserContext.Provider
+          value={{ user: loggedInUser, update: updateUser }}
+        >
           <BrowserRouter>
-            <Header updateUser={getAuthenticatedUser} />
+            <Header />
             <Routes>
               <Route path="/" element={<IndexPage />} />
-              <Route
-                path="login"
-                element={<LoginPage updateUser={getAuthenticatedUser} />}
-              />
+              <Route path="login" element={<LoginPage />} />
               <Route path="register" element={<RegisterPage />} />
             </Routes>
           </BrowserRouter>
