@@ -73,7 +73,8 @@ returns current width and height of the window
 
 - [x] every day another random Wersow's video
 - [x] authentication
-- [ ] ability to collect videos
+- [x] ability to collect videos
+- [ ] video collection page
 
 ## Sources
 
