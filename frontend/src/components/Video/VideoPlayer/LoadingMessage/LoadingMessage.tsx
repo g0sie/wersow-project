@@ -33,7 +33,7 @@ const LoadingMessage = (props: loadingMessageProps) => {
   };
 
   return (
-    <p className={styles.loadingMessage}>
+    <div className={styles.loadingMessage}>
       {message.split("").map((char: string, index: number) => {
         return (
           <pre
@@ -48,7 +48,7 @@ const LoadingMessage = (props: loadingMessageProps) => {
           </pre>
         );
       })}
-    </p>
+    </div>
   );
 };
 
