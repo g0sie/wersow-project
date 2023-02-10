@@ -111,7 +111,7 @@ const LoginPage = () => {
         <Button
           className={styles.submitBtn}
           type="submit"
-          waitingForResponse={waitingForResponse}
+          loading={waitingForResponse}
         >
           Sign in
         </Button>
