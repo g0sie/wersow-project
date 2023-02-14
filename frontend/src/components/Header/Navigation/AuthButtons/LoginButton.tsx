@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import { NavContext } from "../../../../context/NavContext";
 
-import styles from "../../Header.module.css";
+import styles from "../NavLinks/NavLinks.module.css";
 
 interface LoginButtonProps {
   btnClassName: string;

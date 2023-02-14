@@ -4,7 +4,7 @@ import { LoggedInUserContext } from "../../../../context/LoggedInUserContext";
 import { NavContext } from "../../../../context/NavContext";
 
 import axios from "../../../../api";
-import styles from "../../Header.module.css";
+import styles from "../NavLinks/NavLinks.module.css";
 
 interface LogoutButtonProps {
   btnClassName: string;
