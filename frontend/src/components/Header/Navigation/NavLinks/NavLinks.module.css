@@ -1,0 +1,40 @@
+.navLinks {
+  list-style: none;
+
+  display: flex;
+  gap: 1.3rem;
+  flex-grow: 1;
+}
+
+.navLink {
+  font-size: 1.5rem;
+  color: var(--light-blue);
+}
+
+.navLink:is(:hover, :active) {
+  color: var(--bright-blue);
+}
+
+@media (max-width: 630px) {
+  .navLinks {
+    flex-direction: column;
+    gap: 0;
+
+    translate: 100%;
+    transition: var(--ease-out-quint);
+  }
+
+  .navLinksActive {
+    translate: 0;
+  }
+
+  .navLink {
+    padding: 1rem;
+    background-color: var(--dark-blue-600);
+    cursor: pointer;
+  }
+
+  .navLink:is(:hover, :active) {
+    background-color: var(--dark-blue-500);
+  }
+}
