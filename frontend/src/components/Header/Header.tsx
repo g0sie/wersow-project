@@ -4,22 +4,29 @@ import Logo from "./Logo";
 import Hamburger from "./Hamburger";
 import Navigation from "./Navigation/Navigation";
 
+import { NavContext } from "../../context/NavContext";
+
 import styles from "./Header.module.css";
 
 const Header = () => {
-  const [isNavActive, setIsNavActive] = useState(false);
+  const [isNavOpened, setIsNavOpened] = useState(false);
 
-  const toggleNav = () => setIsNavActive(!isNavActive);
-  const turnOffNav = () => {
-    if (isNavActive) toggleNav();
-  };
+  const toggleNav = () => setIsNavOpened(!isNavOpened);
 
   return (
-    <header className={styles.header}>
-      <Logo turnOffNav={turnOffNav} />
-      <Navigation isNavActive={isNavActive} turnOffNav={turnOffNav} />
-      <Hamburger isNavActive={isNavActive} toggleNav={toggleNav} />
-    </header>
+    <NavContext.Provider
+      value={{
+        isOpened: isNavOpened,
+        setIsOpened: setIsNavOpened,
+        toggle: toggleNav,
+      }}
+    >
+      <header className={styles.header}>
+        <Logo />
+        <Navigation />
+        <Hamburger />
+      </header>
+    </NavContext.Provider>
   );
 };
 

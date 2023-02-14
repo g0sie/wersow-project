@@ -1,19 +1,19 @@
+import { useContext } from "react";
+
+import { NavContext } from "../../../context/NavContext";
+
 import styles from "../Header.module.css";
 
-interface DimmingProps {
-  isNavActive: boolean;
-  turnOffNav: () => void;
-}
+const Dimming = () => {
+  const nav = useContext(NavContext);
 
-const Dimming = (props: DimmingProps) => {
+  const classNames = [styles.dimming];
+  if (nav.isOpened) classNames.push(styles.dimmingActive);
+
   return (
     <div
-      className={
-        props.isNavActive
-          ? `${styles.dimming} ${styles.dimmingActive}`
-          : styles.dimming
-      }
-      onClick={props.turnOffNav}
+      className={classNames.join(" ")}
+      onClick={() => nav.setIsOpened(false)}
     ></div>
   );
 };

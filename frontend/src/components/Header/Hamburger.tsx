@@ -1,23 +1,20 @@
+import { useContext } from "react";
+
+import { NavContext } from "../../context/NavContext";
+
 import styles from "./Header.module.css";
 
-interface HamburgerProps {
-  isNavActive: boolean;
-  toggleNav: () => void;
-}
+const Hamburger = () => {
+  const nav = useContext(NavContext);
 
-const Hamburger = (props: HamburgerProps) => {
-  let hamburgerLineClassName;
-  if (props.isNavActive) {
-    hamburgerLineClassName = `${styles.hamburgerLine} ${styles.hamburgerLineActive}`;
-  } else {
-    hamburgerLineClassName = styles.hamburgerLine;
-  }
+  const lineClassNames = [styles.hamburgerLine];
+  if (nav.isOpened) lineClassNames.push(styles.hamburgerLineActive);
 
   return (
-    <button className={styles.hamburger} onClick={props.toggleNav}>
-      <div className={hamburgerLineClassName}></div>
-      <div className={hamburgerLineClassName}></div>
-      <div className={hamburgerLineClassName}></div>
+    <button className={styles.hamburger} onClick={nav.toggle}>
+      <div className={lineClassNames.join(" ")}></div>
+      <div className={lineClassNames.join(" ")}></div>
+      <div className={lineClassNames.join(" ")}></div>
     </button>
   );
 };
