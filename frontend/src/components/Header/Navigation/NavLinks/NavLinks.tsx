@@ -43,7 +43,7 @@ const NavLinks = () => {
   }, [loggedInUser]);
 
   return (
-    <ul className={classNames.join(" ")}>
+    <ul className={classNames.join(" ")} data-testid="nav-links">
       {accessibleLinks.map((navLink, index) => (
         <Link
           className={styles.navLink}
