@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import Logo from "./Logo";
-import Hamburger from "./Hamburger";
+import Hamburger from "./Hamburger/Hamburger";
 import Navigation from "./Navigation/Navigation";
 
 import { NavContext } from "../../context/NavContext";
