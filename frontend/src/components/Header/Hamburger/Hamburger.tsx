@@ -11,7 +11,11 @@ const Hamburger = () => {
   if (nav.isOpened) lineClassNames.push(styles.lineCross);
 
   return (
-    <button className={styles.hamburger} onClick={nav.toggle}>
+    <button
+      className={styles.hamburger}
+      onClick={nav.toggle}
+      data-testid="hamburger"
+    >
       <div className={lineClassNames.join(" ")}></div>
       <div className={lineClassNames.join(" ")}></div>
       <div className={lineClassNames.join(" ")}></div>
