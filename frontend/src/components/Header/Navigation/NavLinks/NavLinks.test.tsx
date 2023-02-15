@@ -35,4 +35,32 @@ describe("<NavLinks />", () => {
       expect(within(navLinks).queryByText("My Videos")).toBeInTheDocument();
     });
   });
+
+  describe("without logged in user", () => {
+    const user = null;
+    const element = (
+      <LoggedInUserContext.Provider value={{ user: user, update: () => {} }}>
+        <BrowserRouter>
+          <NavLinks />
+        </BrowserRouter>
+      </LoggedInUserContext.Provider>
+    );
+
+    it("renders component", () => {
+      const { getByTestId } = render(element);
+      expect(getByTestId("nav-links")).toBeInTheDocument();
+    });
+
+    it("renders a link with public access", () => {
+      const { getByTestId } = render(element);
+      const navLinks = getByTestId("nav-links");
+      expect(within(navLinks).queryByText("Home")).toBeInTheDocument();
+    });
+
+    it("doesn't render a link with authenticated access", () => {
+      const { getByTestId } = render(element);
+      const navLinks = getByTestId("nav-links");
+      expect(within(navLinks).queryByText("My Videos")).not.toBeInTheDocument();
+    });
+  });
 });
