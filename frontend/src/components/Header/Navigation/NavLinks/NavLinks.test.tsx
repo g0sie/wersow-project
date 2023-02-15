@@ -3,7 +3,6 @@ import { render, within } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
 
 import { LoggedInUserContext } from "../../../../context/LoggedInUserContext";
-// import { NavContext } from "../../../context/NavContext";
 
 import NavLinks from "./NavLinks";
 
