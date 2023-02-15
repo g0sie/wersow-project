@@ -55,7 +55,9 @@ function App() {
               <Route path="/" element={<IndexPage />} />
               <Route path="login" element={<LoginPage />} />
               <Route path="register" element={<RegisterPage />} />
-              <Route path="videos" element={<MyVideosPage />} />
+              {loggedInUser && (
+                <Route path="videos" element={<MyVideosPage />} />
+              )}
             </Routes>
           </BrowserRouter>
         </LoggedInUserContext.Provider>
