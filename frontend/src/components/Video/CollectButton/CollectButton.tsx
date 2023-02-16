@@ -44,7 +44,7 @@ const CollectButton = (props: CollectButtonProps) => {
   });
 
   const collectedQuery = useQuery({
-    queryKey: ["collectedVideo"],
+    queryKey: ["user", "video"],
     queryFn: () => {
       return axios.get(`/users/${user?.id}/videos/${video?.id}`);
     },

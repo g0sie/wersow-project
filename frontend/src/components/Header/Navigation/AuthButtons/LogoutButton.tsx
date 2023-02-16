@@ -1,9 +1,8 @@
 import { useContext } from "react";
 import { NavContext } from "../../../../context/NavContext";
 
-import useLoggedInUser from "../../../../hooks/queries/useLoggedInUser";
+import useLogout from "../../../../hooks/mutations/useLogout";
 
-import axios from "../../../../api";
 import styles from "../NavLinks/NavLinks.module.css";
 
 interface LogoutButtonProps {
@@ -12,24 +11,10 @@ interface LogoutButtonProps {
 
 const LogoutButton = (props: LogoutButtonProps) => {
   const { setIsOpened: setIsNavOpened } = useContext(NavContext);
-  const { refetch: refetchUser } = useLoggedInUser();
+  const logoutMutation = useLogout();
 
   const logOut = async () => {
-    axios
-      .post(
-        "/users/logout",
-        {},
-        {
-          withCredentials: true,
-        }
-      )
-      .then(() => {
-        refetchUser();
-      })
-      .catch((error) => {
-        console.error(error.toJSON());
-      });
-
+    logoutMutation.mutate();
     setIsNavOpened(false);
   };
 

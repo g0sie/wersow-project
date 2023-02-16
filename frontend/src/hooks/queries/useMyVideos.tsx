@@ -7,7 +7,7 @@ const useMyVideos = () => {
   const { data: user } = useLoggedInUser();
 
   const videos = useQuery<CollectedVideoInterface[], Error>({
-    queryKey: ["myVideos"],
+    queryKey: ["user", "videos"],
     queryFn: () => {
       return axios
         .get(`users/${user?.id}/videos`)
