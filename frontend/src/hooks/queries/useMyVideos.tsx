@@ -1,13 +1,10 @@
-import { useContext } from "react";
 import { useQuery } from "@tanstack/react-query";
-
-import { LoggedInUserContext } from "../../context/LoggedInUserContext";
-
-import axios from "../../api";
+import useLoggedInUser from "./useLoggedInUser";
 import { CollectedVideoInterface } from "../../interfaces/CollectedVideoInterface";
+import axios from "../../api";
 
 const useMyVideos = () => {
-  const { user } = useContext(LoggedInUserContext);
+  const { data: user } = useLoggedInUser();
 
   const videos = useQuery<CollectedVideoInterface[], Error>({
     queryKey: ["myVideos"],

@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import { Navigate } from "react-router-dom";
 
+import useLoggedInUser from "../../hooks/queries/useLoggedInUser";
+
 import Input from "../../components/forms/Input";
 import Button from "../../components/UI/Button/Button";
 import ErrorMessage from "../../components/forms/ErrorMessage";
-
-import { useContext } from "react";
-import { LoggedInUserContext } from "../../context/LoggedInUserContext";
 
 import axios from "../../api";
 
@@ -15,7 +14,7 @@ import pageStyles from "../Page.module.css";
 import styles from "./LoginPage.module.css";
 
 const LoginPage = () => {
-  const { update: updateUser } = useContext(LoggedInUserContext);
+  const { refetch: refetchUser } = useLoggedInUser();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -47,7 +46,7 @@ const LoginPage = () => {
       .then((res) => {
         switch (res.status) {
           case 200:
-            updateUser();
+            refetchUser();
             setRedirect(true);
             break;
           case 403:

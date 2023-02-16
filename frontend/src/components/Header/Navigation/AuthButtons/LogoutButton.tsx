@@ -1,7 +1,7 @@
 import { useContext } from "react";
-
-import { LoggedInUserContext } from "../../../../context/LoggedInUserContext";
 import { NavContext } from "../../../../context/NavContext";
+
+import useLoggedInUser from "../../../../hooks/queries/useLoggedInUser";
 
 import axios from "../../../../api";
 import styles from "../NavLinks/NavLinks.module.css";
@@ -11,8 +11,8 @@ interface LogoutButtonProps {
 }
 
 const LogoutButton = (props: LogoutButtonProps) => {
-  const { update: updateUser } = useContext(LoggedInUserContext);
   const { setIsOpened: setIsNavOpened } = useContext(NavContext);
+  const { refetch: refetchUser } = useLoggedInUser();
 
   const logOut = async () => {
     axios
@@ -24,7 +24,7 @@ const LogoutButton = (props: LogoutButtonProps) => {
         }
       )
       .then(() => {
-        updateUser();
+        refetchUser();
       })
       .catch((error) => {
         console.error(error.toJSON());

@@ -1,12 +1,11 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
+import useLoggedInUser from "../../../hooks/queries/useLoggedInUser";
 import useTodaysVideo from "../../../hooks/queries/useTodaysVideo";
 
 import Button from "../../UI/Button/Button";
-
-import { LoggedInUserContext } from "../../../context/LoggedInUserContext";
 
 import axios from "../../../api";
 import { AxiosError } from "axios";
@@ -20,10 +19,9 @@ interface CollectButtonProps {
 }
 
 const CollectButton = (props: CollectButtonProps) => {
-  const { isSuccess: isVideoThere, data: video } = useTodaysVideo();
-  const { user: loggedInUser } = useContext(LoggedInUserContext);
+  const { data: video, isSuccess: isVideoThere } = useTodaysVideo();
+  const { data: user } = useLoggedInUser();
 
-  const [isCollected, setIsCollected] = useState(false);
   const toldToSignUp = useRef(false);
 
   const navigate = useNavigate();
@@ -39,9 +37,6 @@ const CollectButton = (props: CollectButtonProps) => {
             throw e;
         });
     },
-    onSuccess: () => {
-      setIsCollected(true);
-    },
     onError: (e) => {
       props.setErrorMsg("Sorry, something went wrong :(");
       props.setShowError(true);
@@ -51,25 +46,22 @@ const CollectButton = (props: CollectButtonProps) => {
   const collectedQuery = useQuery({
     queryKey: ["collectedVideo"],
     queryFn: () => {
-      return axios.get(`/users/${loggedInUser?.id}/videos/${video?.id}`);
+      return axios.get(`/users/${user?.id}/videos/${video?.id}`);
     },
-    enabled: !!loggedInUser && isVideoThere,
+    enabled: !!user && isVideoThere,
+    retry: false,
   });
 
-  useEffect(() => {
-    setIsCollected(!!loggedInUser && isVideoThere && collectedQuery.isSuccess);
-  }, [loggedInUser, isVideoThere, collectedQuery.isSuccess]);
-
   const handleClick = () => {
-    if (!loggedInUser && toldToSignUp.current === false) {
+    if (!user && toldToSignUp.current === false) {
       props.setErrorMsg("Join #teamsówki to collect videos");
       props.setShowError(true);
       toldToSignUp.current = true;
     } else if (toldToSignUp.current === true) {
       return navigate("/register");
-    } else if (loggedInUser && isVideoThere) {
+    } else if (!!user && isVideoThere) {
       collectMutation.mutate({
-        user_id: loggedInUser.id,
+        user_id: user.id,
         video_id: video.id,
       });
     }
@@ -82,7 +74,7 @@ const CollectButton = (props: CollectButtonProps) => {
       disabled={!isVideoThere}
       loading={collectMutation.isLoading}
       className={[styles.collectBtn, props.className].join(" ")}
-      success={isCollected}
+      success={collectMutation.isSuccess || collectedQuery.isSuccess}
     >
       {toldToSignUp.current ? "Sign up" : "Collect"}
     </Button>

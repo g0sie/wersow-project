@@ -1,19 +1,10 @@
-import { useContext, useEffect } from "react";
 import useMyVideos from "../../hooks/queries/useMyVideos";
-
-import { LoggedInUserContext } from "../../context/LoggedInUserContext";
 
 import pageStyles from "../Page.module.css";
 import styles from "./MyVideosPage.module.css";
 
 const MyVideosPage = () => {
-  const {
-    data: videos,
-    isLoading,
-    isSuccess,
-    refetch: refetchVideos,
-  } = useMyVideos();
-  const { user } = useContext(LoggedInUserContext);
+  const { data: videos, isLoading, isSuccess } = useMyVideos();
 
   const message = (text: string) => {
     return (
@@ -28,10 +19,6 @@ const MyVideosPage = () => {
       </p>
     );
   };
-
-  useEffect(() => {
-    refetchVideos();
-  }, [user, refetchVideos]);
 
   if (isLoading) {
     return message("Loading...");
