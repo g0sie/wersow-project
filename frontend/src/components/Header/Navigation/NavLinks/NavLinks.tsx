@@ -1,8 +1,9 @@
 import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
+import useLoggedInUser from "../../../../hooks/queries/useLoggedInUser";
+
 import { NavContext } from "../../../../context/NavContext";
-import { LoggedInUserContext } from "../../../../context/LoggedInUserContext";
 
 import styles from "./NavLinks.module.css";
 
@@ -27,8 +28,7 @@ const navLinks: Array<navLinkType> = [
 
 const NavLinks = () => {
   const nav = useContext(NavContext);
-  const { user: loggedInUser } = useContext(LoggedInUserContext);
-
+  const { data: user } = useLoggedInUser();
   const [accessibleLinks, setAccessibleLinks] = useState(Array<navLinkType>);
 
   const classNames = [styles.navLinks];
@@ -36,11 +36,11 @@ const NavLinks = () => {
 
   useEffect(() => {
     let links = navLinks;
-    if (loggedInUser === null) {
+    if (!user) {
       links = navLinks.filter((navLink) => navLink.access === "public");
     }
     setAccessibleLinks(links);
-  }, [loggedInUser]);
+  }, [user]);
 
   return (
     <ul className={classNames.join(" ")} data-testid="nav-links">
