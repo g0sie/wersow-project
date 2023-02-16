@@ -1,5 +1,5 @@
 import { useContext, useEffect } from "react";
-import useMyVideos from "../../hooks/useMyVideos";
+import useMyVideos from "../../hooks/queries/useMyVideos";
 
 import { LoggedInUserContext } from "../../context/LoggedInUserContext";
 
