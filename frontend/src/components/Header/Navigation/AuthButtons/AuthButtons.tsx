@@ -1,6 +1,7 @@
 import { useContext } from "react";
 
 import { LoggedInUserContext } from "../../../../context/LoggedInUserContext";
+import { NavContext } from "../../../../context/NavContext";
 
 import useWindowSize from "../../../../hooks/useWindowSize";
 
@@ -11,15 +12,11 @@ import LogoutButton from "./LogoutButton";
 import buttonStyles from "../../../UI/Button/Button.module.css";
 import styles from "../../Header.module.css";
 
-interface AuthButtonsProps {
-  isNavActive: boolean;
-  turnOffNav: () => void;
-}
-
 const authButtonsActiveClassName = `${styles.authButtons} ${styles.authButtonsActive}`;
 
-const AuthButtons = (props: AuthButtonsProps) => {
+const AuthButtons = () => {
   const { user: loggedInUser } = useContext(LoggedInUserContext);
+  const { isOpened: isNavOpened } = useContext(NavContext);
 
   const windowWidth = useWindowSize()[0];
 
@@ -32,29 +29,19 @@ const AuthButtons = (props: AuthButtonsProps) => {
 
   let buttons;
   if (loggedInUser) {
-    buttons = (
-      <LogoutButton className={buttonClassName} turnOffNav={props.turnOffNav} />
-    );
+    buttons = <LogoutButton btnClassName={buttonClassName} />;
   } else {
     buttons = (
       <>
-        <LoginButton
-          className={buttonClassName}
-          turnOffNav={props.turnOffNav}
-        />
-        <RegisterButton
-          className={buttonClassName}
-          turnOffNav={props.turnOffNav}
-        />
+        <LoginButton btnClassName={buttonClassName} />
+        <RegisterButton btnClassName={buttonClassName} />
       </>
     );
   }
 
   return (
     <div
-      className={
-        props.isNavActive ? authButtonsActiveClassName : styles.authButtons
-      }
+      className={isNavOpened ? authButtonsActiveClassName : styles.authButtons}
     >
       {buttons}
     </div>

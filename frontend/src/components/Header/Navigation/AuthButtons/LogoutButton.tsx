@@ -1,16 +1,18 @@
 import { useContext } from "react";
+
 import { LoggedInUserContext } from "../../../../context/LoggedInUserContext";
+import { NavContext } from "../../../../context/NavContext";
 
 import axios from "../../../../api";
-import styles from "../../Header.module.css";
+import styles from "../NavLinks/NavLinks.module.css";
 
 interface LogoutButtonProps {
-  turnOffNav: () => void;
-  className: string;
+  btnClassName: string;
 }
 
 const LogoutButton = (props: LogoutButtonProps) => {
   const { update: updateUser } = useContext(LoggedInUserContext);
+  const { setIsOpened: setIsNavOpened } = useContext(NavContext);
 
   const logOut = async () => {
     axios
@@ -28,12 +30,12 @@ const LogoutButton = (props: LogoutButtonProps) => {
         console.error(error.toJSON());
       });
 
-    props.turnOffNav();
+    setIsNavOpened(false);
   };
 
   return (
     <div className={styles.navLink} onClick={logOut}>
-      <button className={props.className}>Log out</button>
+      <button className={props.btnClassName}>Log out</button>
     </div>
   );
 };

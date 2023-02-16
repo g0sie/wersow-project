@@ -1,16 +1,24 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
 
-import styles from "../../Header.module.css";
+import { NavContext } from "../../../../context/NavContext";
+
+import styles from "../NavLinks/NavLinks.module.css";
 
 interface LoginButtonProps {
-  turnOffNav: () => void;
-  className: string;
+  btnClassName: string;
 }
 
 const LoginButton = (props: LoginButtonProps) => {
+  const { setIsOpened: setIsNavOpened } = useContext(NavContext);
+
   return (
-    <Link to="login" onClick={props.turnOffNav} className={styles.navLink}>
-      <button className={props.className}>Log in</button>
+    <Link
+      to="login"
+      onClick={() => setIsNavOpened(false)}
+      className={styles.navLink}
+    >
+      <button className={props.btnClassName}>Log in</button>
     </Link>
   );
 };

@@ -1,41 +1,25 @@
-import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { NavContext } from "../../../context/NavContext";
 
+import NavLinks from "./NavLinks/NavLinks";
 import AuthButtons from "./AuthButtons/AuthButtons";
 import Dimming from "./Dimming";
 
 import styles from "../Header.module.css";
 
-interface NavigationProps {
-  isNavActive: boolean;
-  turnOffNav: () => void;
-}
+const Navigation = () => {
+  const navContext = useContext(NavContext);
 
-const Navigation = (props: NavigationProps) => {
+  const classNames = [styles.nav];
+  if (navContext.isOpened) classNames.push(styles.navActive);
+
   return (
-    <nav
-      className={
-        props.isNavActive ? `${styles.nav} ${styles.navActive}` : styles.nav
-      }
-    >
-      {/* nav links */}
-      <ul
-        className={
-          props.isNavActive
-            ? `${styles.navLinks} ${styles.navLinksActive}`
-            : styles.navLinks
-        }
-      >
-        <Link className={styles.navLink} to="/" onClick={props.turnOffNav}>
-          <li>Home</li>
-        </Link>
-      </ul>
+    <nav className={classNames.join(" ")}>
+      <NavLinks />
 
-      <AuthButtons
-        isNavActive={props.isNavActive}
-        turnOffNav={props.turnOffNav}
-      />
+      <AuthButtons />
 
-      <Dimming isNavActive={props.isNavActive} turnOffNav={props.turnOffNav} />
+      <Dimming />
     </nav>
   );
 };

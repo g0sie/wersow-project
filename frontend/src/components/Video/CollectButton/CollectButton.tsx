@@ -1,11 +1,12 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useMutation, useQuery, UseQueryResult } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
+
+import useTodaysVideo from "../../../hooks/queries/useTodaysVideo";
 
 import Button from "../../UI/Button/Button";
 
 import { LoggedInUserContext } from "../../../context/LoggedInUserContext";
-import { VideoInterface } from "../../../interfaces/VideoInterface";
 
 import axios from "../../../api";
 import { AxiosError } from "axios";
@@ -14,13 +15,12 @@ import styles from "./CollectButton.module.css";
 
 interface CollectButtonProps {
   className?: string;
-  todaysVideoQuery: UseQueryResult<VideoInterface, Error>;
   setShowError: (show: boolean) => void;
   setErrorMsg: (message: string) => void;
 }
 
 const CollectButton = (props: CollectButtonProps) => {
-  const { isSuccess: isVideoThere, data: video } = props.todaysVideoQuery;
+  const { isSuccess: isVideoThere, data: video } = useTodaysVideo();
   const { user: loggedInUser } = useContext(LoggedInUserContext);
 
   const [isCollected, setIsCollected] = useState(false);

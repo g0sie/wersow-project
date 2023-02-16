@@ -1,28 +1,24 @@
-import { UseQueryResult } from "@tanstack/react-query";
-
 import VideoPlayer from "./VideoPlayer/VideoPlayer";
 import VideoPlaceholder from "./VideoPlayer/VideoPlaceholder";
 import LoadingMessage from "./VideoPlayer/LoadingMessage/LoadingMessage";
 
-import { VideoInterface } from "../../interfaces/VideoInterface";
-
 import styles from "./Video.module.css";
+import useTodaysVideo from "../../hooks/queries/useTodaysVideo";
 
 interface TodaysVideoProps {
-  todaysVideoQuery: UseQueryResult<VideoInterface, Error>;
   className?: string;
 }
 
 const TodaysVideo = (props: TodaysVideoProps) => {
+  const { data: video, isSuccess, isError } = useTodaysVideo();
+
   return (
     <div className={[styles.videoPlayerWrapper, props?.className].join(" ")}>
-      {props.todaysVideoQuery.isSuccess ? (
-        <VideoPlayer
-          url={props.todaysVideoQuery.data.url.replace("watch?v=", "embed/")}
-        />
+      {isSuccess ? (
+        <VideoPlayer url={video.url.replace("watch?v=", "embed/")} />
       ) : (
         <VideoPlaceholder>
-          <LoadingMessage loadingFailed={props.todaysVideoQuery.isError} />
+          <LoadingMessage loadingFailed={isError} />
         </VideoPlaceholder>
       )}
     </div>
