@@ -11,6 +11,7 @@ class IsDebugTrueOrReadOnly(BasePermission):
 
 class FrontendClientOrReadOnly(BasePermission):
     def has_permission(self, request, view):
-        is_frontend_client = request.headers.get("Origin") == "http://localhost:3000"
+        origin = request.headers.get("Origin")
+        is_frontend_client = origin == "https://wersow.netlify.app"
         read_only = request.method in SAFE_METHODS
         return is_frontend_client or read_only
