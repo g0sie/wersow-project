@@ -1,8 +1,8 @@
 import { useState } from "react";
 
-import TodaysVideo from "../../components/Video/TodaysVideo";
-import VideoTitle from "../../components/Video/VideoTitle/VideoTitle";
-import CollectButton from "../../components/Video/CollectButton/CollectButton";
+import TodaysVideo from "../../components/TodaysVideo/TodaysVideo";
+import VideoTitle from "../../components/TodaysVideo/VideoTitle/VideoTitle";
+import CollectButton from "../../components/TodaysVideo/CollectButton/CollectButton";
 import ErrorMessage from "../../components/forms/ErrorMessage";
 
 import useTodaysVideo from "../../hooks/queries/useTodaysVideo";

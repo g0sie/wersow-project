@@ -1,4 +1,5 @@
 import useMyVideos from "../../hooks/queries/useMyVideos";
+import MyVideo from "./MyVideo/MyVideo";
 
 import pageStyles from "../Page.module.css";
 import styles from "./MyVideosPage.module.css";
@@ -31,14 +32,7 @@ const MyVideosPage = () => {
         data-testid="videos-page"
       >
         {videos.map((video) => (
-          <div className={styles.video} key={video.id}>
-            <img
-              src={video.thumbnail_url}
-              alt={`thumbnail of ${video.title}`}
-              className={styles.thumbnail}
-            />
-            <p className={styles.title}>{video.title}</p>
-          </div>
+          <MyVideo video={video} key={video.id} />
         ))}
       </div>
     );
