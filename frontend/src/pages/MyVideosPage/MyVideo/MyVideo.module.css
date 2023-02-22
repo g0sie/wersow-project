@@ -21,9 +21,9 @@
 
 .days {
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
-  gap: 0.3rem;
+  flex-wrap: wrap;
 
   font-family: "Roboto", sans-serif;
   font-size: 0.86rem;
@@ -33,12 +33,13 @@
 .day {
   display: flex;
   align-items: center;
-  gap: 0.12rem;
+  gap: 0.2rem;
 }
 
 .dot {
   width: 0.2rem;
   height: 0.2rem;
+  margin: 0 0.3rem;
   background-color: #aaa;
   border-radius: 50%;
 }
