@@ -7,47 +7,6 @@
   min-height: auto;
 }
 
-.video {
-  display: grid;
-  grid-template-rows: min-content 1fr;
-  align-items: start;
-  gap: 0.1rem;
-}
-
-.thumbnail {
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  object-fit: cover;
-  border-radius: 0.6rem;
-}
-
-.title {
-  font-family: "Roboto", sans-serif;
-  font-size: 0.9rem;
-  text-align: left;
-  color: white;
-}
-
-.days {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 0.3rem;
-
-  font-family: "Roboto", sans-serif;
-  font-size: 0.86rem;
-  color: var(--light-blue);
-  color: #aaa;
-}
-
-.dot {
-  width: 0.2rem;
-  height: 0.2rem;
-  background-color: var(--light-blue);
-  background-color: #aaa;
-  border-radius: 50%;
-}
-
 .message {
   color: white;
   text-align: center;
