@@ -9,29 +9,33 @@ interface MyVideoProps {
   video: CollectedVideoInterface;
 }
 
-const daysFrom = (from: Date) => {
+const timeFrom = (from: Date) => {
   const today = new Date();
   const MILISECONDS_IN_DAY = 86400000;
   return Math.floor((today.getTime() - from.getTime()) / MILISECONDS_IN_DAY);
 };
 
-const daysAgoStr = (days: number) => {
+const timeFromStr = (days: number) => {
   if (days < 1) return "today";
   if (days === 1) return "yesterday";
-  return `${days} days ago`;
+  if (days < 365) return `${days} days ago`;
+
+  const years = Math.floor(days / 365);
+  if (years === 1) return "1 year ago";
+  return `${years} years ago`;
 };
 
 const MyVideo = (props: MyVideoProps) => {
-  const daysFromPublishing = (video: CollectedVideoInterface) => {
+  const timeFromPublishing = (video: CollectedVideoInterface) => {
     const published = new Date(video.publish_date);
-    const days = daysFrom(published);
-    return daysAgoStr(days);
+    const days = timeFrom(published);
+    return timeFromStr(days);
   };
 
-  const daysFromCollecting = (video: CollectedVideoInterface) => {
+  const timeFromCollecting = (video: CollectedVideoInterface) => {
     const collected = new Date(video.collected);
-    const days = daysFrom(collected);
-    return daysAgoStr(days);
+    const days = timeFrom(collected);
+    return timeFromStr(days);
   };
 
   return (
@@ -47,12 +51,12 @@ const MyVideo = (props: MyVideoProps) => {
       <div className={styles.days}>
         <div className={styles.day}>
           <PublishedIcon />
-          <p>{daysFromPublishing(props.video)}</p>
+          <p>{timeFromPublishing(props.video)}</p>
         </div>
         <div className={styles.dot}></div>
         <div className={styles.day}>
           <CollectedIcon />
-          <p>{daysFromCollecting(props.video)}</p>
+          <p>{timeFromCollecting(props.video)}</p>
         </div>
       </div>
     </div>
