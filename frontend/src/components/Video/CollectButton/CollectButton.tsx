@@ -74,7 +74,9 @@ const CollectButton = (props: CollectButtonProps) => {
       disabled={!isVideoThere}
       loading={collectMutation.isLoading}
       className={[styles.collectBtn, props.className].join(" ")}
-      success={collectMutation.isSuccess || collectedQuery.isSuccess}
+      success={
+        !!user && (collectMutation.isSuccess || collectedQuery.isSuccess)
+      }
     >
       {toldToSignUp.current ? "Sign up" : "Collect"}
     </Button>
