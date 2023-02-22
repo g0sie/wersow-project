@@ -1,5 +1,6 @@
 import { CollectedVideoInterface } from "../../../interfaces/CollectedVideoInterface";
 import styles from "./MyVideo.module.css";
+import PublishedIcon from "./icons/PublishedIcon";
 
 interface MyVideoProps {
   video: CollectedVideoInterface;
@@ -41,7 +42,10 @@ const MyVideo = (props: MyVideoProps) => {
         <p className={styles.title}>{props.video.title}</p>
       </a>
       <div className={styles.days}>
-        <p>{daysFromPublishing(props.video)}</p>
+        <div className={styles.day}>
+          <PublishedIcon />
+          <p>{daysFromPublishing(props.video)}</p>
+        </div>
         <div className={styles.dot}></div>
         <p>{daysFromCollecting(props.video)}</p>
       </div>

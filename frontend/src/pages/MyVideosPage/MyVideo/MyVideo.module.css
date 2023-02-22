@@ -30,6 +30,12 @@
   color: #aaa;
 }
 
+.day {
+  display: flex;
+  align-items: center;
+  gap: 0.12rem;
+}
+
 .dot {
   width: 0.2rem;
   height: 0.2rem;
