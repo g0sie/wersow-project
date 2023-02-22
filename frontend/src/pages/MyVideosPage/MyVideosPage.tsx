@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import useMyVideos from "../../hooks/queries/useMyVideos";
 
 import pageStyles from "../Page.module.css";
@@ -31,14 +32,20 @@ const MyVideosPage = () => {
         data-testid="videos-page"
       >
         {videos.map((video) => (
-          <div className={styles.video} key={video.id}>
+          <a
+            className={styles.video}
+            href={video.url}
+            target="_blank"
+            rel="noopner"
+            key={video.id}
+          >
             <img
               src={video.thumbnail_url}
               alt={`thumbnail of ${video.title}`}
               className={styles.thumbnail}
             />
             <p className={styles.title}>{video.title}</p>
-          </div>
+          </a>
         ))}
       </div>
     );
