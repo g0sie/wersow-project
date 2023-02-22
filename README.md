@@ -2,8 +2,6 @@
 
 **wersow-project** is an app that allows you to watch and collect Wersow's videos (she's a Polish youtuber). Everyday there is a different video. The goal is to collect all of them. Design of the app is inspired by Chicken Invaders.
 
-![screenshot of home page](screenshot.png)
-
 ## Links
 
 - the website: https://wersow.netlify.app/
@@ -11,12 +9,25 @@
 
 ## Table of Contents
 
+1. [Overview](#overview)
 1. [Technologies](#technologies)
 1. [Frontend](#frontend)
    1. [Custom hooks](#custom-hooks)
 1. [Backend](#backend)
    1. [Custom commands](#custom-commands)
 1. [Sources](#sources)
+
+## Overview
+
+### Home Page
+
+Here you can watch today's video and add it to your collection.
+![screenshot of home page](screenshots/home-page.png)
+
+### My Videos Page
+
+Here you can watch all videos you have collected.
+![screenshot of my videos page](screenshots/my-videos-page.png)
 
 ## Technologies
 
@@ -74,7 +85,8 @@ returns current width and height of the window
 - [x] every day another random Wersow's video
 - [x] authentication
 - [x] ability to collect videos
-- [ ] video collection page
+- [x] video collection page
+- [ ] progress bar (100% - all videos collected)
 
 ## Sources
 
