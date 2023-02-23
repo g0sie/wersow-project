@@ -1,7 +1,15 @@
-venv/
-**.sqlite3
-**.env
-**/__pycache__/
-backend/wersow-project.code-workspace
+# vscode
 .vscode/
+backend/wersow-project.code-workspace
+
+# env
+venv/
+**.env
+**.sqlite3
+
+# django
 staticfiles/
+
+# python cache
+**/__pycache__/
+**/.pytest_cache/
