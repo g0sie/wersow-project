@@ -48,8 +48,9 @@ INSTALLED_APPS = [
     "rest_framework",
     "corsheaders",
     "drf_yasg",
-    "users.apps.UsersConfig",
     "videos.apps.VideosConfig",
+    "users.apps.UsersConfig",
+    "collection.apps.CollectionConfig",
 ]
 
 MIDDLEWARE = [

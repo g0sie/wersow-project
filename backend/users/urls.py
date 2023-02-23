@@ -7,6 +7,4 @@ urlpatterns = [
     path("login", views.login),
     path("user", views.user),
     path("logout", views.logout),
-    path("<int:user_id>/videos", views.videos),
-    path("<int:user_id>/videos/<int:video_id>", views.video),
 ]

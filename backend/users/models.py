@@ -2,8 +2,6 @@ from django.db import models
 from django.core.validators import MinLengthValidator
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 
-from videos.models import Video
-
 
 class UserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
@@ -42,11 +40,3 @@ class User(AbstractUser):
     REQUIRED_FIELDS = []
 
     objects = UserManager()
-
-
-class VideoCollection(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="collection")
-    video = models.ForeignKey(
-        Video, on_delete=models.CASCADE, related_name="collection"
-    )
-    collected = models.DateField(auto_now_add=True)
