@@ -99,3 +99,16 @@ def video(request, user_id: int, video_id: int):
         video["collected"] = user_video.collected
 
         return Response(video)
+
+
+@swagger_auto_schema(
+    method="GET",
+    operation_summary="Count collected videos",
+    # responses={200: schemas.collected_video_schema, 404: "Not found"},
+)
+@api_view(["GET"])
+def count_videos(request, user_id: int, video_id: int):
+    """get collected videos count and all videos count"""
+
+    if request.method == "GET":
+        return Response("Not implemented", status=status.HTTP_501_NOT_IMPLEMENTED)
