@@ -8,8 +8,8 @@ import pytest
 
 
 @pytest.mark.django_db
-def test_create_user_with_email_successful():
-    """Test creating a user with an email is successful."""
+def test_create_user():
+    """Test creating a user is successful."""
     email = "test@example.com"
     password = "testpass123"
     username = "testusername"
@@ -21,3 +21,5 @@ def test_create_user_with_email_successful():
     assert user.email == email
     assert user.check_password(password)
     assert user.username == username
+    assert user.is_active == True
+    assert user.is_staff == False

@@ -1,18 +1,29 @@
+"""
+Database models.
+"""
 from django.db import models
 from django.core.validators import MinLengthValidator
-from django.contrib.auth.models import AbstractUser, BaseUserManager
+from django.contrib.auth.models import (
+    AbstractBaseUser,
+    PermissionsMixin,
+    BaseUserManager,
+)
 
 
 class UserManager(BaseUserManager):
-    def create_user(self, email, password=None, **extra_fields):
+    """Manager for users."""
+
+    def create_user(self, username, email, password=None, **extra_fields):
         extra_fields = {"is_staff": False, "is_superuser": False, **extra_fields}
 
+        if not username:
+            raise ValueError("User must have a username")
         if not email:
             raise ValueError("User must have an email")
         if not password:
             raise ValueError("User must have a password")
 
-        user = User(email=email, **extra_fields)
+        user = self.model(username=username, email=email, **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
 
@@ -21,21 +32,26 @@ class UserManager(BaseUserManager):
     def create_superuser(self, email, password=None, **extra_fields):
         extra_fields = {**extra_fields, "is_staff": True, "is_superuser": True}
 
-        user = self.create_user(email=email, password=password, **extra_fields)
+        user = self.create_user(
+            username=username, email=email, password=password, **extra_fields
+        )
 
         return user
 
 
-class User(AbstractUser):
+class User(AbstractBaseUser, PermissionsMixin):
+    """User in the system."""
+
     username = models.CharField(
         max_length=30,
         validators=[MinLengthValidator(3)],
     )
     email = models.EmailField(max_length=255, unique=True)
     password = models.CharField(max_length=255)
+    is_active = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=False)
 
     # overwrite to log in with email instead of username
     USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = []
 
     objects = UserManager()
