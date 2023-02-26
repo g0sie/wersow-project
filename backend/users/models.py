@@ -17,12 +17,8 @@ class UserManager(BaseUserManager):
         """Create, save and return a new user."""
         extra_fields = {"is_staff": False, "is_superuser": False, **extra_fields}
 
-        if not username:
-            raise ValueError("User must have a username")
-        if not email:
-            raise ValueError("User must have an email")
         if not password:
-            raise ValueError("User must have a password")
+            raise TypeError("User must have a password")
 
         user = self.model(
             username=username, email=self.normalize_email(email), **extra_fields
