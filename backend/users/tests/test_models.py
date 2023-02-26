@@ -23,3 +23,21 @@ def test_create_user():
     assert user.username == username
     assert user.is_active == True
     assert user.is_staff == False
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize(
+    "email, expected",
+    [
+        ("test1@EXAMPLE.com", "test1@example.com"),
+        ("Test2@Example.com", "Test2@example.com"),
+        ("TEST3@EXAMPLE.com", "TEST3@example.com"),
+        ("test4@example.com", "test4@example.com"),
+    ],
+)
+def test_new_user_email_normalized(email, expected):
+    """Test email is normalized for new users."""
+    user = get_user_model().objects.create_user(
+        email=email, username="testusername", password="testpass123"
+    )
+    assert user.email == expected

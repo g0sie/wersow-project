@@ -14,6 +14,7 @@ class UserManager(BaseUserManager):
     """Manager for users."""
 
     def create_user(self, username, email, password=None, **extra_fields):
+        """Create, save and return a new user."""
         extra_fields = {"is_staff": False, "is_superuser": False, **extra_fields}
 
         if not username:
@@ -23,7 +24,9 @@ class UserManager(BaseUserManager):
         if not password:
             raise ValueError("User must have a password")
 
-        user = self.model(username=username, email=email, **extra_fields)
+        user = self.model(
+            username=username, email=self.normalize_email(email), **extra_fields
+        )
         user.set_password(password)
         user.save(using=self._db)
 
