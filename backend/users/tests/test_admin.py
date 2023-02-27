@@ -29,3 +29,12 @@ def test_users_list(admin_client, create_user):
 
     assert bytes(user.username, "utf-8") in response.content
     assert bytes(user.email, "utf-8") in response.content
+
+
+def test_edit_user_page(admin_client, create_user):
+    """Test the edit user page works."""
+    user = create_user()
+    url = reverse("admin:users_user_change", args=[user.id])
+    response = admin_client.get(url)
+
+    assert response.status_code == 200
