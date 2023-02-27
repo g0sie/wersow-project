@@ -52,5 +52,6 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     # overwrite to log in with email instead of username
     USERNAME_FIELD = "email"
+    REQUIRED_FIELDS = ("username",)
 
     objects = UserManager()
