@@ -14,6 +14,7 @@ import django_heroku
 from pathlib import Path
 import environ
 import os
+import sys
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -89,16 +90,24 @@ WSGI_APPLICATION = "backend.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": env("DB_NAME"),
-        "HOST": env("DB_HOST"),
-        "PORT": env("DB_PORT"),
-        "USER": env("DB_USER"),
-        "PASSWORD": env("DB_PASSWORD"),
+if "pytest" in sys.modules:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": "test_db",
+        }
     }
-}
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql_psycopg2",
+            "NAME": env("DB_NAME"),
+            "HOST": env("DB_HOST"),
+            "PORT": env("DB_PORT"),
+            "USER": env("DB_USER"),
+            "PASSWORD": env("DB_PASSWORD"),
+        }
+    }
 
 
 # Password validation
