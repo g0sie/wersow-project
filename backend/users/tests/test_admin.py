@@ -38,3 +38,12 @@ def test_edit_user_page(admin_client, create_user):
     response = admin_client.get(url)
 
     assert response.status_code == 200
+
+
+def test_create_user_page(admin_client, create_user):
+    """Test the create user page works."""
+    user = create_user()
+    url = reverse("admin:users_user_add")
+    response = admin_client.get(url)
+
+    assert response.status_code == 200
