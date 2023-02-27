@@ -80,3 +80,13 @@ def test_new_user_without_password_raises_error(example_username, example_email)
         user = get_user_model().objects.create_user(
             username=example_username, email=example_email
         )
+
+
+@pytest.mark.django_db()
+def test_create_superuser(example_username, example_email, example_password):
+    """Test creating a superuser."""
+    user = get_user_model().objects.create_superuser(
+        username=example_username, email=example_email, password=example_password
+    )
+
+    assert user.is_superuser == True
