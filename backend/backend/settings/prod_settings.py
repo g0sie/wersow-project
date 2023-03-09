@@ -164,11 +164,3 @@ django_heroku.settings(locals())
 
 AUTH_USER_MODEL = "users.User"
 JWT_SECRET_KEY = env("JWT_SECRET_KEY")
-
-# Permissions
-
-REST_FRAMEWORK = {
-    "DEFAULT_PERMISSION_CLASSES": [
-        "backend.permissions.FrontendClientOrReadOnly",
-    ]
-}

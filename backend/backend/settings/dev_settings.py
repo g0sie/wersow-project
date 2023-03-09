@@ -46,9 +46,11 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    # packages
     "rest_framework",
     "corsheaders",
-    "drf_yasg",
+    "drf_spectacular",
+    # project apps
     "users.apps.UsersConfig",
     "videos.apps.VideosConfig",
 ]
@@ -180,11 +182,3 @@ JWT_SECRET_KEY = env("JWT_SECRET_KEY")
 #         }
 #     },
 # }
-
-# Permissions
-
-REST_FRAMEWORK = {
-    "DEFAULT_PERMISSION_CLASSES": [
-        "backend.permissions.IsDebugTrueOrReadOnly",
-    ]
-}

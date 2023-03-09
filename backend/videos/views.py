@@ -5,26 +5,12 @@ from rest_framework.decorators import api_view
 from rest_framework import status
 from rest_framework import generics
 
-from drf_yasg.utils import swagger_auto_schema
-
 from .models import Video
 from .serializers import VideoSerializer
-from . import schemas
 
 
-@swagger_auto_schema(
-    method="GET",
-    operation_summary="List of all videos",
-    responses={200: schemas.videos_schema},
-)
-@swagger_auto_schema(
-    method="POST",
-    operation_summary="Add a new video",
-    responses={201: schemas.post_video_response, 400: "Invalid data"},
-)
 @api_view(["GET", "POST"])
 def videos_list(request):
-
     if request.method == "GET":
         videos = Video.objects.all()
         serializer = VideoSerializer(videos, many=True)
@@ -38,35 +24,8 @@ def videos_list(request):
         return Response("Invalid data", status=status.HTTP_400_BAD_REQUEST)
 
 
-@swagger_auto_schema(
-    method="GET",
-    operation_summary="Get a video by id",
-    responses={
-        200: schemas.video_schema,
-        404: "Video not found",
-    },
-)
-@swagger_auto_schema(
-    method="PUT",
-    operation_summary="Update a video",
-    request_body=VideoSerializer,
-    responses={
-        200: schemas.video_schema,
-        400: "Invalid data",
-        404: "Video not found",
-    },
-)
-@swagger_auto_schema(
-    method="DELETE",
-    operation_summary="Delete a video",
-    responses={
-        204: "Video deleted",
-        404: "Video not found",
-    },
-)
 @api_view(["GET", "PUT", "DELETE"])
 def video_details(request, id: int):
-
     try:
         video = Video.objects.get(id=id)
     except Video.DoesNotExist:
@@ -88,17 +47,8 @@ def video_details(request, id: int):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-@swagger_auto_schema(
-    method="GET",
-    operation_summary="Get a random video",
-    responses={
-        200: schemas.video_schema,
-        404: "There are no videos in the database",
-    },
-)
 @api_view(["GET"])
 def random_video(request):
-
     if request.method == "GET":
         video = Video.objects.random()
         if video:
@@ -110,17 +60,8 @@ def random_video(request):
         )
 
 
-@swagger_auto_schema(
-    method="GET",
-    operation_summary="Get today's video",
-    responses={
-        200: schemas.video_schema,
-        404: "There is no today's video in the database",
-    },
-)
 @api_view(["GET"])
 def todays_video(request):
-
     if request.method == "GET":
         video = Video.objects.todays()
         if video:
