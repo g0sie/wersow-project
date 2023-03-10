@@ -29,3 +29,10 @@ class UserAdminTests(TestCase):
         self.assertContains(res, self.user.username)
         self.assertContains(res, self.user.email)
         self.assertContains(res, "date_joined")
+
+    def test_edit_user_page(self):
+        """Test the edit user page works."""
+        url = reverse("admin:users_user_change", args=[self.user.id])
+        res = self.client.get(url)
+
+        self.assertEquals(res.status_code, 200)
