@@ -1,8 +1,18 @@
+"""
+Django admin for users.
+"""
+
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
-from .models import User
+from users import models
 
 
-@admin.register(User)
 class UserAdmin(admin.ModelAdmin):
-    list_display = ['email', 'is_superuser']
+    """Define the admin pages for users."""
+
+    ordering = ["-date_joined"]
+    list_display = ["username", "email", "date_joined"]
+
+
+admin.site.register(models.User, UserAdmin)
