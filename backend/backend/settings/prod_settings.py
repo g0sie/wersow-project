@@ -37,9 +37,11 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    # packages
     "rest_framework",
     "corsheaders",
     "drf_yasg",
+    # project apps
     "users.apps.UsersConfig",
     "videos.apps.VideosConfig",
 ]
@@ -156,3 +158,7 @@ django_heroku.settings(locals())
 
 AUTH_USER_MODEL = "users.User"
 JWT_SECRET_KEY = env("JWT_SECRET_KEY")
+
+# Documentation
+
+REST_FRAMEWORK = {"DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema"}

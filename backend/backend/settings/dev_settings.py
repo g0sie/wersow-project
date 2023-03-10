@@ -183,3 +183,8 @@ JWT_SECRET_KEY = env("JWT_SECRET_KEY")
 #         }
 #     },
 # }
+
+
+# Documentation
+
+REST_FRAMEWORK = {"DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema"}
