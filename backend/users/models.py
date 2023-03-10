@@ -1,52 +1,66 @@
+"""
+Models for users.
+"""
 from django.db import models
-from django.core.validators import MinLengthValidator
-from django.contrib.auth.models import AbstractUser, BaseUserManager
-
-from videos.models import Video
+from django.contrib.auth.models import (
+    AbstractBaseUser,
+    BaseUserManager,
+    PermissionsMixin,
+)
+from django.utils.timezone import now
 
 
 class UserManager(BaseUserManager):
-    def create_user(self, email, password=None, **extra_fields):
-        extra_fields = {"is_staff": False, "is_superuser": False, **extra_fields}
+    """Manager for users."""
+
+    def create_user(self, email, password=None, username=None, **extra_fields):
+        """Create, save and return a new user."""
 
         if not email:
-            raise ValueError("User must have an email")
+            raise ValueError("User must have an email address.")
         if not password:
-            raise ValueError("User must have a password")
+            raise ValueError("User must have a password.")
+        if not username:
+            raise ValueError("User must have a username.")
 
-        user = User(email=email, **extra_fields)
+        user = self.model(
+            email=self.normalize_email(email), username=username, **extra_fields
+        )
         user.set_password(password)
         user.save(using=self._db)
 
         return user
 
-    def create_superuser(self, email, password=None, **extra_fields):
-        extra_fields = {**extra_fields, "is_staff": True, "is_superuser": True}
-
-        user = self.create_user(email=email, password=password, **extra_fields)
+    def create_superuser(self, email, password=None, username="admin", **extra_fields):
+        """Create, save and return a new superuser."""
+        user = self.create_user(
+            email=email, password=password, username=username, **extra_fields
+        )
+        user.is_staff = True
+        user.is_superuser = True
+        user.save(using=self._db)
 
         return user
 
 
-class User(AbstractUser):
-    name = models.CharField(
-        max_length=30,
-        validators=[MinLengthValidator(3)],
-    )
+class User(AbstractBaseUser, PermissionsMixin):
+    """User in the system."""
+
     email = models.EmailField(max_length=255, unique=True)
     password = models.CharField(max_length=255)
-    username = None
+    username = models.CharField(max_length=30)
+    is_active = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=False)
+    date_joined = models.DateField(default=now)
 
-    # overwrite to log in with email instead of username
     USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = []
 
     objects = UserManager()
 
 
-class VideoCollection(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="collection")
-    video = models.ForeignKey(
-        Video, on_delete=models.CASCADE, related_name="collection"
-    )
-    collected = models.DateField(auto_now_add=True)
+# class VideoCollection(models.Model):
+#     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="collection")
+#     video = models.ForeignKey(
+#         Video, on_delete=models.CASCADE, related_name="collection"
+#     )
+#     collected = models.DateField(auto_now_add=True)
