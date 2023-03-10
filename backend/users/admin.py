@@ -9,7 +9,7 @@ from django.utils.translation import gettext_lazy as _
 from users import models
 
 
-class UserAdmin(admin.ModelAdmin):
+class UserAdmin(BaseUserAdmin):
     """Define the admin pages for users."""
 
     ordering = ["-date_joined"]
@@ -25,6 +25,23 @@ class UserAdmin(admin.ModelAdmin):
         (_("Important dates"), {"fields": ("last_login", "date_joined")}),
     )
     readonly_fields = ["last_login", "date_joined"]
+    add_fieldsets = (
+        (
+            None,
+            {
+                "classes": ("wide",),
+                "fields": (
+                    "email",
+                    "password1",
+                    "password2",
+                    "username",
+                    "is_active",
+                    "is_staff",
+                    "is_superuser",
+                ),
+            },
+        ),
+    )
 
 
 admin.site.register(models.User, UserAdmin)
