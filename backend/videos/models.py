@@ -30,19 +30,19 @@ class VideoManager(models.Manager):
             publish_date=video.publish_date.date(),
         )
 
+    def change_todays_video(self):
+        old_todays = self.filter(todays=True)
 
-#     def change_todays_video(self):
-#         old_todays = self.filter(todays=True)
+        for video in old_todays:
+            video.todays = False
+            video.save()
 
-#         for video in old_todays:
-#             video.todays = False
-#             video.save()
+        new_todays = self.random()
+        new_todays.todays = True
+        new_todays.save()
 
-#         new_todays = self.random()
-#         new_todays.todays = True
-#         new_todays.save()
+        return new_todays
 
-#         return new_todays
 
 #     def add_latest_video(self):
 #         channel = Channel("https://www.youtube.com/channel/UCtVy1X-hcxAL2ZlS6TqMQFw")

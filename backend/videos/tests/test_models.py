@@ -2,6 +2,7 @@
 Tests for Video model.
 """
 import datetime
+from unittest.mock import patch
 
 from django.test import TestCase
 
@@ -96,3 +97,41 @@ class VideoModelTests(TestCase):
 
         exists = Video.objects.filter(title=VIDEO_EXAMPLE["title"]).exists()
         self.assertTrue(exists)
+
+    @patch("videos.models.Video.objects.random")
+    def test_change_todays_video_works(self, patched_random):
+        """Test change_todays_video method changes today's video."""
+        old_todays = create_video(todays=True)
+        next_todays = create_video(todays=False)
+
+        patched_random.return_value = next_todays
+        Video.objects.change_todays_video()
+
+        old_todays.refresh_from_db()
+        self.assertFalse(old_todays.todays)
+        next_todays.refresh_from_db()
+        self.assertTrue(next_todays.todays)
+
+    def test_change_todays_video_when_no_todays_videos(self):
+        """Test change_todays_video sets today's video when there is no today's video."""
+        video = create_video(todays=False)
+
+        Video.objects.change_todays_video()
+
+        video.refresh_from_db()
+        self.assertTrue(video.todays)
+
+    @patch("videos.models.Video.objects.random")
+    def test_change_todays_video_when_multiple_todays_videos(self, patched_random):
+        """Test that change_todays_video leaves database with only one today's video
+        even if there were more today's videos before."""
+        old_todays1 = create_video(todays=True)
+        old_todays2 = create_video(todays=True)
+        next_todays = create_video(todays=False)
+
+        patched_random.return_value = next_todays
+        Video.objects.change_todays_video()
+
+        self.assertTrue(next_todays.todays)
+        todays_count = Video.objects.filter(todays=True).count()
+        self.assertEqual(todays_count, 1)
