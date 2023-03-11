@@ -50,14 +50,14 @@ from pytube import YouTube, Channel
 #             return self.add_video(video_url)
 
 
-# class Video(models.Model):
-#     title = models.CharField(max_length=100)
-#     url = models.URLField()
-#     thumbnail_url = models.URLField()
-#     publish_date = models.DateField()
-#     todays = models.BooleanField(default=False)
+class Video(models.Model):
+    title = models.CharField(max_length=100)
+    url = models.URLField()
+    thumbnail_url = models.URLField()
+    publish_date = models.DateField()
+    todays = models.BooleanField(default=False)
 
-#     objects = VideoManager()
+    # objects = VideoManager()
 
-#     def __str__(self):
-#         return self.title
+    def __str__(self):
+        return self.title
