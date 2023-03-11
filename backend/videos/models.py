@@ -21,15 +21,15 @@ class VideoManager(models.Manager):
         if todays.count() > 0:
             return todays[0]
 
+    def add_video(self, video_url: str):
+        video = YouTube(video_url)
+        return self.create(
+            url=video_url,
+            title=video.title,
+            thumbnail_url=video.thumbnail_url,
+            publish_date=video.publish_date.date(),
+        )
 
-#     def add_video(self, video_url: str):
-#         video = YouTube(video_url)
-#         return self.create(
-#             url=video_url,
-#             title=video.title,
-#             thumbnail_url=video.thumbnail_url,
-#             publish_date=video.publish_date.date(),
-#         )
 
 #     def change_todays_video(self):
 #         old_todays = self.filter(todays=True)

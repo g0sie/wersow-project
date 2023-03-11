@@ -88,3 +88,11 @@ class VideoModelTests(TestCase):
         todays_video = Video.objects.todays()
 
         self.assertEqual(todays_video, latest)
+
+    def test_add_video_works(self):
+        """Test add_video method works."""
+        video_url = VIDEO_EXAMPLE["url"]
+        video = Video.objects.add_video(video_url=video_url)
+
+        exists = Video.objects.filter(title=VIDEO_EXAMPLE["title"]).exists()
+        self.assertTrue(exists)
