@@ -4,15 +4,16 @@ from random import randint
 from pytube import YouTube, Channel
 
 
-# class VideoManager(models.Manager):
-#     def random(self):
-#         max_id = self.all().aggregate(max_id=Max("id"))["max_id"]
-#         if max_id:
-#             while True:
-#                 pk = randint(1, max_id)
-#                 video = self.filter(pk=pk).first()
-#                 if video:
-#                     return video
+class VideoManager(models.Manager):
+    def random(self):
+        max_id = self.all().aggregate(max_id=Max("id"))["max_id"]
+        if max_id:
+            while True:
+                pk = randint(1, max_id)
+                video = self.filter(pk=pk).first()
+                if video:
+                    return video
+
 
 #     def todays(self):
 #         todays = self.filter(todays=True)
@@ -57,7 +58,7 @@ class Video(models.Model):
     publish_date = models.DateField()
     todays = models.BooleanField(default=False)
 
-    # objects = VideoManager()
+    objects = VideoManager()
 
     def __str__(self):
         return self.title
