@@ -6,6 +6,7 @@ from pytube import YouTube, Channel
 
 class VideoManager(models.Manager):
     def random(self):
+        """Return a random video or None if there are no videos."""
         max_id = self.all().aggregate(max_id=Max("id"))["max_id"]
         if max_id:
             while True:
@@ -14,11 +15,12 @@ class VideoManager(models.Manager):
                 if video:
                     return video
 
+    def todays(self):
+        """Return latest today's video or None if there is no today's video."""
+        todays = self.filter(todays=True).order_by("-publish_date")
+        if todays.count() > 0:
+            return todays[0]
 
-#     def todays(self):
-#         todays = self.filter(todays=True)
-#         if todays.count() > 0:
-#             return todays[0]
 
 #     def add_video(self, video_url: str):
 #         video = YouTube(video_url)

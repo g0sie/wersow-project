@@ -52,7 +52,7 @@ class VideoModelTests(TestCase):
         self.assertFalse(video.todays)
 
     def test_random_video(self):
-        """Test random video works."""
+        """Test random method works."""
         video = create_video()
 
         random_video = Video.objects.random()
@@ -60,7 +60,31 @@ class VideoModelTests(TestCase):
         self.assertEqual(video, random_video)
 
     def test_random_video_returns_none_when_no_videos(self):
-        """Test that random video returns None if there is no videos in database."""
+        """Test that random method returns None if there are no videos in database."""
         random_video = Video.objects.random()
 
         self.assertIsNone(random_video)
+
+    def test_todays_video_works(self):
+        """Test todays method returns today's video."""
+        video = create_video(todays=True)
+
+        todays_video = Video.objects.todays()
+
+        self.assertEqual(todays_video, video)
+
+    def test_todays_video_returns_none_when_no_videos(self):
+        """Test that todays method returns None if there are no videos in database."""
+        todays_video = Video.objects.todays()
+
+        self.assertIsNone(todays_video)
+
+    def test_todays_video_when_multiple_todays_videos(self):
+        """Test that todays method returns latest video
+        when there are multiple today's videos."""
+        old = create_video(publish_date=datetime.date(2022, 5, 22), todays=True)
+        latest = create_video(publish_date=datetime.date(2023, 3, 7), todays=True)
+
+        todays_video = Video.objects.todays()
+
+        self.assertEqual(todays_video, latest)
