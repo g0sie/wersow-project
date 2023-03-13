@@ -2,7 +2,8 @@
 Tests for Video model.
 """
 import datetime
-from unittest.mock import patch
+
+from unittest.mock import patch, MagicMock
 
 from django.test import TestCase
 
@@ -135,3 +136,29 @@ class VideoModelTests(TestCase):
         self.assertTrue(next_todays.todays)
         todays_count = Video.objects.filter(todays=True).count()
         self.assertEqual(todays_count, 1)
+
+    @patch("videos.utils.WersowChannel.get_latest_video_url")
+    def test_add_latest_video_works(self, patched_latest):
+        """Test add_latest_video method adds latest Wersow's video to database."""
+        url = VIDEO_EXAMPLE["url"]
+        patched_latest.return_value = url
+        Video.objects.add_latest_video()
+
+        is_added = Video.objects.filter(url=url).exists()
+        self.assertTrue(is_added)
+
+    @patch("videos.utils.WersowChannel.get_latest_video_url")
+    def test_add_latest_video_when_latest_isnt_new(
+        self,
+        patched_latest_video_url,
+    ):
+        """Test add_latest_video doens't add latest Wersow's video
+        if it's already in database."""
+        url = VIDEO_EXAMPLE["url"]
+        create_video(url=url)
+
+        patched_latest_video_url.return_value = url
+        Video.objects.add_latest_video()
+
+        is_added = Video.objects.filter(url=url).count() > 1
+        self.assertFalse(is_added)

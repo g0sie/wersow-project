@@ -1,10 +1,18 @@
+"""
+Models for videos API.
+"""
+from random import randint
+from pytube import YouTube
+
 from django.db import models
 from django.db.models.aggregates import Max
-from random import randint
-from pytube import YouTube, Channel
+
+from videos.utils import WersowChannel
 
 
 class VideoManager(models.Manager):
+    """Manager for videos."""
+
     def random(self):
         """Return a random video or None if there are no videos."""
         max_id = self.all().aggregate(max_id=Max("id"))["max_id"]
@@ -23,6 +31,9 @@ class VideoManager(models.Manager):
 
     def add_video(self, video_url: str):
         """Add a video from url."""
+        if type(video_url) != str:
+            raise TypeError(f"{video_url} is not a string")
+
         video = YouTube(video_url)
         return self.create(
             url=video_url,
@@ -45,14 +56,14 @@ class VideoManager(models.Manager):
 
         return new_todays
 
+    def add_latest_video(self):
+        """If Wersow published a new video - add it to database."""
+        channel = WersowChannel()
+        video_url = channel.get_latest_video_url()
 
-#     def add_latest_video(self):
-#         channel = Channel("https://www.youtube.com/channel/UCtVy1X-hcxAL2ZlS6TqMQFw")
-#         video_url = channel.video_urls[0]
-
-#         is_video_new = self.filter(url=video_url).count() == 0
-#         if is_video_new:
-#             return self.add_video(video_url)
+        is_video_new = self.filter(url=video_url).count() == 0
+        if is_video_new:
+            return self.add_video(video_url)
 
 
 class Video(models.Model):
