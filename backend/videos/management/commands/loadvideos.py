@@ -1,35 +1,45 @@
 from django.core.management.base import BaseCommand
-from pytube import Channel, YouTube
 
 from videos.models import Video
+from videos.utils import WersowChannel
 
 
 class Command(BaseCommand):
     help = "Adds Wersow's videos to the database"
 
     def add_arguments(self, parser):
+        """Specify how many videos should be added (all by default)."""
         parser.add_argument(
             "--limit", type=int, help="Amount of videos to add", default=float("inf")
         )
 
     def handle(self, *args, **options):
-        channel = Channel("https://www.youtube.com/channel/UCtVy1X-hcxAL2ZlS6TqMQFw")
+        """Iterate over Wersow's videos and add them to the database."""
 
-        limit = options.get("limit")
-        added = 0
-        added_all = True
+        channel = WersowChannel()
+        to_add_limit = options.get("limit")
+        added_count = 0
+        added_all = False
 
-        for video_url in channel.video_urls:
-            if added >= limit:
-                added_all = False
+        def should_add_more() -> bool:
+            return added_count < to_add_limit
+
+        def is_video_new(url: str) -> bool:
+            return not Video.objects.filter(url=url).exists()
+
+        i = 0
+        while should_add_more():
+            try:
+                url = channel.get_video_url_by(index=i)
+            except IndexError:
+                added_all = True
                 break
 
-            is_video_new = Video.objects.filter(url=video_url).count() == 0
-            if is_video_new:
-                Video.objects.add_video(video_url)
-                added += 1
+            if is_video_new(url):
+                Video.objects.add_video(url)
+                added_count += 1
 
-        self.stdout.write(self.style.SUCCESS(f"Added {added} new videos"))
+        self.stdout.write(self.style.SUCCESS(f"Added {added_count} new videos"))
 
         if added_all:
             self.stdout.write(
