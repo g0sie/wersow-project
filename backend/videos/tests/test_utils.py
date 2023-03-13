@@ -14,3 +14,10 @@ class TestWersowChannel(TestCase):
         wersow_channel = WersowChannel()
 
         self.assertEqual(wersow_channel.channel.channel_name, "WERSOW")
+
+    def test_video_urls_not_empty(self):
+        """Test that video_urls list is not empty."""
+        channel = WersowChannel()
+        video_urls = channel.get_video_urls()
+
+        self.assertNotEqual(video_urls, [])
