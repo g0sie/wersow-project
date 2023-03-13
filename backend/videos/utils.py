@@ -17,5 +17,6 @@ class WersowChannel:
         """Return list of channel's video urls."""
         return self.channel.video_urls
 
-    # def get_latest_video_url(self) -> str:
-    #     return self.channel.video_urls[0]
+    def get_latest_video_url(self) -> str:
+        """Return url of the latest Wersow's video."""
+        return self.channel.video_urls[0]
