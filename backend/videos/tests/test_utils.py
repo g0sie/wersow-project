@@ -25,6 +25,14 @@ class TestWersowChannel(TestCase):
         is_empty = len(video_urls) == 0
         self.assertFalse(is_empty)
 
+    def test_get_video_url_by_index_works(self):
+        """Test get_latest_video_url returns url."""
+        urls = self.channel.get_video_urls()
+        index = 2
+        url = self.channel.get_video_url_by(index=index)
+
+        self.assertEqual(url, urls[index])
+
     def test_get_latest_video_url_works(self):
         """Test get_latest_video_url returns url."""
         url = self.channel.get_latest_video_url()

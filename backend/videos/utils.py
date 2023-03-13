@@ -21,7 +21,11 @@ class WersowChannel:
 
         return self.video_urls
 
+    def get_video_url_by(self, index: int) -> str:
+        """Return video url by index from video_urls."""
+        urls = self.get_video_urls()
+        return urls[index]
+
     def get_latest_video_url(self) -> str:
         """Return url of the latest Wersow's video."""
-        urls = self.get_video_urls()
-        return urls[0]
+        return self.get_video_url_by(index=0)
