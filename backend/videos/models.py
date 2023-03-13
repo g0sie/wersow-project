@@ -22,6 +22,7 @@ class VideoManager(models.Manager):
             return todays[0]
 
     def add_video(self, video_url: str):
+        """Add a video from url."""
         video = YouTube(video_url)
         return self.create(
             url=video_url,
@@ -31,6 +32,7 @@ class VideoManager(models.Manager):
         )
 
     def change_todays_video(self):
+        """Change today's video to another one."""
         old_todays = self.filter(todays=True)
 
         for video in old_todays:
@@ -54,6 +56,8 @@ class VideoManager(models.Manager):
 
 
 class Video(models.Model):
+    """Video in database."""
+
     title = models.CharField(max_length=100)
     url = models.URLField()
     thumbnail_url = models.URLField()
