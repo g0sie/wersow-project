@@ -29,7 +29,7 @@ class VideoCommandsTests(TestCase):
 
     @patch("videos.utils.WersowChannel.get_video_url_by")
     def test_loadvideos_limit_works(self, patched_video_url_by):
-        """Test loadvideos adds Wersow's videos to database."""
+        """Test that limit argument in loadvideos commands works."""
         patched_video_url_by.side_effect = EXAMPLE_URLS + [IndexError]
         limit = 2
         call_command("loadvideos", limit=limit)
@@ -39,7 +39,7 @@ class VideoCommandsTests(TestCase):
 
     @patch("videos.utils.WersowChannel.get_video_url_by")
     def test_loadvideos_doesnt_add_duplicates(self, patched_video_url_by):
-        """Test loadvideos adds Wersow's videos to database."""
+        """Test loadvideos adds only new videos."""
         Video.objects.add_video(EXAMPLE_URLS[1])
 
         patched_video_url_by.side_effect = EXAMPLE_URLS + [IndexError]
@@ -47,3 +47,10 @@ class VideoCommandsTests(TestCase):
 
         count = Video.objects.all().count()
         self.assertEqual(count, len(EXAMPLE_URLS))
+
+    @patch("videos.models.Video.objects.change_todays_video")
+    def test_changetodaysvideo_calls_change_todays_video(self, change_todays_video):
+        """Test changetodaysvideo calls change_todays_video method."""
+        call_command("changetodaysvideo")
+
+        change_todays_video.assert_called_once()
