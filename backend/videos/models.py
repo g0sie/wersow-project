@@ -10,11 +10,18 @@ from django.db.models.aggregates import Max
 from videos.utils import WersowChannel
 
 
+class NoVideosException(Exception):
+    """There are no videos in database."""
+
+
 class VideoManager(models.Manager):
     """Manager for videos."""
 
     def random(self):
         """Return a random video or None if there are no videos."""
+        if not Video.objects.exists():
+            raise NoVideosException()
+
         max_id = self.all().aggregate(max_id=Max("id"))["max_id"]
         if max_id:
             while True:
@@ -23,11 +30,20 @@ class VideoManager(models.Manager):
                 if video:
                     return video
 
+    def set_random_video_as_todays(self):
+        """Set a random video as todays and return it."""
+        random_video = self.random()
+        random_video.todays = True
+        random_video.save(using=self._db)
+        return random_video
+
     def todays(self):
         """Return latest today's video or None if there is no today's video."""
-        todays = self.filter(todays=True).order_by("-publish_date")
-        if todays.count() > 0:
-            return todays[0]
+        todays_videos = self.filter(todays=True).order_by("-publish_date")
+        if todays_videos:
+            return todays_videos[0]
+
+        return self.set_random_video_as_todays()
 
     def add_video(self, video_url: str):
         """Add a video from url."""
@@ -48,12 +64,9 @@ class VideoManager(models.Manager):
 
         for video in old_todays:
             video.todays = False
-            video.save()
+            video.save(using=self._db)
 
-        new_todays = self.random()
-        new_todays.todays = True
-        new_todays.save()
-
+        new_todays = self.set_random_video_as_todays()
         return new_todays
 
     def add_latest_video(self):

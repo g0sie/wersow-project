@@ -7,7 +7,7 @@ from unittest.mock import patch, MagicMock
 
 from django.test import TestCase
 
-from videos.models import Video
+from videos.models import Video, NoVideosException
 
 
 VIDEO_EXAMPLE = {
@@ -61,11 +61,27 @@ class VideoModelTests(TestCase):
 
         self.assertEqual(video, random_video)
 
-    def test_random_video_returns_none_when_no_videos(self):
-        """Test that random method returns None if there are no videos in database."""
-        random_video = Video.objects.random()
+    def test_random_video_error_when_no_videos(self):
+        """Test that random method raises exception
+        when there are no videos in database."""
+        with self.assertRaises(NoVideosException):
+            random_video = Video.objects.random()
 
-        self.assertIsNone(random_video)
+    def test_set_random_video_as_todays(self):
+        """Test set_random_video_as_todays sets random video's todays field to True."""
+        video = create_video(todays=False)
+
+        todays_video = Video.objects.set_random_video_as_todays()
+
+        video.refresh_from_db()
+        self.assertEqual(video, todays_video)
+        self.assertTrue(video.todays)
+
+    def test_set_random_video_as_todays_error_when_no_videos(self):
+        """Test set_random_video_as_todays raises exception
+        when there are no videos in database."""
+        with self.assertRaises(NoVideosException):
+            todays_video = Video.objects.set_random_video_as_todays()
 
     def test_todays_video_works(self):
         """Test todays method returns today's video."""
@@ -75,11 +91,22 @@ class VideoModelTests(TestCase):
 
         self.assertEqual(todays_video, video)
 
-    def test_todays_video_returns_none_when_no_videos(self):
-        """Test that todays method returns None if there are no videos in database."""
+    def test_todays_video_sets_new_todays_when_no_todays(self):
+        """Test todays method sets random video as today's video
+        when there are no today's videos."""
+        video = create_video(todays=False)
+
         todays_video = Video.objects.todays()
 
-        self.assertIsNone(todays_video)
+        video.refresh_from_db()
+        self.assertTrue(video.todays)
+        self.assertEqual(todays_video, video)
+
+    def test_todays_video_error_when_no_videos(self):
+        """Test that todays method raises exception
+        when there are no videos in database."""
+        with self.assertRaises(NoVideosException):
+            todays_video = Video.objects.todays()
 
     def test_todays_video_when_multiple_todays_videos(self):
         """Test that todays method returns latest video
@@ -121,6 +148,11 @@ class VideoModelTests(TestCase):
 
         video.refresh_from_db()
         self.assertTrue(video.todays)
+
+    def test_change_todays_video_error_when_no_videos(self):
+        """Test change_todays_video raises exception when there are no videos in database."""
+        with self.assertRaises(NoVideosException):
+            Video.objects.change_todays_video()
 
     @patch("videos.models.Video.objects.random")
     def test_change_todays_video_when_multiple_todays_videos(self, patched_random):

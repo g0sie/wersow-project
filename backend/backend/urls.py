@@ -15,4 +15,5 @@ urlpatterns = [
         name="api-docs",
     ),
     path("users/", include("users.urls")),
+    path("videos/", include("videos.urls")),
 ]
