@@ -1,13 +1,14 @@
 """
-Tests for Video model.
+Tests for videos models.
 """
 import datetime
 
 from unittest.mock import patch, MagicMock
 
 from django.test import TestCase
+from django.contrib.auth import get_user_model
 
-from videos.models import Video, NoVideosException
+from videos.models import Video, UserVideoRelation, NoVideosException
 
 
 VIDEO_EXAMPLE = {
@@ -26,7 +27,7 @@ def create_video(**params):
         url=params.pop("url", VIDEO_EXAMPLE["url"]),
         thumbnail_url=params.pop("thumbnail_url", VIDEO_EXAMPLE["thumbnail_url"]),
         publish_date=params.pop("publish_date", VIDEO_EXAMPLE["publish_date"]),
-        **params
+        **params,
     )
     return video
 
@@ -194,3 +195,21 @@ class VideoModelTests(TestCase):
 
         is_added = Video.objects.filter(url=url).count() > 1
         self.assertFalse(is_added)
+
+
+class UserVideoRelationModelTests(TestCase):
+    """Tests for UserVideoRelation model."""
+
+    def test_user_can_collect_video(self):
+        """Test user can collect a video."""
+        user = get_user_model().objects.create(
+            email="test@example.com", password="pass123", username="testuser"
+        )
+        video = create_video()
+
+        user_video = UserVideoRelation.objects.create(user=user, video=video)
+
+        expected_str = (
+            f"{user.email} collected {video.title} on {datetime.date.today()}"
+        )
+        self.assertEqual(str(user_video), expected_str)

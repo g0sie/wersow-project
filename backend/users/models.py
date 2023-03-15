@@ -56,11 +56,3 @@ class User(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = "email"
 
     objects = UserManager()
-
-
-# class VideoCollection(models.Model):
-#     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="collection")
-#     video = models.ForeignKey(
-#         Video, on_delete=models.CASCADE, related_name="collection"
-#     )
-#     collected = models.DateField(auto_now_add=True)
