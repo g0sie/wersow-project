@@ -27,8 +27,10 @@ class Command(BaseCommand):
         def is_video_new(url: str) -> bool:
             return not Video.objects.filter(url=url).exists()
 
-        i = 0
-        while should_add_more():
+        for i in range(len(channel.get_video_urls())):
+            if not should_add_more():
+                break
+
             try:
                 url = channel.get_video_url_by(index=i)
             except IndexError:
@@ -36,8 +38,9 @@ class Command(BaseCommand):
                 break
 
             if is_video_new(url):
-                Video.objects.add_video(url)
+                video = Video.objects.add_video(url)
                 added_count += 1
+                self.stdout.write(f"Added {video.title}...")
 
         self.stdout.write(self.style.SUCCESS(f"Added {added_count} new videos"))
 
