@@ -10,11 +10,12 @@ from django.urls import reverse
 from django.contrib.auth import get_user_model
 
 from videos.models import Video, UserVideoRelation
-from videos.serializers import VideoSerializer, CollectedVideoSerializer
+from videos.serializers import VideoSerializer, ReadCollectedVideoSerializer
 
 
 TODAYS_URL = reverse("videos:todays")
 MY_VIDEOS_URL = reverse("videos:my-videos")
+COLLECT_VIDEO_URL = reverse("videos:collect-video")
 
 VIDEO_EXAMPLE = {
     "title": "POZNALIŚMY PŁEĆ NASZEGO DZIECKA!",
@@ -84,9 +85,18 @@ class PublicVideosAPITests(APITestCase):
         serializer = VideoSerializer(latest_video)
         self.assertEqual(res.data, serializer.data)
 
-    def test_my_videos_require_authentication(self):
-        """Test my videos endpoint require authentication."""
+    def test_my_videos_requires_authentication(self):
+        """Test my videos endpoint requires authentication."""
         res = self.client.get(MY_VIDEOS_URL)
+
+        self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_collect_video_requires_authentication(self):
+        """Test collect video endpoint requires authentication."""
+        video = create_video()
+        payload = {"video_id": video.id}
+
+        res = self.client.post(COLLECT_VIDEO_URL, payload)
 
         self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
 
@@ -111,7 +121,7 @@ class PrivateVideosAPITests(APITestCase):
 
         self.assertEqual(res.status_code, 200)
         for user_video in user_video_relations:
-            serializer = CollectedVideoSerializer(user_video)
+            serializer = ReadCollectedVideoSerializer(user_video)
             self.assertIn(serializer.data, res.data)
             collected = user_video.collected
             self.assertEqual(str(collected), serializer.data["collected"])
@@ -133,7 +143,29 @@ class PrivateVideosAPITests(APITestCase):
         res = self.client.get(MY_VIDEOS_URL)
 
         self.assertEqual(res.status_code, status.HTTP_200_OK)
-        user_video_serializer = CollectedVideoSerializer(user_video)
+        user_video_serializer = ReadCollectedVideoSerializer(user_video)
         self.assertIn(user_video_serializer.data, res.data)
-        other_user_video_serializer = CollectedVideoSerializer(other_user_video)
+        other_user_video_serializer = ReadCollectedVideoSerializer(other_user_video)
         self.assertNotIn(other_user_video_serializer.data, res.data)
+
+    def test_collect_video_user_can_collect_video(self):
+        """Test user can collect video by posting video_id."""
+        video = create_video()
+
+        payload = {"video_id": video.id}
+        res = self.client.post(COLLECT_VIDEO_URL, payload)
+
+        self.assertEqual(res.status_code, status.HTTP_201_CREATED)
+        collected_successfully = UserVideoRelation.objects.filter(
+            user=self.user, video=video
+        ).exists()
+        self.assertTrue(collected_successfully)
+
+    def test_collect_not_existing_video_error(self):
+        """Test that user can't collect a video that doesn't exist."""
+        payload = {"video_id": -1}
+        res = self.client.post(COLLECT_VIDEO_URL, payload)
+
+        self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertFalse(UserVideoRelation.objects.all().exists())
+        self.assertFalse(Video.objects.all().exists())

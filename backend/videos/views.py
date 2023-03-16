@@ -7,7 +7,11 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 
 from videos.models import Video, UserVideoRelation, NoVideosException
-from videos.serializers import VideoSerializer, CollectedVideoSerializer
+from videos.serializers import (
+    VideoSerializer,
+    ReadCollectedVideoSerializer,
+    CollectVideoSerializer,
+)
 
 
 class TodaysVideo(APIView):
@@ -35,12 +39,20 @@ class TodaysVideo(APIView):
 
 
 class MyVideos(generics.ListAPIView):
-    """Get list of videos collected by user."""
+    """Get a list of videos collected by authenticated user."""
 
     queryset = UserVideoRelation.objects.all()
-    serializer_class = CollectedVideoSerializer
+    serializer_class = ReadCollectedVideoSerializer
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
+        """Filter queryset with authenticated user."""
         user = self.request.user
         return self.queryset.filter(user=user)
+
+
+class CollectVideo(generics.CreateAPIView):
+    """Collect a video."""
+
+    serializer_class = CollectVideoSerializer
+    permission_classes = [IsAuthenticated]
