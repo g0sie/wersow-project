@@ -48,7 +48,7 @@ class MyVideos(generics.ListAPIView):
     def get_queryset(self):
         """Filter queryset with authenticated user."""
         user = self.request.user
-        return self.queryset.filter(user=user)
+        return self.queryset.filter(user=user).order_by("-collected")
 
 
 class CollectVideo(generics.CreateAPIView):

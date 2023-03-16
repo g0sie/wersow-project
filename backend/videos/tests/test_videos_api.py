@@ -148,6 +148,24 @@ class PrivateVideosAPITests(APITestCase):
         other_user_video_serializer = ReadCollectedVideoSerializer(other_user_video)
         self.assertNotIn(other_user_video_serializer.data, res.data)
 
+    def test_my_videos_sorted_by_collected_date(self):
+        """Test my_videos list is sorted by collected date."""
+        UserVideoRelation.objects.create(
+            user=self.user, video=create_video(), collected=datetime.date(2023, 2, 14)
+        )
+        UserVideoRelation.objects.create(
+            user=self.user, video=create_video(), collected=datetime.date(2023, 2, 16)
+        )
+        UserVideoRelation.objects.create(
+            user=self.user, video=create_video(), collected=datetime.date(2023, 2, 18)
+        )
+
+        res = self.client.get(MY_VIDEOS_URL)
+
+        user_video_relations = UserVideoRelation.objects.all().order_by("-collected")
+        serializer = ReadCollectedVideoSerializer(user_video_relations, many=True)
+        self.assertEqual(res.data, serializer.data)
+
     def test_collect_video_user_can_collect_video(self):
         """Test user can collect video by posting video_id."""
         video = create_video()
