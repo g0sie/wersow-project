@@ -7,12 +7,14 @@ from rest_framework.test import APITestCase
 from rest_framework import status
 
 from django.urls import reverse
+from django.contrib.auth import get_user_model
 
-from videos.models import Video
-from videos.serializers import VideoSerializer
+from videos.models import Video, UserVideoRelation
+from videos.serializers import VideoSerializer, CollectedVideoSerializer
 
 
 TODAYS_URL = reverse("videos:todays")
+MY_VIDEOS_URL = reverse("videos:my-videos")
 
 VIDEO_EXAMPLE = {
     "title": "POZNALIŚMY PŁEĆ NASZEGO DZIECKA!",
@@ -81,3 +83,57 @@ class PublicVideosAPITests(APITestCase):
         latest_video.refresh_from_db()
         serializer = VideoSerializer(latest_video)
         self.assertEqual(res.data, serializer.data)
+
+    def test_my_videos_require_authentication(self):
+        """Test my videos endpoint require authentication."""
+        res = self.client.get(MY_VIDEOS_URL)
+
+        self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
+
+
+class PrivateVideosAPITests(APITestCase):
+    """Test authenticated API requests."""
+
+    def setUp(self):
+        self.user = get_user_model().objects.create(
+            email="test@example.com", password="testpass123", username="testuser"
+        )
+        self.client.force_authenticate(self.user)
+
+    def test_my_videos_lists_videos(self):
+        """Test my-videos endpoint returns a list of videos collected by user."""
+        user_video_relations = [
+            UserVideoRelation.objects.create(user=self.user, video=create_video())
+            for _ in range(3)
+        ]
+
+        res = self.client.get(MY_VIDEOS_URL)
+
+        self.assertEqual(res.status_code, 200)
+        for user_video in user_video_relations:
+            serializer = CollectedVideoSerializer(user_video)
+            self.assertIn(serializer.data, res.data)
+            collected = user_video.collected
+            self.assertEqual(str(collected), serializer.data["collected"])
+            video_data = VideoSerializer(user_video.video).data
+            self.assertEqual(video_data, serializer.data["video"])
+
+    def test_my_videos_limited_to_authenticated_user(self):
+        """Test my-videos list is limited to authenticated user's videos."""
+        user_video = UserVideoRelation.objects.create(
+            user=self.user, video=create_video()
+        )
+        other_user = get_user_model().objects.create(
+            email="other@example.com", password="testpass123", username="otheruser"
+        )
+        other_user_video = UserVideoRelation.objects.create(
+            user=other_user, video=create_video()
+        )
+
+        res = self.client.get(MY_VIDEOS_URL)
+
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        user_video_serializer = CollectedVideoSerializer(user_video)
+        self.assertIn(user_video_serializer.data, res.data)
+        other_user_video_serializer = CollectedVideoSerializer(other_user_video)
+        self.assertNotIn(other_user_video_serializer.data, res.data)

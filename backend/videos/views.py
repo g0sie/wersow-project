@@ -1,11 +1,13 @@
-from drf_spectacular.utils import extend_schema, OpenApiTypes, OpenApiResponse
+from drf_spectacular.utils import extend_schema, OpenApiResponse
 
+from rest_framework import status
+from rest_framework import generics
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
 
-from videos.models import Video, NoVideosException
-from videos.serializers import VideoSerializer
+from videos.models import Video, UserVideoRelation, NoVideosException
+from videos.serializers import VideoSerializer, CollectedVideoSerializer
 
 
 class TodaysVideo(APIView):
@@ -30,3 +32,15 @@ class TodaysVideo(APIView):
 
         serializer = VideoSerializer(video)
         return Response(serializer.data)
+
+
+class MyVideos(generics.ListAPIView):
+    """Get list of videos collected by user."""
+
+    queryset = UserVideoRelation.objects.all()
+    serializer_class = CollectedVideoSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        user = self.request.user
+        return self.queryset.filter(user=user)
