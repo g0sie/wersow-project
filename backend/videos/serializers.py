@@ -19,7 +19,8 @@ class CollectVideoSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UserVideoRelation
-        fields = ("video_id", "collected")
+        fields = ["video_id", "collected"]
+        read_only_fields = ["collected"]
 
     def validate_video_id(self, video_id):
         """Check if video with given id exists."""
@@ -43,4 +44,4 @@ class ReadCollectedVideoSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UserVideoRelation
-        fields = ("collected", "video")
+        fields = ["collected", "video"]

@@ -187,3 +187,13 @@ class PrivateVideosAPITests(APITestCase):
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertFalse(UserVideoRelation.objects.all().exists())
         self.assertFalse(Video.objects.all().exists())
+
+    def test_collect_video_user_cant_set_collected_date(self):
+        """Test that user can't set collected date when collecting video."""
+        video = create_video()
+
+        payload = {"collected": datetime.date(2022, 5, 22), "video_id": video.id}
+        res = self.client.post(COLLECT_VIDEO_URL, payload)
+
+        user_video = UserVideoRelation.objects.get(user=self.user, video=video)
+        self.assertEqual(user_video.collected, datetime.date.today())
