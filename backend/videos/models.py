@@ -1,6 +1,7 @@
 """
 Models for videos API.
 """
+import datetime
 from random import randint
 from pytube import YouTube
 
@@ -104,7 +105,7 @@ class UserVideoRelation(models.Model):
     video = models.ForeignKey(
         Video, on_delete=models.CASCADE, related_name="collection"
     )
-    collected = models.DateField(auto_now_add=True)
+    collected = models.DateField(default=datetime.date.today)
 
     def __str__(self):
         return f"{self.user} collected {self.video} on {self.collected}"
